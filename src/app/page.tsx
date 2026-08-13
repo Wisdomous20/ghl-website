@@ -1,5 +1,5 @@
-import { StoryLanding } from "@/components/story-landing";
+import { CinematicHome } from "@/components/cinematic-home";
 
 export default function Home() {
-  return <StoryLanding />;
+  return <CinematicHome />;
 }

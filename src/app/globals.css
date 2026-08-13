@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: oklch(97.4% 0.012 78);
-  --foreground: oklch(22% 0.035 201);
+  --paper: oklch(96.8% 0.012 78);
+  --paper-deep: oklch(91.5% 0.018 75);
+  --ink: oklch(13.8% 0.01 255);
+  --ink-soft: oklch(21% 0.013 255);
+  --signal-orange: oklch(68.5% 0.205 42);
+  --signal-orange-light: oklch(79% 0.145 55);
+  --signal-orange-ink: oklch(49% 0.17 42);
+  --line-light: oklch(35% 0.012 255 / 52%);
+  --line-dark: oklch(76% 0.012 75 / 38%);
+  --background: var(--ink);
+  --foreground: var(--paper);
 }
 
 * {
@@ -12,6 +21,7 @@
 html {
   background: var(--background);
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -24,6 +34,17 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+body,
+button,
+a {
+  cursor: default;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
 a,
 button,
 input,
@@ -32,9 +53,33 @@ select {
   font: inherit;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video,
+svg {
+  display: block;
+}
+
+button,
+input,
+textarea,
+select {
+  border-radius: 0;
+}
+
+:focus-visible {
+  outline: 0.16rem solid white;
+  outline-offset: 0.2rem;
+  box-shadow: 0 0 0 0.34rem black;
+}
+
 ::selection {
-  background: oklch(68% 0.19 49);
-  color: oklch(20% 0.047 190);
+  background: var(--signal-orange);
+  color: var(--ink);
 }
 
 @media (prefers-reduced-motion: reduce) {

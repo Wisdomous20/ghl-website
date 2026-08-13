@@ -1,0 +1,1703 @@
+.site {
+  --gutter: clamp(1.25rem, 4vw, 4.75rem);
+  min-height: 100vh;
+  overflow: clip;
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.skipLink {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.8rem 1rem;
+  color: var(--ink);
+  background: var(--signal-orange-light);
+  transform: translateY(-150%);
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+}
+
+.header {
+  position: fixed;
+  z-index: 50;
+  inset: 0 0 auto;
+  color: var(--paper);
+  background: oklch(12.5% 0.009 255 / 94%);
+  border-bottom: 1px solid oklch(92% 0.008 80 / 16%);
+}
+
+.headerInner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: 4.6rem;
+  padding-inline: var(--gutter);
+}
+
+.logo,
+.footerLogo {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+}
+
+.logo {
+  gap: 0.7rem;
+  font-size: 1.2rem;
+}
+
+.logoMark {
+  width: 1.7rem;
+  height: auto;
+  color: var(--paper);
+}
+
+.nav {
+  display: flex;
+  gap: clamp(1.6rem, 3.1vw, 3.2rem);
+  font-size: 0.71rem;
+  font-weight: 620;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.nav a {
+  transition: color 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav a:hover {
+  color: var(--signal-orange-light);
+}
+
+.headerCta,
+.contactCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-size: 0.74rem;
+  font-weight: 670;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.headerCta {
+  justify-self: end;
+  min-height: 2.75rem;
+  padding-inline: 1rem;
+  color: var(--ink);
+  background: var(--signal-orange);
+}
+
+.headerCta:hover,
+.contactCta:hover {
+  transform: translateY(-0.15rem);
+}
+
+.headerCta span,
+.contactCta span,
+.chapterLink span {
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.headerCta:hover span,
+.contactCta:hover span,
+.chapterLink:hover span {
+  transform: translate(0.18rem, -0.18rem);
+}
+
+.journey {
+  position: relative;
+  height: 620svh;
+  min-height: 300rem;
+  background: var(--paper);
+}
+
+.journeySticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 37rem;
+  overflow: hidden;
+}
+
+.journeyTrack {
+  display: flex;
+  width: 300vw;
+  height: 100%;
+  will-change: transform;
+}
+
+.journeyPanel {
+  position: relative;
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.chapterLabel,
+.sectionLabel,
+.worldIndex,
+.frameNote,
+.cinemaMeta,
+.imaginePrompt,
+.liveTag {
+  margin: 0;
+  font-size: clamp(0.63rem, 0.76vw, 0.74rem);
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.chapterLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.chapterLabel > span {
+  display: inline-grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 1px solid currentColor;
+}
+
+.chapterIntro {
+  max-width: 35rem;
+  margin: 0;
+  font-size: clamp(0.94rem, 1.2vw, 1.12rem);
+  font-weight: 350;
+  line-height: 1.66;
+}
+
+.imaginePanel {
+  display: grid;
+  grid-template-columns: minmax(21rem, 0.78fr) minmax(34rem, 1.42fr);
+  gap: clamp(2rem, 5vw, 6rem);
+  padding: clamp(7rem, 13vh, 9.5rem) var(--gutter) clamp(5.5rem, 10vh, 8rem);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.imaginePanel::before {
+  position: absolute;
+  inset: 4.6rem auto 4rem 34.5vw;
+  width: 1px;
+  content: "";
+  background: oklch(20% 0.012 255 / 16%);
+}
+
+.imagineCopy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.imagineCopy .chapterLabel {
+  margin-bottom: clamp(2rem, 5vh, 4.5rem);
+}
+
+.imagineCopy h1 {
+  max-width: 8.5ch;
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(4.7rem, 8.4vw, 9.4rem);
+  font-weight: 520;
+  line-height: 0.8;
+  letter-spacing: -0.073em;
+}
+
+.imagineCopy h1 span {
+  display: block;
+  color: var(--signal-orange-ink);
+}
+
+.imagineCopy .chapterIntro {
+  max-width: 27rem;
+  margin-top: clamp(2rem, 4.5vh, 3.5rem);
+  color: oklch(34% 0.015 255);
+}
+
+.imaginePrompt {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: clamp(1.8rem, 4vh, 3.5rem);
+  color: oklch(35% 0.018 255);
+}
+
+.imaginePrompt span {
+  display: block;
+  width: 3rem;
+  height: 0.18rem;
+  background: var(--signal-orange);
+}
+
+.imagineVisual {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--ink-soft);
+  clip-path: polygon(5% 0, 100% 0, 100% 92%, 93% 100%, 0 100%, 0 6%);
+}
+
+.journeyImage,
+.journeyImage img,
+.filmPoster,
+.storyVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.journeyImage {
+  transform-origin: center;
+}
+
+.journeyImage img,
+.filmPoster,
+.storyVideo {
+  object-fit: cover;
+}
+
+.imagineVisual .journeyImage img {
+  object-position: 48% 50%;
+}
+
+.frameNote {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.25rem;
+  padding: 0.7rem 0.85rem;
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.buildPanel {
+  display: grid;
+  grid-template-columns: minmax(21rem, 0.67fr) minmax(38rem, 1.55fr);
+  gap: clamp(2rem, 4vw, 5rem);
+  padding: clamp(7rem, 12vh, 9rem) clamp(2rem, 3vw, 3.5rem) clamp(5.5rem, 9vh, 7rem) var(--gutter);
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.buildPanel::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.45rem;
+  content: "";
+  background: var(--signal-orange);
+}
+
+.buildCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.buildCopy .chapterLabel {
+  margin-bottom: clamp(2rem, 5vh, 4rem);
+  color: var(--signal-orange-light);
+}
+
+.buildCopy h2,
+.manageCopy h2 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 520;
+  line-height: 0.84;
+  letter-spacing: -0.068em;
+  text-wrap: balance;
+}
+
+.buildCopy h2 {
+  max-width: 8ch;
+  font-size: clamp(4.2rem, 7.2vw, 8.3rem);
+}
+
+.buildCopy .chapterIntro {
+  max-width: 27rem;
+  margin-top: clamp(2rem, 4vh, 3.25rem);
+  color: oklch(91% 0.009 80 / 67%);
+}
+
+.buildDisciplines {
+  width: 100%;
+  margin: clamp(2rem, 5vh, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid oklch(91% 0.009 80 / 19%);
+}
+
+.buildDisciplines li {
+  display: grid;
+  grid-template-columns: 2.2rem 1fr;
+  gap: 0.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid oklch(91% 0.009 80 / 19%);
+  color: oklch(92% 0.009 80 / 78%);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.buildDisciplines span {
+  color: var(--signal-orange-light);
+  font-size: 0.65rem;
+}
+
+.buildCinema {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: oklch(16% 0.01 255);
+  border: 1px solid oklch(91% 0.009 80 / 26%);
+  transform-origin: left center;
+}
+
+.filmPoster,
+.storyVideo {
+  object-position: center;
+}
+
+.storyVideo {
+  opacity: 0;
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.storyVideo[data-ready="true"] {
+  opacity: 1;
+}
+
+.cinemaFrame {
+  position: absolute;
+  inset: 1rem;
+  pointer-events: none;
+  border: 1px solid oklch(95% 0.008 80 / 24%);
+}
+
+.cinemaMeta {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 1.1rem;
+  color: oklch(95% 0.008 80 / 72%);
+  background: var(--ink);
+}
+
+.managePanel {
+  display: grid;
+  grid-template-columns: minmax(38rem, 1.48fr) minmax(21rem, 0.72fr);
+  gap: clamp(2.5rem, 5vw, 6rem);
+  padding: clamp(7rem, 12vh, 9rem) var(--gutter) clamp(5.5rem, 9vh, 7rem);
+  color: var(--ink);
+  background: var(--signal-orange);
+}
+
+.manageVisual {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--ink-soft);
+  clip-path: polygon(0 0, 94% 0, 100% 8%, 100% 100%, 6% 100%, 0 92%);
+}
+
+.manageVisual .journeyImage img {
+  object-position: center;
+}
+
+.liveTag {
+  position: absolute;
+  right: 1.3rem;
+  bottom: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 0.85rem;
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.liveTag i {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--signal-orange-light);
+  border-radius: 50%;
+  animation: status-pulse 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.manageCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.manageCopy .chapterLabel {
+  margin-bottom: clamp(2rem, 5vh, 4rem);
+}
+
+.manageCopy h2 {
+  max-width: 9ch;
+  font-size: clamp(4rem, 6.8vw, 7.8rem);
+}
+
+.manageCopy .chapterIntro {
+  max-width: 28rem;
+  margin-top: clamp(2rem, 4vh, 3.25rem);
+  color: var(--ink);
+}
+
+.chapterLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: clamp(2rem, 5vh, 4rem);
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--ink);
+  font-size: 0.76rem;
+  font-weight: 670;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.journeyRail {
+  position: absolute;
+  z-index: 8;
+  inset: auto 0 0;
+  height: 4rem;
+  padding: 0.7rem var(--gutter) 0.85rem;
+  color: var(--paper);
+  background: var(--ink);
+  border-top: 1px solid oklch(91% 0.009 80 / 18%);
+}
+
+.railLabels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 0.65rem;
+  color: oklch(91% 0.009 80 / 62%);
+  font-size: 0.6rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.railLabels span:nth-child(2) {
+  text-align: center;
+}
+
+.railLabels span:last-child {
+  text-align: right;
+}
+
+.railTrack {
+  height: 0.16rem;
+  overflow: hidden;
+  background: oklch(91% 0.009 80 / 18%);
+}
+
+.railTrack i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--signal-orange);
+  transform-origin: left;
+}
+
+.manifesto {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.36fr) minmax(25rem, 1.64fr);
+  align-content: center;
+  gap: clamp(3rem, 7vw, 9rem);
+  min-height: 100svh;
+  padding: clamp(7rem, 14vw, 13rem) var(--gutter);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.sectionLabel {
+  color: oklch(35% 0.017 255);
+}
+
+.manifesto h2,
+.servicesHeader h2,
+.approachHeading h2,
+.contact h2 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 520;
+  line-height: 0.84;
+  letter-spacing: -0.069em;
+  text-wrap: balance;
+}
+
+.manifesto h2 {
+  max-width: 13ch;
+  font-size: clamp(4rem, 8.6vw, 10rem);
+}
+
+.manifesto h2 span {
+  display: block;
+  color: var(--signal-orange-ink);
+}
+
+.manifestoFoot {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 2rem;
+  padding-top: clamp(2.5rem, 5vw, 5rem);
+  border-top: 1px solid oklch(22% 0.012 255 / 25%);
+}
+
+.manifestoFoot p {
+  max-width: 34rem;
+  margin: 0;
+  color: oklch(35% 0.017 255);
+  line-height: 1.65;
+}
+
+.manifestoFoot > span {
+  color: var(--signal-orange-ink);
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+}
+
+.services {
+  background: var(--ink);
+}
+
+.servicesHeader {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.35fr) minmax(24rem, 1.65fr);
+  align-content: center;
+  gap: clamp(3rem, 7vw, 9rem);
+  min-height: 72svh;
+  padding: clamp(6rem, 11vw, 10rem) var(--gutter);
+  color: var(--paper);
+}
+
+.servicesHeader .sectionLabel {
+  color: var(--signal-orange-light);
+}
+
+.servicesHeader h2 {
+  max-width: 12ch;
+  font-size: clamp(4rem, 8vw, 9rem);
+}
+
+.serviceWorld {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(22rem, 0.76fr) minmax(35rem, 1.24fr);
+  gap: clamp(3rem, 7vw, 9rem);
+  align-items: center;
+  min-height: 100svh;
+  overflow: hidden;
+  padding: clamp(7rem, 12vh, 10rem) var(--gutter);
+}
+
+.worldCopy {
+  position: relative;
+  z-index: 3;
+}
+
+.worldIndex {
+  margin-bottom: clamp(2rem, 5vh, 4rem);
+}
+
+.worldCopy h3 {
+  max-width: 10ch;
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(3.5rem, 6.4vw, 7.4rem);
+  font-weight: 520;
+  line-height: 0.86;
+  letter-spacing: -0.064em;
+  text-wrap: balance;
+}
+
+.worldCopy > p:not(.worldIndex) {
+  max-width: 31rem;
+  margin: clamp(1.7rem, 4vh, 3rem) 0 0;
+  font-size: clamp(0.94rem, 1.2vw, 1.1rem);
+  line-height: 1.68;
+}
+
+.worldCopy ul {
+  max-width: 31rem;
+  margin: clamp(2rem, 4.5vh, 3.5rem) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid currentColor;
+}
+
+.worldCopy li {
+  position: relative;
+  padding: 0.88rem 0 0.88rem 1.2rem;
+  border-bottom: 1px solid currentColor;
+  font-size: 0.79rem;
+  letter-spacing: 0.03em;
+}
+
+.worldCopy li::before {
+  position: absolute;
+  top: 1.2rem;
+  left: 0;
+  width: 0.38rem;
+  height: 0.38rem;
+  content: "";
+  background: var(--signal-orange);
+}
+
+.developWorld {
+  color: var(--ink);
+  background: var(--paper-deep);
+  border-top: 1px solid oklch(22% 0.012 255 / 25%);
+}
+
+.developWorld .worldCopy > p:not(.worldIndex) {
+  color: oklch(34% 0.017 255);
+}
+
+.developWorld .worldCopy ul {
+  color: oklch(22% 0.012 255 / 35%);
+}
+
+.developWorld .worldCopy li {
+  color: var(--ink);
+}
+
+.developmentStage {
+  position: relative;
+  height: min(71vh, 46rem);
+  min-height: 31rem;
+  overflow: hidden;
+  border: 1px solid oklch(22% 0.012 255 / 25%);
+  background-image:
+    linear-gradient(oklch(22% 0.012 255 / 9%) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(22% 0.012 255 / 9%) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem;
+}
+
+.developmentStage > img,
+.ambientFilm,
+.ambientFilm video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ambientFilm {
+  z-index: 1;
+}
+
+.motionControl {
+  position: absolute;
+  z-index: 4;
+  bottom: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.6rem;
+  padding: 0.65rem 0.8rem;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid oklch(91% 0.009 80 / 22%);
+  font-size: 0.62rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.motionControl span {
+  color: var(--signal-orange-light);
+}
+
+.developmentStage > p {
+  position: absolute;
+  z-index: 3;
+  right: 1rem;
+  bottom: 1rem;
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  color: var(--paper);
+  background: var(--ink);
+  font-size: 0.66rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.developmentStage::before {
+  position: absolute;
+  inset: 1rem;
+  content: "";
+  border: 1px solid oklch(22% 0.012 255 / 16%);
+}
+
+.developmentStage svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.developmentStage path {
+  fill: none;
+  stroke: var(--signal-orange);
+  stroke-width: 5;
+  vector-effect: non-scaling-stroke;
+}
+
+.stageModule {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  box-shadow: 0.75rem 0.75rem 0 var(--ink);
+}
+
+.stageModule span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.stageModuleOne {
+  top: 60%;
+  left: 5%;
+  width: 24%;
+  height: 20%;
+}
+
+.stageModuleTwo {
+  top: 8%;
+  left: 34%;
+  width: 29%;
+  height: 24%;
+}
+
+.stageModuleThree {
+  right: 6%;
+  bottom: 57%;
+  width: 23%;
+  height: 21%;
+}
+
+.stageSignal {
+  position: absolute;
+  z-index: 4;
+  top: 72%;
+  left: 3.8%;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: var(--signal-orange);
+  border: 0.2rem solid var(--paper-deep);
+}
+
+.automateWorld {
+  display: block;
+  min-height: 112svh;
+  color: var(--ink);
+  background: var(--signal-orange);
+}
+
+.automateTitle {
+  position: absolute;
+  top: 5.5rem;
+  left: -1vw;
+  color: oklch(18% 0.012 255 / 11%);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(8rem, 24vw, 27rem);
+  font-weight: 720;
+  line-height: 0.8;
+  letter-spacing: -0.08em;
+  white-space: nowrap;
+}
+
+.automateWorld .worldCopy {
+  max-width: 47rem;
+  margin-top: clamp(11rem, 26vh, 19rem);
+}
+
+.automateWorld .worldCopy h3 {
+  max-width: 12ch;
+}
+
+.automateWorld .worldCopy > p:not(.worldIndex) {
+  color: var(--ink);
+}
+
+.automateWorld .worldCopy ul {
+  color: oklch(17% 0.012 255 / 28%);
+}
+
+.automateWorld .worldCopy li {
+  color: var(--ink);
+}
+
+.automateWorld .worldCopy li::before {
+  background: var(--paper);
+}
+
+.automationRoute {
+  position: absolute;
+  right: 0;
+  bottom: clamp(4rem, 8vh, 7rem);
+  display: flex;
+  align-items: center;
+  width: min(94vw, 95rem);
+  color: var(--ink);
+  border-top: 0.26rem solid var(--ink);
+  border-bottom: 0.26rem solid var(--ink);
+}
+
+.automationRoute span {
+  flex: 0 0 auto;
+  padding: 1.2rem clamp(1rem, 2.4vw, 2.5rem);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.2rem, 2.2vw, 2.4rem);
+  font-weight: 610;
+  letter-spacing: -0.04em;
+}
+
+.automationRoute i {
+  display: block;
+  flex: 1;
+  min-width: 1.4rem;
+  height: 0.26rem;
+  background: var(--paper);
+}
+
+.operateWorld {
+  color: var(--paper);
+  background: var(--ink-soft);
+}
+
+.operateWorld .worldCopy {
+  grid-column: 2;
+}
+
+.operateWorld .worldCopy > p:not(.worldIndex) {
+  color: oklch(91% 0.009 80 / 66%);
+}
+
+.operateWorld .worldCopy ul {
+  color: oklch(91% 0.009 80 / 22%);
+}
+
+.operateWorld .worldCopy li {
+  color: var(--paper);
+}
+
+.operationPlane {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  height: min(72vh, 47rem);
+  overflow: hidden;
+  background: var(--ink);
+  border: 1px solid oklch(91% 0.009 80 / 21%);
+}
+
+.operationPlane > img {
+  object-fit: cover;
+}
+
+.operationProof {
+  position: absolute;
+  z-index: 2;
+  right: 1rem;
+  bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.8rem 0.95rem;
+  color: var(--paper);
+  background: var(--ink);
+  font-size: 0.64rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.operationProof i {
+  width: 0.48rem;
+  height: 0.48rem;
+  background: var(--signal-orange-light);
+  border-radius: 50%;
+  animation: status-pulse 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.operationPlane::before,
+.operationPlane::after {
+  display: none;
+}
+
+.operationPlane::before {
+  inset: 0 auto 0 35%;
+  width: 1px;
+}
+
+.operationPlane::after {
+  inset: 58% 0 auto;
+  height: 1px;
+}
+
+.operationLine {
+  position: absolute;
+  inset: 9% 7% auto;
+  height: 42%;
+  border-bottom: 0.28rem solid var(--signal-orange);
+}
+
+.operationLine::before {
+  position: absolute;
+  right: 0;
+  bottom: -0.28rem;
+  left: 0;
+  height: 70%;
+  content: "";
+  border-right: 0.28rem solid var(--signal-orange);
+  border-top: 0.28rem solid var(--signal-orange);
+  transform: skewY(-12deg);
+  transform-origin: right bottom;
+}
+
+.operationLine i,
+.operationLine span {
+  position: absolute;
+  z-index: 2;
+  bottom: -0.65rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  background: var(--signal-orange);
+  border: 0.2rem solid var(--ink);
+}
+
+.operationLine i {
+  left: 0;
+}
+
+.operationLine span {
+  right: 0;
+}
+
+.operationReadout {
+  position: absolute;
+  right: 7%;
+  bottom: 7%;
+  left: 7%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0;
+}
+
+.operationReadout p,
+.operationReadout strong {
+  margin: 0;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid oklch(91% 0.009 80 / 16%);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.operationReadout p {
+  color: oklch(91% 0.009 80 / 52%);
+}
+
+.operationReadout strong {
+  color: var(--signal-orange-light);
+  font-weight: 620;
+}
+
+.operationPulse {
+  position: absolute;
+  top: 9%;
+  left: 7%;
+  width: 0.8rem;
+  height: 0.8rem;
+  background: var(--signal-orange);
+  border-radius: 50%;
+  animation: status-pulse 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.approach {
+  display: grid;
+  grid-template-columns: minmax(22rem, 0.75fr) minmax(36rem, 1.25fr);
+  gap: clamp(4rem, 9vw, 11rem);
+  padding: clamp(7rem, 14vw, 13rem) var(--gutter);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.approachHeading {
+  align-self: start;
+  position: sticky;
+  top: 8rem;
+}
+
+.approachHeading .sectionLabel {
+  margin-bottom: 2rem;
+}
+
+.approachHeading h2 {
+  max-width: 9ch;
+  font-size: clamp(3.8rem, 7vw, 8rem);
+}
+
+.approachSteps {
+  border-top: 1px solid oklch(22% 0.012 255 / 26%);
+}
+
+.approachSteps article {
+  display: grid;
+  grid-template-columns: 4rem minmax(14rem, 0.8fr) minmax(14rem, 1fr);
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  align-items: start;
+  padding: clamp(2.5rem, 5vw, 5rem) 0;
+  border-bottom: 1px solid oklch(22% 0.012 255 / 26%);
+}
+
+.approachSteps article > span {
+  display: inline-grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  color: var(--paper);
+  background: var(--ink);
+  font-size: 0.66rem;
+}
+
+.approachSteps h3 {
+  max-width: 12ch;
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 3.3vw, 3.9rem);
+  font-weight: 520;
+  line-height: 0.94;
+  letter-spacing: -0.052em;
+}
+
+.approachSteps p {
+  margin: 0;
+  color: oklch(36% 0.017 255);
+  line-height: 1.65;
+}
+
+.contact {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.48fr) minmax(27rem, 1.52fr);
+  gap: clamp(4rem, 9vw, 10rem);
+  align-items: end;
+  min-height: 92svh;
+  overflow: hidden;
+  padding: clamp(7rem, 13vw, 12rem) var(--gutter);
+  color: var(--ink);
+  background: var(--signal-orange);
+}
+
+.contact::after {
+  position: absolute;
+  right: -10vw;
+  bottom: -30vw;
+  width: 55vw;
+  aspect-ratio: 1;
+  content: "";
+  border: 1px solid oklch(18% 0.012 255 / 26%);
+  border-radius: 50%;
+}
+
+.contactMark {
+  align-self: start;
+  width: clamp(8rem, 17vw, 18rem);
+  color: var(--ink);
+}
+
+.contactMark rect:nth-child(2) {
+  fill: var(--paper);
+}
+
+.contactCopy {
+  position: relative;
+  z-index: 2;
+}
+
+.contactCopy .sectionLabel {
+  margin-bottom: 2rem;
+  color: var(--ink);
+}
+
+.contact h2 {
+  max-width: 9ch;
+  font-size: clamp(4rem, 9.7vw, 11rem);
+}
+
+.contactCopy > p:not(.sectionLabel) {
+  max-width: 38rem;
+  margin: clamp(2rem, 4vw, 3.5rem) 0;
+  color: var(--ink);
+  font-size: clamp(0.98rem, 1.25vw, 1.15rem);
+  line-height: 1.67;
+}
+
+.contactCta {
+  min-width: min(100%, 19rem);
+  min-height: 4.25rem;
+  padding-inline: 1.4rem;
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 2rem;
+  padding: clamp(2.5rem, 5vw, 4.5rem) var(--gutter);
+  color: oklch(91% 0.009 80 / 57%);
+  background: var(--ink);
+  border-top: 1px solid oklch(91% 0.009 80 / 16%);
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.footerLogo {
+  gap: 0.65rem;
+  color: var(--paper);
+  font-size: 1.08rem;
+  text-transform: lowercase;
+}
+
+.footerMark {
+  width: 1.5rem;
+  color: var(--paper);
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer p:last-child {
+  justify-self: end;
+}
+
+@keyframes status-pulse {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .manifesto h2,
+  .worldCopy,
+  .approachSteps article {
+    animation: section-enter linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  .automateTitle {
+    animation: title-travel linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+
+  .stageSignal {
+    animation: signal-travel linear both;
+    animation-timeline: view();
+    animation-range: entry 15% cover 65%;
+  }
+
+  @keyframes section-enter {
+    from {
+      opacity: 0;
+      transform: translateY(3rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes title-travel {
+    from { transform: translateX(8vw); }
+    to { transform: translateX(-16vw); }
+  }
+
+  @keyframes signal-travel {
+    from { transform: translate(0, 0); }
+    to { transform: translate(72vw, -25rem); }
+  }
+}
+
+@media (max-width: 68rem) {
+  .headerInner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .imaginePanel,
+  .buildPanel,
+  .managePanel {
+    gap: 2rem;
+  }
+
+  .imaginePanel {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  }
+
+  .buildPanel {
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+  }
+
+  .managePanel {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  }
+
+  .serviceWorld,
+  .approach {
+    grid-template-columns: 1fr;
+  }
+
+  .serviceWorld {
+    min-height: auto;
+  }
+
+  .developWorld,
+  .operateWorld {
+    padding-block: clamp(7rem, 12vw, 10rem);
+  }
+
+  .developmentStage,
+  .operationPlane {
+    height: min(62vh, 40rem);
+  }
+
+  .operateWorld .worldCopy,
+  .operationPlane {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .approachHeading {
+    position: static;
+  }
+
+  .imagineCopy h1,
+  .buildCopy h2,
+  .manageCopy h2 {
+    font-size: clamp(4rem, 8vw, 6rem);
+  }
+
+  .serviceWorld,
+  .approach {
+    gap: 4rem;
+  }
+
+  .approachSteps article {
+    grid-template-columns: 3.5rem 1fr;
+  }
+
+  .approachSteps p {
+    grid-column: 2;
+  }
+
+  .footer {
+    grid-template-columns: 1fr auto;
+  }
+
+  .footer > p:nth-child(2) {
+    display: none;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .site {
+    --gutter: clamp(1.05rem, 5vw, 1.5rem);
+  }
+
+  .headerInner {
+    min-height: 4.25rem;
+  }
+
+  .logo {
+    gap: 0.55rem;
+    font-size: 1.02rem;
+  }
+
+  .logoMark {
+    width: 1.45rem;
+  }
+
+  .headerCta {
+    min-height: 2.5rem;
+    padding-inline: 0.75rem;
+    font-size: 0.62rem;
+  }
+
+  .journey {
+    height: 540svh;
+    min-height: 225rem;
+  }
+
+  .journeySticky {
+    min-height: 33rem;
+  }
+
+  .imaginePanel,
+  .buildPanel,
+  .managePanel {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 1.25rem;
+    padding: 5.5rem var(--gutter) 4.7rem;
+  }
+
+  .imaginePanel::before {
+    display: none;
+  }
+
+  .imagineCopy {
+    display: block;
+  }
+
+  .imagineCopy .chapterLabel,
+  .buildCopy .chapterLabel,
+  .manageCopy .chapterLabel {
+    margin-bottom: 1rem;
+  }
+
+  .chapterLabel > span {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .imagineCopy h1,
+  .buildCopy h2,
+  .manageCopy h2 {
+    max-width: 9.5ch;
+    font-size: clamp(3.15rem, 14vw, 5rem);
+    line-height: 0.84;
+  }
+
+  .chapterIntro {
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+
+  .imagineCopy .chapterIntro,
+  .buildCopy .chapterIntro,
+  .manageCopy .chapterIntro {
+    margin-top: 1rem;
+  }
+
+  .imaginePrompt,
+  .buildDisciplines {
+    display: none;
+  }
+
+  .imagineVisual,
+  .buildCinema,
+  .manageVisual {
+    min-height: 0;
+    clip-path: none;
+  }
+
+  .imagineVisual {
+    grid-row: 2;
+  }
+
+  .imagineVisual .journeyImage img {
+    object-position: 50% center;
+  }
+
+  .frameNote,
+  .cinemaMeta {
+    font-size: 0.52rem;
+  }
+
+  .buildCopy {
+    display: block;
+  }
+
+  .buildCinema {
+    min-height: 14rem;
+  }
+
+  .cinemaFrame {
+    inset: 0.6rem;
+  }
+
+  .managePanel {
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .manageVisual {
+    min-height: 18rem;
+  }
+
+  .manageCopy {
+    display: block;
+  }
+
+  .manageCopy h2 {
+    max-width: 11ch;
+  }
+
+  .chapterLink {
+    margin-top: 1.2rem;
+    font-size: 0.63rem;
+  }
+
+  .journeyRail {
+    height: 3.65rem;
+    padding-top: 0.6rem;
+  }
+
+  .railLabels {
+    font-size: 0.52rem;
+  }
+
+  .manifesto,
+  .servicesHeader,
+  .serviceWorld,
+  .approach,
+  .contact {
+    grid-template-columns: 1fr;
+  }
+
+  .manifesto {
+    min-height: 92svh;
+    gap: 2.5rem;
+  }
+
+  .manifesto h2,
+  .servicesHeader h2,
+  .approachHeading h2,
+  .contact h2 {
+    font-size: clamp(3.45rem, 15vw, 6rem);
+  }
+
+  .manifestoFoot {
+    grid-column: auto;
+    display: block;
+  }
+
+  .manifestoFoot > span {
+    display: block;
+    margin-top: 2rem;
+  }
+
+  .servicesHeader {
+    min-height: 68svh;
+    gap: 2rem;
+  }
+
+  .serviceWorld {
+    gap: 3rem;
+    min-height: 105svh;
+  }
+
+  .worldCopy h3 {
+    font-size: clamp(3.1rem, 13.5vw, 5.2rem);
+  }
+
+  .developmentStage {
+    height: 46vh;
+    min-height: 22rem;
+  }
+
+  .automateWorld {
+    min-height: 110svh;
+  }
+
+  .automateTitle {
+    top: 6rem;
+    font-size: 35vw;
+  }
+
+  .automateWorld .worldCopy {
+    margin-top: 8rem;
+  }
+
+  .automationRoute {
+    right: auto;
+    bottom: 3.5rem;
+    left: 0;
+    width: max-content;
+  }
+
+  .automationRoute span {
+    font-size: 1.1rem;
+  }
+
+  .automationRoute i {
+    width: 1.5rem;
+    flex: 0 0 1.5rem;
+  }
+
+  .operateWorld .worldCopy,
+  .operationPlane {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .operationPlane {
+    grid-row: 2;
+    height: 48vh;
+    min-height: 23rem;
+  }
+
+  .approachHeading {
+    position: static;
+  }
+
+  .approachSteps article {
+    grid-template-columns: 3rem 1fr;
+    gap: 1.2rem;
+  }
+
+  .approachSteps h3 {
+    font-size: 2.25rem;
+  }
+
+  .contact {
+    min-height: 52rem;
+    gap: 3rem;
+  }
+
+  .contactMark {
+    justify-self: end;
+    width: 8rem;
+  }
+
+  .contact::after {
+    right: -32vw;
+    bottom: -18vw;
+    width: 100vw;
+  }
+
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (max-height: 38rem) and (prefers-reduced-motion: no-preference) {
+  .journey {
+    height: auto;
+    min-height: 0;
+  }
+
+  .journeySticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .journeyTrack {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+
+  .journeyPanel {
+    width: 100%;
+    min-height: 42rem;
+  }
+
+  .journeyRail {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey {
+    height: auto;
+    min-height: 0;
+  }
+
+  .journeySticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .journeyTrack {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+
+  .journeyPanel {
+    width: 100%;
+    min-height: 100svh;
+  }
+
+  .journeyRail,
+  .storyVideo,
+  .ambientFilm {
+    display: none;
+  }
+
+  .liveTag i,
+  .operationProof i,
+  .operationPulse {
+    animation: none;
+  }
+
+  .manifesto h2,
+  .worldCopy,
+  .approachSteps article,
+  .automateTitle,
+  .stageSignal {
+    animation: none !important;
+  }
+}
