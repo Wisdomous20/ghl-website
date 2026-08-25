@@ -10,7 +10,7 @@
   --signal-orange-ink: oklch(49% 0.17 42);
   --line-light: oklch(35% 0.012 255 / 52%);
   --line-dark: oklch(76% 0.012 75 / 38%);
-  --background: var(--ink);
+  --background: #11100f;
   --foreground: var(--paper);
 }
 
@@ -32,6 +32,7 @@ body {
   font-family: var(--font-detail), sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 body,
@@ -79,7 +80,7 @@ select {
 
 ::selection {
   background: var(--signal-orange);
-  color: var(--ink);
+  color: #171512;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,5 +1,5 @@
-import { CinematicHome } from "@/components/cinematic-home";
+import { EnginaraSystemExperience } from "@/components/enginara-system-experience";
 
 export default function Home() {
-  return <CinematicHome />;
+  return <EnginaraSystemExperience />;
 }
