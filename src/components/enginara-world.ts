@@ -38,9 +38,9 @@ type TrackedLabel = {
 
 const OFF_WHITE = 0xf6f4ef;
 const SIGNAL_ORANGE = 0xf36b21;
-const GRAPHITE = 0x171717;
-const GRAPHITE_DEEP = 0x0f1012;
-const GRAPHITE_SOFT = 0x2b2c2f;
+const GRAPHITE = 0x171512;
+const GRAPHITE_DEEP = 0x100f0e;
+const GRAPHITE_SOFT = 0x2b2824;
 
 const clamp = (value: number, min = 0, max = 1) =>
   Math.min(max, Math.max(min, value));
@@ -653,10 +653,10 @@ export function createEnginaraWorld({
   ) => {
     const element = document.createElement("span");
     element.className = signal ? "world-label world-label-brass" : "world-label";
-    element.style.setProperty("--steel-soft", "rgb(246 244 239 / 42%)");
+    element.style.setProperty("--steel-soft", "oklch(95.2% 0.018 78 / 42%)");
     if (signal) {
-      element.style.setProperty("--brass", "#f36b21");
-      element.style.setProperty("--brass-soft", "rgb(243 107 33 / 58%)");
+      element.style.setProperty("--brass", "oklch(69% 0.19 45)");
+      element.style.setProperty("--brass-soft", "oklch(69% 0.19 45 / 58%)");
     }
     element.textContent = text;
     labelHost.appendChild(element);
@@ -705,7 +705,7 @@ export function createEnginaraWorld({
       node.userData.name,
       node,
       new THREE.Vector3(0, 0.34, 0),
-      [5.08, 6.5],
+      [5.08, 6.2],
     );
   });
 
@@ -718,7 +718,7 @@ export function createEnginaraWorld({
       String(label),
       supportSignals[Number(index)],
       new THREE.Vector3(0, 0.4, 0),
-      [6.08, 6.68],
+      [6.14, 6.92],
       true,
     );
   });
@@ -736,10 +736,6 @@ export function createEnginaraWorld({
     { look: [0, 0, -27], position: [0, 0.15, -19.5] },
     { look: [0, 0, -27], position: [0, 0.15, -19.5] },
   ] as const;
-
-  tooltip.style.backgroundColor = "rgb(23 23 23 / 96%)";
-  tooltip.style.borderColor = "rgb(246 244 239 / 28%)";
-  tooltip.style.color = "#f6f4ef";
 
   let metrics: SceneMetric[] = [];
   let scrollPosition = 0;
@@ -884,10 +880,10 @@ export function createEnginaraWorld({
       (1 - ramp(pathsProgress, 0.54, 0.68));
     const networkVisibility =
       ramp(capabilityProgress, 0.04, 0.32) *
-      (1 - ramp(supportProgress, 0.48, 0.64));
+      (1 - ramp(supportProgress, 0.06, 0.24));
     const supportVisibility =
-      ramp(supportProgress, 0.05, 0.34) *
-      (1 - ramp(supportProgress, 0.58, 0.68));
+      ramp(supportProgress, 0.12, 0.3) *
+      (1 - ramp(supportProgress, 0.84, 0.96));
     const processVisibility = 1 - ramp(problemProgress, 0.02, 0.2);
 
     const dim = 1 - 0.62 * easeOutCubic(problemProgress) * (1 - finalEase);
@@ -1043,7 +1039,7 @@ export function createEnginaraWorld({
     const amount =
       segment === 7
         ? smooth(segmentProgress)
-        : ramp(segmentProgress, segment === 0 ? 0.42 : 0.68, 1);
+        : ramp(segmentProgress, segment === 0 ? 0.42 : 0.8, 1);
     const from = cameraPath[segment];
     const to = cameraPath[segment + 1];
     const pointerDamping = 1 - Math.pow(0.0018, Math.max(delta, 0.001));

@@ -30,6 +30,89 @@ type FlowStep = {
 
 type ActivePath = "custom" | "proven";
 
+type StoryChapter = {
+  focus: string;
+  id: string;
+  number: string;
+  phase: string;
+  tone: "dark" | "light" | "signal";
+};
+
+const storyChapters = [
+  {
+    focus: "One idea becomes one accountable system",
+    id: "hero",
+    number: "00",
+    phase: "Promise",
+    tone: "dark",
+  },
+  {
+    focus: "Choose the right way into the system",
+    id: "split",
+    number: "01",
+    phase: "Imagine",
+    tone: "dark",
+  },
+  {
+    focus: "Engineer exactly what the work needs",
+    id: "custom",
+    number: "02",
+    phase: "Build",
+    tone: "dark",
+  },
+  {
+    focus: "Shape a proven foundation around the business",
+    id: "proven",
+    number: "03",
+    phase: "Build",
+    tone: "dark",
+  },
+  {
+    focus: "Select the right starting architecture",
+    id: "paths",
+    number: "04",
+    phase: "Decide",
+    tone: "dark",
+  },
+  {
+    focus: "Connect every capability through one partner",
+    id: "capabilities",
+    number: "05",
+    phase: "Connect",
+    tone: "dark",
+  },
+  {
+    focus: "Keep the system useful after launch",
+    id: "support",
+    number: "06",
+    phase: "Manage",
+    tone: "dark",
+  },
+  {
+    focus: "Discover, architect, deliver, and improve",
+    id: "process",
+    number: "07",
+    phase: "Deliver",
+    tone: "dark",
+  },
+  {
+    focus: "Name what should work better",
+    id: "problem",
+    number: "08",
+    phase: "Imagine",
+    tone: "light",
+  },
+  {
+    focus: "Turn the idea into a working system",
+    id: "final",
+    number: "09",
+    phase: "Begin",
+    tone: "signal",
+  },
+] as const satisfies readonly StoryChapter[];
+
+type StoryChapterId = (typeof storyChapters)[number]["id"];
+
 const flows: Record<string, FlowStep[]> = {
   leads: [
     { label: "Lead capture" },
@@ -104,25 +187,29 @@ const processStages = [
     body: "The business, workflow, bottlenecks, users, and goals are mapped before anything is built.",
     label: "Discover",
     number: "01",
+    outcome: "The real operation becomes a shared map.",
     title: "Understand the system you already are",
   },
   {
     body: "Technology, workflow, automation, data, and integrations are drawn as one blueprint.",
     label: "Architect",
     number: "02",
+    outcome: "The map becomes one buildable blueprint.",
     title: "Design before code",
   },
   {
-    body: "Develop, configure, integrate, test, and launch—on a custom build or proven foundation.",
+    body: "Develop, configure, integrate, test, and launch on a custom build or proven foundation.",
     label: "Build & deploy",
     number: "03",
+    outcome: "The blueprint becomes a working system.",
     title: "Modules connect. Data starts to flow.",
   },
   {
     body: "Train, optimize, maintain, and, when you want it, help operate the system day to day.",
     label: "Operate & improve",
     number: "04",
-    title: "Live—and looked after",
+    outcome: "The system stays owned and keeps improving.",
+    title: "Live and looked after",
   },
 ] as const;
 
@@ -150,6 +237,8 @@ export function EnginaraSystemExperience() {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<EnginaraWorld | null>(null);
   const motionPausedRef = useRef(false);
+  const [activeChapterId, setActiveChapterId] =
+    useState<StoryChapterId>("hero");
   const [activeFlow, setActiveFlow] = useState<string | null>(null);
   const [activePath, setActivePath] = useState<ActivePath | null>(null);
   const [motionEnabled, setMotionEnabled] = useState(false);
@@ -177,6 +266,70 @@ export function EnginaraSystemExperience() {
     return () => {
       reducedMotion.removeEventListener("change", update);
       desktop.removeEventListener("change", update);
+    };
+  }, []);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    let cancelled = false;
+    let frame = 0;
+    let positions: Array<{ chapter: (typeof storyChapters)[number]; top: number }> = [];
+
+    const measure = () => {
+      positions = storyChapters.flatMap((chapter) => {
+        const section = root.querySelector<HTMLElement>(`#${chapter.id}`);
+        return section
+          ? [{ chapter, top: section.getBoundingClientRect().top + window.scrollY }]
+          : [];
+      });
+    };
+
+    const sync = () => {
+      frame = 0;
+      const chapterLine = window.scrollY + window.innerHeight * 0.84;
+      const headerLine = window.scrollY + 76;
+      let active = positions[0]?.chapter ?? storyChapters[0];
+      let headerChapter = active;
+
+      positions.forEach(({ chapter, top }) => {
+        if (top <= chapterLine) active = chapter;
+        if (top <= headerLine) headerChapter = chapter;
+      });
+
+      setActiveChapterId((current) =>
+        current === active.id ? current : active.id,
+      );
+      root.dataset.headerTone = headerChapter.tone;
+    };
+
+    const requestSync = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(sync);
+    };
+
+    const handleResize = () => {
+      measure();
+      requestSync();
+    };
+    const resizeObserver = new ResizeObserver(handleResize);
+
+    measure();
+    sync();
+    resizeObserver.observe(root);
+    window.addEventListener("scroll", requestSync, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
+    void document.fonts.ready.then(() => {
+      if (!cancelled) handleResize();
+    });
+
+    return () => {
+      cancelled = true;
+      if (frame) window.cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
+      window.removeEventListener("scroll", requestSync);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -474,7 +627,7 @@ export function EnginaraSystemExperience() {
         if (brandFilm) {
           handoff.to(
             brandFilm,
-            { duration: 0.62, ease: "none", opacity: 0.15, scale: 1.035 },
+            { duration: 0.62, ease: "none", opacity: 0.1, scale: 1.025 },
             0.42,
           );
         }
@@ -487,8 +640,8 @@ export function EnginaraSystemExperience() {
       if (brandFilm && split) {
         gsap.to(brandFilm, {
           ease: "none",
-          opacity: 0.08,
-          scale: 1.06,
+          opacity: 0.04,
+          scale: 1.04,
           scrollTrigger: {
             end: "top 15%",
             scrub: 0.18,
@@ -499,12 +652,21 @@ export function EnginaraSystemExperience() {
       }
 
       root
-        .querySelectorAll<HTMLElement>("[data-scene]:not(#hero):not(#process)")
+        .querySelectorAll<HTMLElement>(
+          "[data-scene]:not(#hero):not(#process):not(#final)",
+        )
         .forEach((scene) => {
           const elements = Array.from(
             scene.querySelectorAll<HTMLElement>("[data-reveal]"),
           );
           if (!elements.length) return;
+          const lead =
+            scene.querySelector<HTMLElement>("[data-scene-lead]") ?? elements[0];
+          const nextScene = scene.nextElementSibling as HTMLElement | null;
+          const nextLead = nextScene?.querySelector<HTMLElement>(
+            "[data-scene-lead]",
+          );
+
           gsap.fromTo(
             elements,
             { autoAlpha: 0, y: 24 },
@@ -513,65 +675,79 @@ export function EnginaraSystemExperience() {
               ease: "none",
               stagger: 0.08,
               scrollTrigger: {
-                end: "top 48%",
+                end: "top 58%",
                 scrub: 0.18,
-                start: "top 88%",
-                trigger: scene,
+                start: "top 92%",
+                trigger: lead,
               },
               y: 0,
             },
           );
-          if (scene.id !== "final") {
+          if (nextLead) {
             gsap.to(elements, {
               autoAlpha: 0,
               ease: "none",
               stagger: 0.025,
               scrollTrigger: {
-                end: "bottom 70%",
+                end: "top 62%",
                 scrub: 0.18,
-                start: "bottom bottom",
-                trigger: scene,
+                start: "top 92%",
+                trigger: nextLead,
               },
-              y: -16,
+              y: -14,
             });
           }
         });
 
-      if (problem) {
-        ScrollTrigger.create({
-          end: "bottom top",
-          onEnter: () => {
-            root.dataset.headerTone = "light";
-          },
-          onEnterBack: () => {
-            root.dataset.headerTone = "light";
-          },
-          onLeave: () => {
-            root.dataset.headerTone = "signal";
-          },
-          onLeaveBack: () => {
-            root.dataset.headerTone = "dark";
-          },
-          start: "top 76px",
-          trigger: problem,
-        });
-      }
-
       if (final) {
-        ScrollTrigger.create({
-          end: "bottom top",
-          onEnter: () => {
-            root.dataset.headerTone = "signal";
-          },
-          onEnterBack: () => {
-            root.dataset.headerTone = "signal";
-          },
-          onLeaveBack: () => {
-            root.dataset.headerTone = "light";
-          },
-          start: "top top",
-          trigger: final,
-        });
+        const finalPillars = Array.from(
+          final.querySelectorAll<HTMLElement>("[data-final-pillar]"),
+        );
+        const finalReveals = Array.from(
+          final.querySelectorAll<HTMLElement>("[data-reveal]"),
+        );
+
+        if (finalPillars.length) {
+          gsap.set(finalPillars, {
+            autoAlpha: 0.18,
+            rotationY: (index) => (index % 2 === 0 ? -86 : 86),
+          });
+          gsap.set(finalReveals, { autoAlpha: 0, y: 22 });
+
+          const finalTimeline = gsap.timeline({
+            scrollTrigger: {
+              end: "top 4%",
+              invalidateOnRefresh: true,
+              scrub: 0.28,
+              start: "top 92%",
+              trigger: final,
+            },
+          });
+
+          finalTimeline
+            .to(
+              finalPillars,
+              {
+                autoAlpha: 1,
+                duration: 0.72,
+                ease: "none",
+                rotationY: 0,
+                stagger: { amount: 0.18, from: "center" },
+              },
+              0,
+            )
+            .to(
+              finalReveals,
+              {
+                autoAlpha: 1,
+                duration: 0.24,
+                ease: "none",
+                stagger: 0.025,
+                y: 0,
+              },
+              0.64,
+            );
+        }
       }
 
       const process = root.querySelector<HTMLElement>("#process");
@@ -580,29 +756,65 @@ export function EnginaraSystemExperience() {
       );
       if (process) {
         const stageRail = process.querySelector<HTMLElement>("[data-stage-rail]");
+        const processShell = process.querySelector<HTMLElement>(
+          "[data-process-shell]",
+        );
+        const processMarkers = Array.from(
+          process.querySelectorAll<HTMLElement>("[data-process-marker]"),
+        );
+        if (processShell) {
+          gsap.fromTo(
+            processShell,
+            { autoAlpha: 0, y: 24 },
+            {
+              autoAlpha: 1,
+              ease: "none",
+              scrollTrigger: {
+                end: "top 58%",
+                scrub: 0.2,
+                start: "top 88%",
+                trigger: processShell,
+              },
+              y: 0,
+            },
+          );
+        }
         ScrollTrigger.create({
           end: "bottom bottom",
           onUpdate: (self) => {
             const active = Math.min(3, Math.floor(self.progress * 4.0001));
+            processShell?.style.setProperty(
+              "--process-progress",
+              self.progress.toFixed(4),
+            );
+            if (processShell) processShell.dataset.stageIndex = String(active);
             stages.forEach((stage, index) => {
               stage.dataset.active = index === active ? "true" : "false";
               stage.dataset.complete = index < active ? "true" : "false";
             });
+            processMarkers.forEach((marker, index) => {
+              const stageIndex = index % processStages.length;
+              marker.dataset.active = stageIndex === active ? "true" : "false";
+              marker.dataset.complete = stageIndex < active ? "true" : "false";
+            });
           },
-          start: "top bottom",
+          start: "top top",
           trigger: process,
         });
         if (stageRail) {
+          const problemLead = problem?.querySelector<HTMLElement>(
+            "[data-scene-lead]",
+          );
           gsap.to(stageRail, {
             autoAlpha: 0,
             ease: "none",
             scrollTrigger: {
-              end: "bottom 70%",
+              end: problemLead ? "top 62%" : "bottom 70%",
               scrub: 0.18,
-              start: "bottom bottom",
-              trigger: process,
+              start: problemLead ? "top 92%" : "bottom bottom",
+              trigger: problemLead ?? process,
             },
-            y: -16,
+            y: -14,
           });
         }
       }
@@ -641,11 +853,11 @@ export function EnginaraSystemExperience() {
   const scrollToScene = (id: string, focus = false) => {
     const target = document.getElementById(id);
     if (!target) return;
+    if (focus) target.focus({ preventScroll: true });
     target.scrollIntoView({
       behavior: motionEnabled && !motionPaused ? "smooth" : "auto",
       block: "start",
     });
-    if (focus) window.requestAnimationFrame(() => target.focus());
   };
 
   const handleSkip = (event: ReactMouseEvent<HTMLAnchorElement>) => {
@@ -654,10 +866,14 @@ export function EnginaraSystemExperience() {
   };
 
   const currentFlow = activeFlow ? flows[activeFlow] : null;
+  const activeChapter =
+    storyChapters.find((chapter) => chapter.id === activeChapterId) ??
+    storyChapters[0];
 
   return (
     <div
       className={styles.experience}
+      data-active-chapter={activeChapterId}
       data-motion={
         motionResolved ? (motionEnabled ? "enabled" : "static") : "pending"
       }
@@ -743,10 +959,27 @@ export function EnginaraSystemExperience() {
         <span />
       </div>
 
+      <div aria-hidden="true" className={styles.storyGuide}>
+        <span className={styles.storySignal}>
+          <i />
+        </span>
+        <div className={styles.storyGuideCopy} key={activeChapter.id}>
+          <span>
+            {activeChapter.number} / {activeChapter.phase}
+          </span>
+          <strong>{activeChapter.focus}</strong>
+        </div>
+      </div>
+
       <main className={styles.story}>
-        <section className={`${styles.scene} ${styles.hero}`} data-scene id="hero">
+        <section
+          aria-labelledby="hero-title"
+          className={`${styles.scene} ${styles.hero}`}
+          data-scene
+          id="hero"
+        >
           <div className={styles.hold}>
-            <div className={styles.heroContent}>
+            <div className={styles.heroContent} data-scene-lead>
               <div className={styles.heroBrand} data-hero-mark>
                 <div className={styles.heroLogoStage} data-hero-logo>
                   <EnginaraMark className={styles.heroLogo} />
@@ -773,7 +1006,7 @@ export function EnginaraSystemExperience() {
               <p className={styles.heroSub} data-hero-sub>
                 Software · Automation · AI systems · Managed operations
               </p>
-              <h1 className={styles.heroLines}>
+              <h1 className={styles.heroLines} id="hero-title">
                 <span data-hero-line>
                   You <em>imagine.</em>
                 </span>
@@ -795,17 +1028,17 @@ export function EnginaraSystemExperience() {
           </div>
         </section>
 
-        <section className={styles.scene} data-scene id="split">
+        <section aria-labelledby="split-title" className={styles.scene} data-scene id="split">
           <div className={`${styles.hold} ${styles.centeredHold}`}>
-            <div className={styles.centeredCopy}>
+            <div className={styles.centeredCopy} data-scene-lead>
               <p className={styles.eyebrow} data-reveal>
                 Two ways in
               </p>
-              <h2 className={styles.wideTitle} data-reveal>
+              <h2 className={styles.wideTitle} data-reveal id="split-title">
                 Every business system starts one of two ways.
               </h2>
               <p className={styles.lede} data-reveal>
-                Build exactly what you imagine—or begin with a foundation we
+                Build exactly what you imagine, or begin with a foundation we
                 have already proven, then make it yours.
               </p>
               <div className={styles.splitPoles} data-reveal>
@@ -822,17 +1055,17 @@ export function EnginaraSystemExperience() {
           </div>
         </section>
 
-        <section className={styles.scene} data-scene id="custom">
+        <section aria-labelledby="custom-title" className={styles.scene} data-scene id="custom">
           <div className={`${styles.hold} ${styles.rightHold}`}>
-            <div className={styles.copyBlock}>
+            <div className={styles.copyBlock} data-scene-lead>
               <p className={styles.eyebrow} data-reveal>
                 Custom build
               </p>
-              <h2 data-reveal>You imagine it. We engineer it.</h2>
+              <h2 data-reveal id="custom-title">You imagine it. We engineer it.</h2>
               <p className={styles.lede} data-reveal>
                 Bring an idea, a bottleneck, a workflow that should not be
                 manual, or software that does not exist yet. We design and
-                build it from scratch—applications, CRMs, AI agents, portals,
+                build it from scratch: applications, CRMs, AI agents, portals,
                 APIs, dashboards, integrations, and the infrastructure below.
               </p>
               <p className={styles.closingLine} data-reveal>
@@ -842,13 +1075,13 @@ export function EnginaraSystemExperience() {
           </div>
         </section>
 
-        <section className={styles.scene} data-scene id="proven">
+        <section aria-labelledby="proven-title" className={styles.scene} data-scene id="proven">
           <div className={`${styles.hold} ${styles.leftHold}`}>
-            <div className={styles.copyBlock}>
+            <div className={styles.copyBlock} data-scene-lead>
               <p className={styles.eyebrow} data-reveal>
                 Proven Enginara systems
               </p>
-              <h2 data-reveal>Start with something proven. Make it yours.</h2>
+              <h2 data-reveal id="proven-title">Start with something proven. Make it yours.</h2>
               <p className={styles.lede} data-reveal>
                 You do not always need to start from zero. Our prebuilt CRM,
                 lead management, sales pipeline, follow-up, booking, reporting,
@@ -862,13 +1095,13 @@ export function EnginaraSystemExperience() {
           </div>
         </section>
 
-        <section className={styles.scene} data-scene id="paths">
+        <section aria-labelledby="paths-title" className={styles.scene} data-scene id="paths">
           <div className={`${styles.hold} ${styles.centeredHold}`}>
-            <div className={styles.pathContent}>
+            <div className={styles.pathContent} data-scene-lead>
               <p className={styles.eyebrow} data-reveal>
                 Choose your path
               </p>
-              <h2 className={styles.wideTitle} data-reveal>
+              <h2 className={styles.wideTitle} data-reveal id="paths-title">
                 Which way should your system begin?
               </h2>
               <div className={styles.paths} data-reveal>
@@ -895,7 +1128,7 @@ export function EnginaraSystemExperience() {
                   <span className={styles.pathNumber}>Path 01</span>
                   <strong>Build from scratch</strong>
                   <span>
-                    A dedicated build for a problem no template solves—mapped,
+                    A dedicated build for a problem no template solves, mapped,
                     architected, developed, and deployed around your operation.
                   </span>
                   <i>{activePath === "custom" ? "Selected" : "Select custom build →"}</i>
@@ -949,16 +1182,16 @@ export function EnginaraSystemExperience() {
           </div>
         </section>
 
-        <section className={styles.scene} data-scene id="capabilities">
+        <section aria-labelledby="capabilities-title" className={styles.scene} data-scene id="capabilities">
           <div className={`${styles.hold} ${styles.bottomHold}`}>
-            <div className={styles.copyBlock}>
+            <div className={styles.copyBlock} data-scene-lead>
               <p className={styles.eyebrow} data-reveal>
                 The ecosystem
               </p>
-              <h2 data-reveal>One partner. A lot of capability.</h2>
+              <h2 data-reveal id="capabilities-title">One partner. A lot of capability.</h2>
               <p className={styles.lede} data-reveal>
                 Software, automation, AI, and operations are not separate
-                vendors here. They are nodes in one connected system—designed,
+                vendors here. They are nodes in one connected system, designed,
                 built, and run by the same team.
               </p>
               <p className={styles.pointerHint} data-reveal>
@@ -979,16 +1212,16 @@ export function EnginaraSystemExperience() {
           </div>
         </section>
 
-        <section className={styles.scene} data-scene id="support">
+        <section aria-labelledby="support-title" className={styles.scene} data-scene id="support">
           <div className={`${styles.hold} ${styles.leftHold}`}>
-            <div className={styles.copyBlock}>
+            <div className={styles.copyBlock} data-scene-lead>
               <p className={`${styles.eyebrow} ${styles.brass}`} data-reveal>
                 Enginara managed support
               </p>
-              <h2 data-reveal>Technology should not create another job for you.</h2>
+              <h2 data-reveal id="support-title">Technology should not create another job for you.</h2>
               <p className={styles.lede} data-reveal>
                 Once the system is live, a human operations layer keeps it
-                running—monitoring, optimizing, and working inside it every day
+                running: monitoring, optimizing, and working inside it every day
                 so you do not have to.
               </p>
               <div className={styles.supportList} data-reveal>
@@ -1013,31 +1246,84 @@ export function EnginaraSystemExperience() {
         </section>
 
         <section
+          aria-labelledby="process-title"
           className={`${styles.scene} ${styles.process}`}
           data-scene
           id="process"
         >
           <div className={`${styles.hold} ${styles.leftHold}`}>
-            <div className={styles.stageRail} data-stage-rail>
-              {processStages.map((stage, index) => (
-                <article
-                  data-active={index === 0 ? "true" : "false"}
-                  data-complete="false"
-                  data-process-stage
-                  key={stage.number}
-                >
-                  <p>
-                    {stage.number} · {stage.label}
-                  </p>
-                  <h3>{stage.title}</h3>
-                  <span>{stage.body}</span>
-                </article>
-              ))}
+            <div
+              className={styles.processShell}
+              data-process-shell
+              data-scene-lead
+              data-stage-index="0"
+              data-stage-rail
+            >
+              <header className={styles.processHeading}>
+                <p className={styles.eyebrow}>One accountable delivery</p>
+                <h2 id="process-title">Four decisive moves. No handoff gap.</h2>
+              </header>
+
+              <ol className={styles.stageRail}>
+                {processStages.map((stage, index) => (
+                  <li
+                    data-active={index === 0 ? "true" : "false"}
+                    data-complete="false"
+                    data-process-stage
+                    key={stage.number}
+                  >
+                    <div className={styles.stageMeta}>
+                      <span>{stage.number}</span>
+                      <p>{stage.label}</p>
+                    </div>
+                    <h3>{stage.title}</h3>
+                    <p className={styles.stageBody}>{stage.body}</p>
+                    <p className={styles.stageOutcome}>
+                      <span>What changes</span>
+                      {stage.outcome}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+
+              <div aria-hidden="true" className={styles.processAssembly}>
+                <span className={styles.assemblyAxis} />
+                {processStages.map((stage, index) => (
+                  <div
+                    className={styles.assemblyBand}
+                    data-active={index === 0 ? "true" : "false"}
+                    data-complete="false"
+                    data-process-marker
+                    key={stage.number}
+                  >
+                    <span>{stage.number}</span>
+                    <i />
+                    <strong>{stage.label}</strong>
+                  </div>
+                ))}
+                <EnginaraMark className={styles.assemblyMark} />
+              </div>
+
+              <ol aria-hidden="true" className={styles.processSequence}>
+                {processStages.map((stage, index) => (
+                  <li
+                    data-active={index === 0 ? "true" : "false"}
+                    data-complete="false"
+                    data-process-marker
+                    key={stage.number}
+                  >
+                    <span>{stage.number}</span>
+                    <i />
+                    <strong>{stage.label}</strong>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </section>
 
         <section
+          aria-labelledby="problem-title"
           className={`${styles.scene} ${styles.problem}`}
           data-scene
           data-tone="workbench"
@@ -1045,11 +1331,11 @@ export function EnginaraSystemExperience() {
           tabIndex={-1}
         >
           <div className={`${styles.hold} ${styles.centeredHold}`}>
-            <div className={styles.problemContent}>
+            <div className={styles.problemContent} data-scene-lead>
               <p className={styles.eyebrow} data-reveal>
                 Start here
               </p>
-              <h2 className={styles.wideTitle} data-reveal>
+              <h2 className={styles.wideTitle} data-reveal id="problem-title">
                 What should work better?
               </h2>
               <div className={styles.chips} data-reveal>
@@ -1136,17 +1422,23 @@ export function EnginaraSystemExperience() {
         </section>
 
         <section
+          aria-labelledby="final-title"
           className={`${styles.scene} ${styles.final}`}
           data-scene
           data-tone="signal"
           id="final"
         >
           <div className={`${styles.hold} ${styles.centeredHold}`}>
-            <div className={styles.finalContent}>
+            <div aria-hidden="true" className={styles.finalPillars}>
+              {Array.from({ length: 8 }, (_, index) => (
+                <i data-final-pillar key={index} />
+              ))}
+            </div>
+            <div className={styles.finalContent} data-scene-lead>
               <p className={styles.eyebrow} data-reveal>
                 One system
               </p>
-              <h2 className={styles.finalTitle} data-reveal>
+              <h2 className={styles.finalTitle} data-reveal id="final-title">
                 Your business already knows what it needs to become.
               </h2>
               <p className={styles.finalThen} data-reveal>
@@ -1180,7 +1472,7 @@ export function EnginaraSystemExperience() {
 
       <footer className={styles.footer}>
         <span>© {new Date().getFullYear()} Enginara</span>
-        <span>Imagine → Architect → Build → Connect → Automate → Operate → Improve</span>
+        <span>Imagine → Build → Manage → Improve</span>
       </footer>
     </div>
   );

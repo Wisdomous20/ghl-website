@@ -10,7 +10,7 @@
   --signal-orange-ink: oklch(49% 0.17 42);
   --line-light: oklch(35% 0.012 255 / 52%);
   --line-dark: oklch(76% 0.012 75 / 38%);
-  --background: #11100f;
+  --background: var(--ink);
   --foreground: var(--paper);
 }
 
@@ -25,7 +25,7 @@ html {
 }
 
 body {
-  min-width: 20rem;
+  min-width: 0;
   margin: 0;
   background: var(--background);
   color: var(--foreground);
@@ -73,14 +73,14 @@ select {
 }
 
 :focus-visible {
-  outline: 0.16rem solid white;
+  outline: 0.16rem solid var(--paper);
   outline-offset: 0.2rem;
-  box-shadow: 0 0 0 0.34rem black;
+  box-shadow: 0 0 0 0.34rem var(--ink);
 }
 
 ::selection {
   background: var(--signal-orange);
-  color: #171512;
+  color: var(--ink-soft);
 }
 
 @media (prefers-reduced-motion: reduce) {
