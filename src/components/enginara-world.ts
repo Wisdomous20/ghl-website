@@ -569,80 +569,6 @@ export function createEnginaraWorld({
   setOpacity(supportRail, 0);
   scene.add(supportRail);
 
-  const process = new THREE.Group();
-  const processMinis: THREE.Group[] = [];
-  const processZ = [-18, -21, -24, -27];
-
-  const discovery = new THREE.Group();
-  discovery.add(createSignalRailMark(0.13));
-  processMinis.push(discovery);
-
-  const blueprint = new THREE.Group();
-  blueprint.add(
-    new THREE.LineSegments(
-      new THREE.EdgesGeometry(new THREE.BoxGeometry(1.15, 1.15, 1.15)),
-      lineMaterial(OFF_WHITE, 0.62),
-    ),
-  );
-  const grid = new THREE.GridHelper(1.7, 6, OFF_WHITE, GRAPHITE_SOFT);
-  grid.rotation.x = Math.PI / 2;
-  grid.position.z = -0.58;
-  eachMaterial(grid, (material) => {
-    material.opacity = 0.42;
-    material.transparent = true;
-  });
-  blueprint.add(grid);
-  processMinis.push(blueprint);
-
-  const connected = new THREE.Group();
-  const connectedPoints = [
-    new THREE.Vector3(-0.55, 0.35, 0),
-    new THREE.Vector3(0.5, 0.55, -0.2),
-    new THREE.Vector3(0.05, -0.5, 0.15),
-  ];
-  connectedPoints.forEach((position) => {
-    const block = edged(
-      new THREE.BoxGeometry(0.42, 0.42, 0.42),
-      solidMaterial(OFF_WHITE, 0.08),
-      OFF_WHITE,
-      0.5,
-    );
-    block.position.copy(position);
-    connected.add(block);
-  });
-  connected.add(
-    new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints([
-        ...connectedPoints,
-        connectedPoints[0],
-      ]),
-      lineMaterial(OFF_WHITE, 0.5),
-    ),
-  );
-  processMinis.push(connected);
-
-  const operated = new THREE.Group();
-  operated.add(createSignalRailMark(0.17));
-  for (let index = 0; index < 3; index += 1) {
-    const operator = new THREE.Mesh(
-      new THREE.BoxGeometry(0.15, 0.1, 0.1),
-      new THREE.MeshBasicMaterial({ color: SIGNAL_ORANGE, transparent: true }),
-    );
-    operator.userData.phase = index / 3;
-    operator.userData.rail = index;
-    operated.userData[`signal${index}`] = operator;
-    operated.add(operator);
-  }
-  processMinis.push(operated);
-
-  processMinis.forEach((mini, index) => {
-    mini.position.set(index % 2 === 0 ? 1.7 : 1.95, 0.1, processZ[index]);
-    rememberOpacity(mini);
-    setOpacity(mini, 0);
-    process.add(mini);
-  });
-  scene.add(process);
-
   const labels: TrackedLabel[] = [];
   const createLabel = (
     text: string,
@@ -885,6 +811,8 @@ export function createEnginaraWorld({
       ramp(supportProgress, 0.12, 0.3) *
       (1 - ramp(supportProgress, 0.84, 0.96));
     const processVisibility = 1 - ramp(problemProgress, 0.02, 0.2);
+    const processLineEmphasis =
+      ramp(processProgress, 0.04, 0.2) * processVisibility;
 
     const dim = 1 - 0.62 * easeOutCubic(problemProgress) * (1 - finalEase);
     ambientLight.intensity = 1.9 * dim;
@@ -895,7 +823,10 @@ export function createEnginaraWorld({
       scene.fog.density = 0.008 * (1 - 0.45 * finalEase);
     }
     guideMaterial.opacity =
-      0.05 * ramp(heroProgress, 0.12, 0.34) * dim * processVisibility;
+      (0.05 + 0.035 * processLineEmphasis) *
+      ramp(heroProgress, 0.12, 0.34) *
+      dim *
+      processVisibility;
 
     core.position.y = 0;
     const lineArray = coreLineGeometry.attributes.position.array as Float32Array;
@@ -1012,27 +943,6 @@ export function createEnginaraWorld({
       }
     });
     setOpacity(supportRail, railOpacity);
-
-    processMinis.forEach((mini, index) => {
-      const cursor = processProgress * processMinis.length;
-      const entered = ramp(cursor, index, index + 0.42);
-      const leaving =
-        index === processMinis.length - 1
-          ? 1
-          : 1 - ramp(cursor, index + 0.72, index + 1);
-      setOpacity(mini, entered * leaving * processVisibility * dim);
-      mini.scale.setScalar(0.7 + 0.3 * easeOutCubic(entered));
-      mini.rotation.z = 0;
-    });
-    for (let index = 0; index < 3; index += 1) {
-      const operator = operated.userData[`signal${index}`] as THREE.Mesh;
-      const travel = (Number(operator.userData.phase) + elapsed * 0.18) % 1;
-      operator.position.set(
-        lerp(-0.4, 0.43, travel),
-        (1 - Number(operator.userData.rail)) * 0.32,
-        0.13,
-      );
-    }
 
     const segment = Math.min(cameraPath.length - 2, Math.floor(progress));
     const segmentProgress = clamp(progress - segment);

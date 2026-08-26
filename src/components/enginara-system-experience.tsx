@@ -107,7 +107,7 @@ const storyChapters = [
     id: "final",
     number: "09",
     phase: "Begin",
-    tone: "signal",
+    tone: "dark",
   },
 ] as const satisfies readonly StoryChapter[];
 
@@ -699,20 +699,80 @@ export function EnginaraSystemExperience() {
           }
         });
 
+      if (problem) {
+        const choiceSignals = Array.from(
+          problem.querySelectorAll<HTMLElement>("[data-choice-signal]"),
+        );
+        if (choiceSignals.length) {
+          gsap.fromTo(
+            choiceSignals,
+            { autoAlpha: 0, x: -6 },
+            {
+              autoAlpha: 1,
+              ease: "none",
+              stagger: 0.04,
+              scrollTrigger: {
+                end: "top 58%",
+                scrub: 0.18,
+                start: "top 82%",
+                trigger: problem,
+              },
+              x: 0,
+            },
+          );
+        }
+      }
+
       if (final) {
-        const finalPillars = Array.from(
-          final.querySelectorAll<HTMLElement>("[data-final-pillar]"),
+        const finalRails = Array.from(
+          final.querySelectorAll<HTMLElement>("[data-final-rail]"),
+        );
+        const finalPulses = Array.from(
+          final.querySelectorAll<HTMLElement>("[data-final-pulse]"),
+        );
+        const finalSpine = final.querySelector<HTMLElement>(
+          "[data-final-spine]",
+        );
+        const finalTerminal = final.querySelector<HTMLElement>(
+          "[data-final-terminal]",
+        );
+        const finalStatus = final.querySelector<HTMLElement>(
+          "[data-final-status]",
+        );
+        const finalEmphasis = final.querySelector<HTMLElement>(
+          "[data-final-emphasis]",
+        );
+        const finalEmphasisCopy = final.querySelector<HTMLElement>(
+          "[data-final-emphasis-copy]",
         );
         const finalReveals = Array.from(
           final.querySelectorAll<HTMLElement>("[data-reveal]"),
         );
 
-        if (finalPillars.length) {
-          gsap.set(finalPillars, {
-            autoAlpha: 0.18,
-            rotationY: (index) => (index % 2 === 0 ? -86 : 86),
+        if (finalRails.length) {
+          gsap.set(finalRails, {
+            scaleX: 0,
+            transformOrigin: "left center",
           });
-          gsap.set(finalReveals, { autoAlpha: 0, y: 22 });
+          gsap.set(finalPulses, {
+            autoAlpha: 0,
+            x: (_, target: HTMLElement) => {
+              const rail = target.parentElement;
+              return rail ? -rail.clientWidth : 0;
+            },
+          });
+          gsap.set(finalSpine, {
+            scaleY: 0,
+            transformOrigin: "center center",
+          });
+          gsap.set(finalTerminal, { autoAlpha: 0, scale: 0.84, x: -14 });
+          gsap.set(finalStatus, { autoAlpha: 0, x: -10 });
+          gsap.set(finalEmphasis, {
+            scaleX: 0,
+            transformOrigin: "left center",
+          });
+          gsap.set(finalEmphasisCopy, { opacity: 0, y: 10 });
+          gsap.set(finalReveals, { opacity: 0, y: 20 });
 
           const finalTimeline = gsap.timeline({
             scrollTrigger: {
@@ -726,26 +786,86 @@ export function EnginaraSystemExperience() {
 
           finalTimeline
             .to(
-              finalPillars,
+              finalRails,
               {
                 autoAlpha: 1,
-                duration: 0.72,
+                duration: 0.42,
                 ease: "none",
-                rotationY: 0,
-                stagger: { amount: 0.18, from: "center" },
+                scaleX: 1,
+                stagger: 0.06,
               },
               0,
             )
             .to(
-              finalReveals,
+              finalPulses,
               {
                 autoAlpha: 1,
-                duration: 0.24,
+                duration: 0.28,
                 ease: "none",
-                stagger: 0.025,
+                stagger: 0.055,
+                x: 0,
+              },
+              0.46,
+            )
+            .to(
+              finalSpine,
+              {
+                duration: 0.2,
+                ease: "none",
+                scaleY: 1,
+              },
+              0.68,
+            )
+            .to(
+              finalTerminal,
+              {
+                autoAlpha: 1,
+                duration: 0.2,
+                ease: "none",
+                scale: 1,
+                x: 0,
+              },
+              0.78,
+            )
+            .to(
+              finalStatus,
+              {
+                autoAlpha: 1,
+                duration: 0.2,
+                ease: "none",
+                x: 0,
+              },
+              0.84,
+            )
+            .to(
+              finalReveals,
+              {
+                duration: 0.28,
+                ease: "none",
+                opacity: 1,
+                stagger: 0.035,
                 y: 0,
               },
-              0.64,
+              0.46,
+            )
+            .to(
+              finalEmphasis,
+              {
+                duration: 0.24,
+                ease: "none",
+                scaleX: 1,
+              },
+              0.62,
+            )
+            .to(
+              finalEmphasisCopy,
+              {
+                duration: 0.18,
+                ease: "none",
+                opacity: 1,
+                y: 0,
+              },
+              0.76,
             );
         }
       }
@@ -773,7 +893,7 @@ export function EnginaraSystemExperience() {
                 end: "top 58%",
                 scrub: 0.2,
                 start: "top 88%",
-                trigger: processShell,
+                trigger: process,
               },
               y: 0,
             },
@@ -1257,34 +1377,35 @@ export function EnginaraSystemExperience() {
               data-process-shell
               data-scene-lead
               data-stage-index="0"
-              data-stage-rail
             >
-              <header className={styles.processHeading}>
-                <p className={styles.eyebrow}>One accountable delivery</p>
-                <h2 id="process-title">Four decisive moves. No handoff gap.</h2>
-              </header>
+              <div className={styles.processCopy}>
+                <header className={styles.processHeading}>
+                  <p className={styles.eyebrow}>One accountable delivery</p>
+                  <h2 id="process-title">Four decisive moves. No handoff gap.</h2>
+                </header>
 
-              <ol className={styles.stageRail}>
-                {processStages.map((stage, index) => (
-                  <li
-                    data-active={index === 0 ? "true" : "false"}
-                    data-complete="false"
-                    data-process-stage
-                    key={stage.number}
-                  >
-                    <div className={styles.stageMeta}>
-                      <span>{stage.number}</span>
-                      <p>{stage.label}</p>
-                    </div>
-                    <h3>{stage.title}</h3>
-                    <p className={styles.stageBody}>{stage.body}</p>
-                    <p className={styles.stageOutcome}>
-                      <span>What changes</span>
-                      {stage.outcome}
-                    </p>
-                  </li>
-                ))}
-              </ol>
+                <ol className={styles.stageRail} data-stage-rail>
+                  {processStages.map((stage, index) => (
+                    <li
+                      data-active={index === 0 ? "true" : "false"}
+                      data-complete="false"
+                      data-process-stage
+                      key={stage.number}
+                    >
+                      <div className={styles.stageMeta}>
+                        <span>{stage.number}</span>
+                        <p>{stage.label}</p>
+                      </div>
+                      <h3>{stage.title}</h3>
+                      <p className={styles.stageBody}>{stage.body}</p>
+                      <p className={styles.stageOutcome}>
+                        <span>What changes</span>
+                        {stage.outcome}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
 
               <div aria-hidden="true" className={styles.processAssembly}>
                 <span className={styles.assemblyAxis} />
@@ -1301,23 +1422,7 @@ export function EnginaraSystemExperience() {
                     <strong>{stage.label}</strong>
                   </div>
                 ))}
-                <EnginaraMark className={styles.assemblyMark} />
               </div>
-
-              <ol aria-hidden="true" className={styles.processSequence}>
-                {processStages.map((stage, index) => (
-                  <li
-                    data-active={index === 0 ? "true" : "false"}
-                    data-complete="false"
-                    data-process-marker
-                    key={stage.number}
-                  >
-                    <span>{stage.number}</span>
-                    <i />
-                    <strong>{stage.label}</strong>
-                  </li>
-                ))}
-              </ol>
             </div>
           </div>
         </section>
@@ -1338,9 +1443,19 @@ export function EnginaraSystemExperience() {
               <h2 className={styles.wideTitle} data-reveal id="problem-title">
                 What should work better?
               </h2>
-              <div className={styles.chips} data-reveal>
+              <p className={styles.choiceHint} data-reveal id="flow-choice-hint">
+                Select an area to preview its working system
+              </p>
+              <div
+                aria-describedby="flow-choice-hint"
+                aria-labelledby="problem-title"
+                className={styles.chips}
+                data-reveal
+                role="group"
+              >
                 {flowChoices.map(([value, label]) => (
                   <button
+                    aria-controls="flow-preview"
                     aria-pressed={activeFlow === value}
                     className={styles.chip}
                     data-selected={activeFlow === value ? "true" : "false"}
@@ -1348,18 +1463,27 @@ export function EnginaraSystemExperience() {
                     onClick={() => setActiveFlow(value)}
                     type="button"
                   >
-                    {label}
+                    <span>{label}</span>
+                    <span
+                      aria-hidden="true"
+                      className={styles.chipAffordance}
+                      data-choice-signal
+                    >
+                      {activeFlow === value ? "✓" : "↘"}
+                    </span>
                   </button>
                 ))}
               </div>
 
               <div
+                aria-atomic="true"
                 aria-live="polite"
                 className={styles.flowRegion}
-                key={activeFlow ?? "empty"}
+                data-empty={currentFlow ? "false" : "true"}
+                id="flow-preview"
               >
                 {currentFlow ? (
-                  <div className={styles.flow}>
+                  <div className={styles.flow} key={activeFlow}>
                     {currentFlow.map((step, index) => (
                       <span className={styles.flowPair} key={`${activeFlow}-${step.label}`}>
                         {index > 0 ? (
@@ -1396,11 +1520,7 @@ export function EnginaraSystemExperience() {
                       </span>
                     ))}
                   </div>
-                ) : (
-                  <p className={styles.flowPrompt}>
-                    Choose an area to assemble a working system.
-                  </p>
-                )}
+                ) : null}
               </div>
 
               {currentFlow ? (
@@ -1425,21 +1545,47 @@ export function EnginaraSystemExperience() {
           aria-labelledby="final-title"
           className={`${styles.scene} ${styles.final}`}
           data-scene
-          data-tone="signal"
+          data-tone="dark"
           id="final"
         >
-          <div className={`${styles.hold} ${styles.centeredHold}`}>
-            <div aria-hidden="true" className={styles.finalPillars}>
-              {Array.from({ length: 8 }, (_, index) => (
-                <i data-final-pillar key={index} />
-              ))}
+          <div className={styles.hold}>
+            <div aria-hidden="true" className={styles.finalSignal}>
+              <span className={styles.finalSignalLane}>
+                <small>Imagine</small>
+                <i data-final-rail>
+                  <b data-final-pulse />
+                </i>
+              </span>
+              <span className={styles.finalSignalLane}>
+                <small>Build</small>
+                <i data-final-rail>
+                  <b data-final-pulse />
+                </i>
+              </span>
+              <span className={styles.finalSignalLane}>
+                <small>Manage</small>
+                <i data-final-rail>
+                  <b data-final-pulse />
+                </i>
+              </span>
+              <span className={styles.finalSignalSpine} data-final-spine />
+              <span className={styles.finalSignalOutput}>
+                <i data-final-terminal />
+                <strong data-final-status>One working system</strong>
+              </span>
             </div>
             <div className={styles.finalContent} data-scene-lead>
               <p className={styles.eyebrow} data-reveal>
                 One system
               </p>
-              <h2 className={styles.finalTitle} data-reveal id="final-title">
-                Your business already knows what it needs to become.
+              <h2 className={styles.finalTitle} id="final-title">
+                <span className={styles.finalLead} data-reveal>
+                  Your business already knows
+                </span>
+                <span className={styles.finalEmphasis}>
+                  <i aria-hidden="true" data-final-emphasis />
+                  <span data-final-emphasis-copy>what it needs to become.</span>
+                </span>
               </h2>
               <p className={styles.finalThen} data-reveal>
                 We build the system <em>that gets it there.</em>

@@ -1092,21 +1092,30 @@
 
 .processShell {
   --process-progress: 0;
+  align-items: center;
   column-gap: clamp(4rem, 9vw, 10rem);
   display: grid;
-  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
-  grid-template-rows: auto minmax(17rem, 1fr) auto;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  grid-template-rows: minmax(0, 1fr);
   margin-inline: auto;
   max-width: 94rem;
-  min-height: min(68vh, 43rem);
-  row-gap: clamp(1.8rem, 4vh, 3.5rem);
+  min-height: min(72vh, 46rem);
   width: 100%;
-  will-change: opacity, transform;
+}
+
+.processCopy {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  grid-column: 1;
+  grid-row: 1;
+  max-width: 42rem;
+  min-width: 0;
+  width: 100%;
 }
 
 .processHeading {
-  align-self: start;
-  grid-column: 1;
+  align-self: stretch;
 }
 
 .processHeading .eyebrow {
@@ -1114,15 +1123,16 @@
 }
 
 .processHeading h2 {
-  font-size: clamp(2.15rem, 3.4vw, 3.75rem);
-  max-width: 12ch;
+  color: var(--paper-deep);
+  font-size: clamp(1.8rem, 2.55vw, 2.8rem);
+  line-height: 1.08;
+  max-width: 15ch;
 }
 
 .stageRail {
-  grid-column: 1;
   list-style: none;
-  margin: 0;
-  min-height: 20rem;
+  margin: clamp(2.5rem, 5.5vh, 4.5rem) 0 0;
+  min-height: clamp(19rem, 40vh, 24rem);
   padding: 0;
   position: relative;
   width: 100%;
@@ -1134,8 +1144,8 @@
   pointer-events: none;
   position: absolute;
   transform: translate3d(0, 2rem, 0);
-  transition: opacity 360ms var(--ease-out-expo),
-    transform 520ms var(--ease-out-expo);
+  transition: opacity 260ms var(--ease-out-expo),
+    transform 420ms var(--ease-out-expo);
 }
 
 .stageRail li[data-active="true"] {
@@ -1158,8 +1168,8 @@
 
 .stageMeta > span {
   color: var(--signal-orange);
-  font: 430 clamp(3rem, 5.4vw, 5.4rem)/0.78 var(--display);
-  letter-spacing: -0.07em;
+  font: 450 clamp(2.55rem, 4.2vw, 4.15rem)/0.82 var(--display);
+  letter-spacing: -0.06em;
 }
 
 .stageMeta p {
@@ -1172,10 +1182,10 @@
 
 .stageRail h3 {
   color: var(--ink);
-  font: 480 clamp(2.15rem, 3.9vw, 4.2rem)/0.98 var(--display);
+  font: 480 clamp(2.35rem, 4.15vw, 4.45rem)/0.98 var(--display);
   letter-spacing: -0.045em;
   margin: 0;
-  max-width: 12ch;
+  max-width: 13ch;
   text-wrap: balance;
 }
 
@@ -1215,11 +1225,11 @@
   display: grid;
   gap: clamp(1.25rem, 2.4vh, 2rem);
   grid-column: 2;
-  grid-row: 1 / 3;
+  grid-row: 1;
   grid-template-rows: repeat(4, minmax(2.75rem, 1fr));
   isolation: isolate;
   min-height: 28rem;
-  padding: clamp(3.5rem, 8vh, 6rem) 5.75rem clamp(1.5rem, 3vh, 2.5rem) 0;
+  padding: clamp(2.5rem, 6vh, 4.75rem) 2.75rem clamp(2.5rem, 6vh, 4.75rem) 0;
   position: relative;
 }
 
@@ -1231,7 +1241,7 @@
   );
   content: "";
   inset: 0;
-  opacity: 0.28;
+  opacity: 0.2;
   pointer-events: none;
   position: absolute;
   z-index: -1;
@@ -1241,9 +1251,21 @@
   background: var(--line);
   bottom: 8%;
   position: absolute;
-  right: 4.6rem;
+  right: 1.1rem;
   top: 8%;
   width: 1px;
+}
+
+.assemblyAxis::before {
+  background: var(--paper-deep);
+  bottom: -0.23rem;
+  content: "";
+  height: 0.46rem;
+  position: absolute;
+  right: -0.23rem;
+  transition: background-color 360ms var(--ease-out-expo),
+    box-shadow 360ms var(--ease-out-expo), transform 360ms var(--ease-out-expo);
+  width: 0.46rem;
 }
 
 .assemblyAxis::after {
@@ -1341,94 +1363,10 @@
   background: var(--paper);
 }
 
-.assemblyMark {
-  color: var(--faint);
-  height: auto;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%) scale(0.86);
-  transition: color 420ms var(--ease-out-expo), transform 520ms var(--ease-out-expo);
-  width: 4.6rem;
-}
-
-.processShell[data-stage-index="3"] .assemblyMark {
-  color: var(--paper);
-  transform: translateY(-50%) scale(1);
-}
-
-.processShell[data-stage-index="3"] .assemblyMark rect:nth-child(2) {
-  fill: var(--signal-orange);
-}
-
-.processSequence {
-  display: grid;
-  gap: clamp(1.4rem, 3vw, 3.5rem);
-  grid-column: 1 / 3;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.processSequence li {
-  color: var(--faint);
-  display: grid;
-  gap: 0.62rem 0.7rem;
-  grid-template-columns: auto 1fr;
-  opacity: 0.3;
-  transition: color 360ms var(--ease-out-expo), opacity 360ms var(--ease-out-expo),
-    transform 520ms var(--ease-out-expo);
-}
-
-.processSequence li i {
-  background: var(--line);
-  grid-column: 1 / 3;
-  height: 1px;
-  overflow: hidden;
-  position: relative;
-}
-
-.processSequence li i::after {
+.processShell[data-stage-index="3"] .assemblyAxis::before {
   background: var(--signal-orange);
-  content: "";
-  inset: 0;
-  position: absolute;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 520ms var(--ease-out-expo);
-}
-
-.processSequence li span,
-.processSequence li strong {
-  font: 550 0.57rem/1 var(--mono);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.processSequence li strong {
-  font-weight: 520;
-  letter-spacing: 0.1em;
-}
-
-.processSequence li[data-active="true"] {
-  color: var(--paper);
-  opacity: 1;
-  transform: translate3d(0, -0.18rem, 0);
-}
-
-.processSequence li[data-active="true"] i::after,
-.processSequence li[data-complete="true"] i::after {
-  transform: scaleX(1);
-}
-
-.processSequence li[data-active="true"] span {
-  color: var(--signal-orange);
-}
-
-.processSequence li[data-complete="true"] {
-  color: var(--paper-deep);
-  opacity: 0.58;
+  box-shadow: 0 0 1rem var(--signal-orange-soft);
+  transform: scale(1.35);
 }
 
 .problem {
@@ -1462,35 +1400,57 @@
   width: 100%;
 }
 
+.choiceHint {
+  align-items: center;
+  color: color-mix(in oklch, var(--graphite) 70%, var(--paper));
+  display: flex;
+  font: 500 0.62rem/1.4 var(--mono);
+  gap: 0.7rem;
+  justify-content: center;
+  letter-spacing: 0.15em;
+  margin: 1.35rem auto 0;
+  text-transform: uppercase;
+}
+
+.choiceHint::before {
+  background: var(--signal-orange);
+  content: "";
+  height: 0.34rem;
+  width: 0.34rem;
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
   justify-content: center;
-  margin: 2.3rem auto 0;
-  max-width: 52rem;
+  margin: 1.3rem auto 0;
+  max-width: 58rem;
 }
 
 .chip {
+  align-items: center;
   appearance: none;
   background: color-mix(in oklch, var(--paper) 72%, transparent);
-  border: 1px solid color-mix(in oklch, var(--graphite) 20%, transparent);
+  border: 1px solid color-mix(in oklch, var(--graphite) 28%, transparent);
   color: color-mix(in oklch, var(--graphite) 76%, var(--paper));
+  display: inline-flex;
   font: 500 0.63rem/1 var(--mono);
+  gap: 0.85rem;
+  justify-content: space-between;
   letter-spacing: 0.17em;
   min-height: 2.75rem;
-  padding: 0.78rem 1.2rem;
+  padding: 0.78rem 0.9rem 0.78rem 1.15rem;
   text-transform: uppercase;
   transition: background-color 200ms var(--ease-out-expo),
     border-color 200ms var(--ease-out-expo), color 200ms var(--ease-out-expo),
     transform 200ms var(--ease-out-expo);
 }
 
-.chip:hover,
 .chip:focus-visible {
   border-color: var(--signal-orange);
   color: var(--graphite);
-  transform: translateY(-0.12rem);
+  outline-color: var(--graphite);
 }
 
 .chip[data-selected="true"] {
@@ -1499,12 +1459,44 @@
   color: var(--graphite);
 }
 
+.chipAffordance {
+  align-items: center;
+  color: var(--signal-orange-ink);
+  display: inline-flex;
+  font-size: 0.88rem;
+  justify-content: center;
+  line-height: 1;
+  min-width: 1rem;
+  transition: color 200ms ease, transform 200ms var(--ease-out-expo);
+}
+
+.chip[data-selected="true"] .chipAffordance {
+  color: var(--graphite);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    border-color: var(--signal-orange);
+    color: var(--graphite);
+    transform: translateY(-0.12rem);
+  }
+
+  .chip:hover .chipAffordance {
+    transform: translate3d(0.2rem, 0.12rem, 0);
+  }
+}
+
 .flowRegion {
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-top: 2.35rem;
+  margin-top: 2rem;
   min-height: 8.5rem;
+}
+
+.flowRegion[data-empty="true"] {
+  margin-top: 1rem;
+  min-height: 2rem;
 }
 
 .flow {
@@ -1562,14 +1554,6 @@
   color: var(--graphite);
 }
 
-.flowPrompt {
-  color: color-mix(in oklch, var(--graphite) 66%, var(--paper));
-  font: 500 0.64rem/1.5 var(--mono);
-  letter-spacing: 0.14em;
-  margin: 0;
-  text-transform: uppercase;
-}
-
 .flowCta,
 .primaryButton,
 .secondaryButton {
@@ -1593,84 +1577,201 @@
   color: var(--paper);
 }
 
-.flowCta:hover,
-.primaryButton:hover {
-  background: var(--bg);
-  transform: translateY(-0.18rem);
+@media (hover: hover) and (pointer: fine) {
+  .flowCta:hover,
+  .primaryButton:hover {
+    background: var(--bg);
+    transform: translateY(-0.18rem);
+  }
 }
 
 .final {
-  min-height: 200svh;
+  min-height: 190svh;
 }
 
 .final .hold {
-  background: var(--graphite);
-  box-shadow: 0 -2rem 6rem color-mix(in oklch, var(--bg) 54%, transparent);
-  isolation: isolate;
-}
-
-.finalPillars {
-  display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  inset: 0;
-  overflow: clip;
-  perspective: clamp(56rem, 85vw, 110rem);
-  perspective-origin: 50% 45%;
-  pointer-events: none;
-  position: absolute;
-  transform-style: preserve-3d;
-  z-index: 0;
-}
-
-.finalPillars > i {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
   background:
-    repeating-linear-gradient(
-      180deg,
-      transparent 0 calc(25% - 1px),
-      color-mix(in oklch, var(--graphite) 10%, transparent) calc(25% - 1px) 25%
+    radial-gradient(
+      circle at 82% 50%,
+      color-mix(in oklch, var(--signal-orange) 14%, transparent),
+      transparent 28%
     ),
     linear-gradient(
       90deg,
-      color-mix(in oklch, var(--paper) 7%, transparent),
-      transparent 38% 78%,
-      color-mix(in oklch, var(--graphite) 7%, transparent)
+      transparent 0 58%,
+      color-mix(in oklch, var(--paper) 4%, transparent) 58% calc(58% + 1px),
+      transparent calc(58% + 1px)
     ),
-    var(--signal-orange);
-  border-inline-start: 1px solid
-    color-mix(in oklch, var(--graphite) 14%, transparent);
-  display: block;
-  min-width: 0;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  will-change: opacity, transform;
+    var(--graphite);
+  box-shadow: 0 -2rem 6rem color-mix(in oklch, var(--bg) 54%, transparent);
+  isolation: isolate;
+  overflow: hidden;
 }
 
-.finalPillars > i:nth-child(even) {
-  transform-origin: right center;
+.finalSignal {
+  display: grid;
+  gap: clamp(1.7rem, 4.5vh, 3.25rem);
+  position: absolute;
+  pointer-events: none;
+  right: clamp(9rem, 11vw, 13rem);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(33vw, 38rem);
+  z-index: 0;
+}
+
+.finalSignalLane {
+  align-items: center;
+  display: grid;
+  gap: clamp(0.8rem, 1.2vw, 1.25rem);
+  grid-template-columns: 5.25rem minmax(0, 1fr);
+  position: relative;
+}
+
+.finalSignalLane:first-child {
+  margin-left: 13%;
+}
+
+.finalSignalLane:nth-child(3) {
+  margin-left: 7%;
+}
+
+.finalSignalLane small {
+  color: color-mix(in oklch, var(--paper) 42%, transparent);
+  font: 550 0.58rem/1 var(--mono);
+  letter-spacing: 0.2em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.finalSignalLane > i {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--paper) 7%, transparent),
+    color-mix(in oklch, var(--paper) 25%, transparent) 36%,
+    color-mix(in oklch, var(--signal-orange) 78%, var(--paper))
+  );
+  display: block;
+  height: 1px;
+  opacity: 0.74;
+  position: relative;
+  transform-origin: left center;
+  width: 100%;
+}
+
+.finalSignalLane b {
+  background: var(--signal-orange);
+  box-shadow: 0 0 1.2rem var(--signal-orange-soft);
+  display: block;
+  height: 0.42rem;
+  position: absolute;
+  right: -0.21rem;
+  top: -0.2rem;
+  width: 0.42rem;
+}
+
+.finalSignalSpine {
+  background: linear-gradient(
+    transparent,
+    color-mix(in oklch, var(--signal-orange) 58%, transparent) 22% 78%,
+    transparent
+  );
+  bottom: -1rem;
+  position: absolute;
+  right: 0;
+  top: -1rem;
+  transform-origin: center center;
+  width: 1px;
+}
+
+.finalSignalOutput {
+  align-items: center;
+  display: flex;
+  gap: 0.8rem;
+  left: calc(100% - 0.36rem);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.finalSignalOutput > i {
+  background: var(--signal-orange);
+  box-shadow: 0 0 1.8rem var(--signal-orange-soft);
+  height: 0.72rem;
+  flex: 0 0 auto;
+  width: 0.72rem;
+}
+
+.finalSignalOutput strong {
+  color: color-mix(in oklch, var(--paper) 68%, transparent);
+  font: 550 0.58rem/1.45 var(--mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  width: 8.75rem;
 }
 
 .finalContent {
-  max-width: 76rem;
+  margin-inline: auto;
+  max-width: 88rem;
   position: relative;
+  text-align: left;
+  width: 100%;
   z-index: 1;
 }
 
 .finalTitle {
-  color: var(--graphite) !important;
-  margin-inline: auto !important;
-  max-width: 17ch !important;
+  color: var(--paper) !important;
+  font-size: clamp(3rem, 5.2vw, 5.6rem) !important;
+  line-height: 1.01 !important;
+  margin: 0 !important;
+  max-width: 18ch !important;
+}
+
+.finalTitle > span {
+  display: block;
+}
+
+.finalLead {
+  max-width: 16ch;
+}
+
+.finalEmphasis {
+  isolation: isolate;
+  margin-top: 0.12em;
+  padding: 0 0 0.12em;
+  position: relative;
+  width: fit-content;
+}
+
+.finalEmphasis > i {
+  background: linear-gradient(
+    90deg,
+    var(--signal-orange),
+    var(--signal-orange-bright)
+  );
+  bottom: 0.02em;
+  box-shadow: 0 0.16em 0.7em color-mix(in oklch, var(--signal-orange) 20%, transparent);
+  height: 0.18em;
+  left: -0.02em;
+  position: absolute;
+  right: -0.02em;
+  transform-origin: left center;
+  z-index: -1;
+}
+
+.finalEmphasis > span {
+  color: var(--paper);
+  display: block;
 }
 
 .finalThen {
-  color: var(--graphite);
+  color: var(--paper-deep);
   font: 400 clamp(1.2rem, 2vw, 1.75rem)/1.4 var(--display);
   margin: 1.25rem 0 0;
 }
 
 .finalThen em {
-  color: var(--graphite);
+  color: var(--signal-orange-bright);
   font-style: normal;
 }
 
@@ -1678,61 +1779,70 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 2.7rem;
 }
 
 .secondaryButton {
   appearance: none;
   background: transparent;
-  border: 1px solid color-mix(in oklch, var(--graphite) 42%, transparent);
-  color: var(--graphite);
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--paper-deep);
+  padding-inline: 0.35rem;
 }
 
-.secondaryButton:hover,
 .secondaryButton:focus-visible {
-  background: color-mix(in oklch, var(--graphite) 9%, transparent);
-  border-color: var(--graphite);
-  transform: translateY(-0.18rem);
+  border-color: var(--signal-orange);
+  color: var(--paper);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .secondaryButton:hover {
+    border-color: var(--signal-orange);
+    color: var(--paper);
+    transform: translateY(-0.12rem);
+  }
 }
 
 .final .eyebrow {
-  color: var(--graphite);
+  color: var(--signal-orange-bright);
+  justify-content: flex-start;
 }
 
 .final .eyebrow::before {
-  background: var(--graphite);
+  background: var(--signal-orange-soft);
 }
 
 .final .primaryButton {
-  background: var(--graphite);
-  border-color: var(--graphite);
-  color: var(--paper);
+  background: var(--signal-orange);
+  border-color: var(--signal-orange);
+  color: var(--graphite);
 }
 
 .finalSignature {
   align-items: center;
-  color: var(--graphite);
+  color: var(--faint);
   display: flex;
-  flex-direction: column;
   gap: 1rem;
-  margin-top: 8vh;
+  justify-content: flex-start;
+  margin-top: clamp(4rem, 10vh, 7rem);
 }
 
 .finalLogo {
-  color: var(--graphite);
-  height: 2.6rem;
+  color: var(--paper-deep);
+  height: 2.2rem;
   width: auto;
 }
 
 .finalLogo rect:nth-child(2) {
-  fill: var(--paper);
+  fill: var(--signal-orange);
 }
 
 .finalMark {
-  color: var(--graphite);
+  color: var(--faint);
   font-size: 0.62rem;
-  letter-spacing: 0.38em;
+  letter-spacing: 0.3em;
   margin: 0;
 }
 
@@ -1803,6 +1913,46 @@
   }
 }
 
+@media (min-width: 60rem) and (max-width: 78rem),
+  (min-width: 60rem) and (max-height: 45rem) {
+  .process .hold {
+    padding-bottom: 2.5rem;
+    padding-top: 7.5rem;
+  }
+
+  .processShell {
+    column-gap: clamp(2.5rem, 5vw, 4.5rem);
+    grid-template-columns: minmax(0, 1.04fr) minmax(20rem, 0.96fr);
+    min-height: min(72vh, 38rem);
+  }
+
+  .processHeading h2 {
+    font-size: clamp(1.65rem, 2.6vw, 2.3rem);
+  }
+
+  .stageRail {
+    margin-top: clamp(1.7rem, 3.5vh, 2.7rem);
+    min-height: 18rem;
+  }
+
+  .stageRail h3 {
+    font-size: clamp(2rem, 4vw, 3.4rem);
+  }
+
+  .stageBody {
+    line-height: 1.5;
+  }
+
+  .stageOutcome {
+    margin-top: 1.15rem;
+  }
+
+  .processAssembly {
+    min-height: 24rem;
+    padding-block: 2rem;
+  }
+}
+
 .experience[data-motion="static"] .scene {
   min-height: auto;
 }
@@ -1820,12 +1970,13 @@
 }
 
 .experience[data-motion="static"] .processHeading {
-  margin-bottom: clamp(3rem, 7vw, 5rem);
+  margin-bottom: 0;
 }
 
 .experience[data-motion="static"] .stageRail {
   display: grid;
   gap: clamp(2.5rem, 8vw, 4rem);
+  margin-top: clamp(2.5rem, 7vw, 4.5rem);
   min-height: 0;
 }
 
@@ -1840,19 +1991,8 @@
   transition: none;
 }
 
-.experience[data-motion="static"] .processAssembly,
-.experience[data-motion="static"] .processSequence {
+.experience[data-motion="static"] .processAssembly {
   display: none;
-}
-
-.experience[data-motion="static"] .finalPillars {
-  perspective: none;
-}
-
-.experience[data-motion="static"] .finalPillars > i {
-  opacity: 1 !important;
-  transform: none !important;
-  will-change: auto !important;
 }
 
 .experience[data-motion="static"] .canvas,
@@ -2017,7 +2157,7 @@
   }
 
   .stageMeta > span {
-    font-size: clamp(3.2rem, 18vw, 5rem);
+    font-size: clamp(2.8rem, 15vw, 4.4rem);
   }
 
   .stageRail h3 {
@@ -2028,6 +2168,49 @@
     align-items: flex-start;
     flex-wrap: wrap;
     max-width: 31rem;
+  }
+
+  .finalSignal {
+    gap: 1.25rem;
+    opacity: 0.22;
+    right: 6vw;
+    top: 80%;
+    width: 72vw;
+  }
+
+  .finalSignalLane {
+    grid-template-columns: 1fr;
+    margin-left: 0 !important;
+  }
+
+  .finalSignalLane small,
+  .finalSignalLane b,
+  .finalSignalOutput strong {
+    display: none;
+  }
+
+  .finalTitle {
+    font-size: clamp(2.6rem, 12vw, 3.8rem) !important;
+    max-width: 12ch !important;
+  }
+
+  .finalActions {
+    align-items: stretch;
+    flex-direction: column;
+    max-width: 24rem;
+    width: 100%;
+  }
+
+  .finalActions > * {
+    width: 100%;
+  }
+
+  .finalSignature {
+    align-items: flex-start;
+  }
+
+  .finalMark {
+    line-height: 1.6;
   }
 
   .footer {
@@ -2041,13 +2224,14 @@
     animation: none;
   }
 
-  .finalPillars {
-    perspective: none;
-  }
-
-  .finalPillars > i {
+  .finalSignalLane > i,
+  .finalSignalLane b,
+  .finalSignalSpine,
+  .finalSignalOutput > i,
+  .finalSignalOutput strong,
+  .finalEmphasis > i,
+  .finalEmphasis > span {
     opacity: 1 !important;
     transform: none !important;
-    will-change: auto !important;
   }
 }
