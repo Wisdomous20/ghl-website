@@ -1,0 +1,13 @@
+.drawing { position: absolute; width: 53%; right: 3%; top: 21%; transform: rotate(-3deg); color: var(--graphite); }
+.drawing svg { width: 100%; height: auto; overflow: visible; }
+.stroke { stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw var(--duration) cubic-bezier(.25,1,.5,1) var(--delay) both; }
+.accent { stroke: var(--signal-orange); stroke-width: 1.8; }
+.guides { stroke: var(--graphite); stroke-width: .65; opacity: .2; }
+.notes { fill: var(--muted); font-family: var(--font-detail), sans-serif; font-size: 11px; opacity: 0; animation: note .4s ease-out 2.6s forwards; }
+.notes text:first-child { fill: var(--accent-ink); font-size: 14px; }
+.notes text:last-child { font-size: 8px; letter-spacing: 1.4px; }
+.pencil { stroke: var(--graphite); stroke-width: 1; opacity: .7; }.pencil .accent { fill: var(--signal-orange); stroke: none; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes note { to { opacity: 1; } }
+@media (max-width: 949px) { .drawing { right: -9%; top: 33%; width: 65%; opacity: .65; } }
+@media (prefers-reduced-motion: reduce) { .stroke { animation: none; stroke-dashoffset: 0; }.notes { animation: none; opacity: 1; } }

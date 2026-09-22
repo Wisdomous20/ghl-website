@@ -10,8 +10,8 @@
   --signal-orange-ink: oklch(49% 0.17 42);
   --line-light: oklch(35% 0.012 255 / 52%);
   --line-dark: oklch(76% 0.012 75 / 38%);
-  --background: var(--ink);
-  --foreground: var(--paper);
+  --background: oklch(from #ded9d1 l c h);
+  --foreground: oklch(27% .012 75);
 }
 
 * {
@@ -73,14 +73,13 @@ select {
 }
 
 :focus-visible {
-  outline: 0.16rem solid var(--paper);
-  outline-offset: 0.2rem;
-  box-shadow: 0 0 0 0.34rem var(--ink);
+  outline: 0.12rem solid var(--foreground);
+  outline-offset: 0.25rem;
 }
 
 ::selection {
-  background: var(--signal-orange);
-  color: var(--ink-soft);
+  background: oklch(39% .018 75);
+  color: var(--paper);
 }
 
 @media (prefers-reduced-motion: reduce) {

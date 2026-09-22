@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Familjen_Grotesk, Geologica } from "next/font/google";
+import { Sora, Manrope } from "next/font/google";
 import "./globals.css";
 
-const display = Familjen_Grotesk({
+const display = Sora({
   display: "swap",
   variable: "--font-display",
   subsets: ["latin"],
 });
 
-const detail = Geologica({
+const detail = Manrope({
   display: "swap",
   variable: "--font-detail",
   subsets: ["latin"],
@@ -28,8 +28,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: "dark",
-  themeColor: "#11100f",
+  colorScheme: "light",
+  themeColor: "#ded9d1",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

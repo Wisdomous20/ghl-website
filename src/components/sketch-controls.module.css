@@ -1,0 +1,13 @@
+.arrow { flex-shrink: 0; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.underline { position: absolute; left: -3%; bottom: -10px; width: 106%; height: 15px; fill: none; color: var(--signal-orange); stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; pointer-events: none; }
+.link { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: space-between; gap: 42px; min-height: 58px; padding: 15px 23px; color: var(--accent-ink); font-size: 14px; font-weight: 600; transition: color .2s, transform .2s cubic-bezier(.22,1,.36,1); }
+.frame { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; overflow: visible; pointer-events: none; }
+.wash { fill: currentColor; opacity: .055; transition: opacity .2s; }
+.hatch { opacity: .16; transition: opacity .2s; }
+.edge { fill: none; stroke: currentColor; stroke-width: .9; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
+.link > .arrow { transition: transform .2s cubic-bezier(.22,1,.36,1); }
+.link:hover .wash { opacity: .11; }.link:hover .hatch { opacity: .25; }.link:hover > .arrow { transform: translate(2px,-2px); }.link:active { transform: translateY(1px); }
+.compact { min-height: 48px; padding: 10px 19px; gap: 24px; color: var(--text); font-size: 13px; font-weight: 500; }
+.compact .wash, .compact .hatch { opacity: 0; }.compact .edge { opacity: .36; }.compact .arrow { color: var(--accent-ink); width: 22px; }
+.compact:hover { color: var(--accent-ink); }
+@media (prefers-reduced-motion: reduce) { .link, .link > .arrow, .wash, .hatch { transition: none; }.link:hover > .arrow { transform: none; } }

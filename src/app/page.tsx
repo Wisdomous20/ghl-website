@@ -1,5 +1,5 @@
-import { EnginaraSystemExperience } from "@/components/enginara-system-experience";
+import { EnginaraLaptopExperience } from "@/components/enginara-laptop-experience";
 
 export default function Home() {
-  return <EnginaraSystemExperience />;
+  return <EnginaraLaptopExperience />;
 }

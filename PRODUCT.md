@@ -14,7 +14,7 @@ The website should convert confidence into a project conversation. It presents E
 
 ## Brand Personality
 
-Precise, kinetic, dependable. Enginara should feel highly crafted and technically assured without becoming cold, theatrical, or obscure. Its voice is direct, concise, and quietly confident.
+Precise, considered, dependable. Enginara should feel like a thoughtful partner working through an idea with you. Warm paper and graphite drawings tell a story of creation, from the first sketch to a useful product. Its voice is direct, concise, and quietly confident.
 
 ## Anti-references
 
@@ -23,10 +23,10 @@ Avoid generic SaaS hero templates, interchangeable icon-card grids, neon artific
 ## Design Principles
 
 1. Make the promise visible. Every major scene should advance the sequence from imagination to build to dependable management.
-2. One continuous system. Use the logo’s modular rails and orange signal as connective tissue across the entire experience.
+2. One continuous system. Warm paper and graphite express imagination; a precise software workspace expresses building. Orange and the logo’s modular rails connect both chapters.
 3. Experience before explanation. Establish confidence through motion and pacing, then reveal concise service proof and a clear next step.
 4. Complexity becomes coherent. Dense technical capability should resolve into legible outcomes, never visual noise.
-5. Premium means controlled. Favor decisive composition, purposeful transitions, strong typography, and excellent detail over excessive effects.
+5. Show the making. Favor legible drawings, purposeful assembly, strong typography, and useful detail. Motion should help someone follow the creation process.
 
 ## Accessibility & Inclusion
 
