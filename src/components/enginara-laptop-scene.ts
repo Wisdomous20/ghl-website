@@ -6,6 +6,7 @@ import { phase as storyPhase, storyOpacity, SCREEN_HANDOFF, keyboardAssembly } f
 import { pencilMaterial, pencilEdges } from "./pencil-rendering";
 import { createLaptopInspection } from "./laptop-inspection";
 import type { AssemblyPartId } from "./assembly-parts";
+import { frameCamera } from "./inspection-camera";
 
 export type LaptopScene = { update: (progress: number, reduced: boolean, ink?: number) => void; inspect: (id: AssemblyPartId | null, amount: number, angle?: number) => void; hitInspection: (x: number, y: number) => boolean; dispose: () => void };
 
@@ -13,13 +14,13 @@ type AssemblyOptions = { surface: HTMLElement; annotations?: HTMLElement | null;
 
 export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions): LaptopScene {
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "low-power" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, host.clientWidth < 950 ? 1.35 : 1.7));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NoToneMapping;
   renderer.setClearColor(0x000000, 0);
   host.appendChild(renderer.domElement);
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 180);
   camera.position.set(0, 2.4, 16);
   camera.lookAt(0, 0.8, 0);
   const hardware = createLaptopHardware(Boolean(assembly));
@@ -27,6 +28,11 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
   scene.add(laptop);
   const annotationElements = Array.from(assembly?.annotations?.querySelectorAll<HTMLElement>("[data-part]") ?? []);
   const annotationPoint = new THREE.Vector3();
+  const portraitBounds = new THREE.Box3();
+  const portraitPartBounds = new THREE.Box3();
+  const portraitCenter = new THREE.Vector3();
+  const portraitOrientation = new THREE.Quaternion();
+  const portraitCorners = Array.from({ length: 8 }, () => new THREE.Vector3());
   const engineeringLines = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: .78, depthTest: true });
   const diagramSurface = pencilMaterial(0xded9d1, 20, .15);
   const paperColors: Record<string, number> = { shell: 0xe8e2d7, edge: 0xc5bcae, graphite: 0x7b827f, keys: 0xc9c5ba, sage: 0xb0beb3, copper: 0xbc7148, orange: 0xd57940, blue: 0xa4b9bc };
@@ -98,6 +104,7 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
   const focus = new THREE.Vector3();
   const corners = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()] as const;
   const paperScreen = new THREE.Color(0xded9d1);
+  const poweredScreen = new THREE.Color(0x181711);
   const inspection = assembly ? createLaptopInspection(renderer, scene, camera, laptop) : null;
   let inspectedPart: AssemblyPartId | null = null;
   let inspectionAmount = 0;
@@ -170,6 +177,11 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
     laptop.position.set(mix(shot.x, next.x), mix(shot.y, next.y), 0);
     laptop.rotation.set(0, mix(shot.ry, next.ry), mix(shot.rz, next.rz));
     laptop.scale.setScalar(mix(shot.scale, next.scale));
+    if (width < 950) {
+      laptop.position.x = 0;
+      laptop.rotation.z *= .55;
+      laptop.scale.setScalar(1);
+    }
     hardware.mechanics.forEach(part => {
       const docked = phase(part.start, part.end);
       part.node.position.copy(part.home).addScaledVector(part.offset, unfold * (1 - docked));
@@ -178,11 +190,25 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
     instanceOutlines.forEach(({ mesh, lines }) => lines.forEach((line, index) => mesh.getMatrixAt(index, line.matrix)));
     screenMaterial.map = null;
     screenMaterial.color.copy(paperScreen);
+    if (width < 950) screenMaterial.color.lerp(poweredScreen, power);
     nextScreen.visible = false;
     scene.updateMatrixWorld(true);
     frontCenter.set(0, 2.1, 0.108).applyMatrix4(lid.matrixWorld);
     camera.position.set(...shot.camera.map((value, index) => mix(value, next.camera[index])) as [number, number, number]);
     focus.set(...shot.target.map((value, index) => mix(value, next.target[index])) as [number, number, number]);
+    if (width < 950) {
+      // Fit the real assembly below the copy; width alone cannot frame an exploded object.
+      portraitBounds.makeEmpty();
+      [chassis, underside, motherboard, keyboard, trackpad, lid].forEach(part => {
+        if (part.visible) portraitBounds.union(portraitPartBounds.setFromObject(part));
+      });
+      portraitBounds.getCenter(portraitCenter);
+      let cornerIndex = 0;
+      for (const x of [portraitBounds.min.x, portraitBounds.max.x]) for (const y of [portraitBounds.min.y, portraitBounds.max.y]) for (const z of [portraitBounds.min.z, portraitBounds.max.z]) portraitCorners[cornerIndex++].set(x, y, z);
+      camera.lookAt(focus); camera.updateMatrixWorld(true); portraitOrientation.copy(camera.quaternion);
+      const portraitView = frameCamera(portraitCorners, portraitCenter, portraitOrientation, camera.aspect, camera.fov, { left: -.94, right: .94, top: width >= 600 ? .35 : height < 710 ? .16 : .2, bottom: width >= 600 ? -.62 : height < 710 ? -.42 : -.52 });
+      camera.position.copy(portraitView.position); focus.copy(portraitView.target);
+    }
     focus.lerp(frontCenter, phase(.84, .885));
     // The HTML surface retains the viewport aspect ratio within the physical screen.
     // At the end, this camera distance makes its projected bounds exactly the viewport.
@@ -297,6 +323,7 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
   const resize = new ResizeObserver(() => {
     const { clientWidth: width, clientHeight: height } = host;
     if (!width || !height) return;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, width < 950 ? 1.35 : 1.7));
     renderer.setSize(width, height); camera.aspect = width / height; camera.updateProjectionMatrix();
     update(lastProgress, reducedMotion, lastInk);
   });

@@ -83,7 +83,7 @@ export function createLaptopInspection(renderer: THREE.WebGLRenderer, scene: THR
     while (owner && owner.userData.inspectId !== id) owner = owner.parent;
     (owner ?? laptop).getWorldQuaternion(faceOrientation);
     if (id !== "display") faceOrientation.multiply(topFace);
-    const { target, position, up } = inspectionCameraView(bounds, faceOrientation, camera.aspect, camera.fov, corners, angle);
+    const { target, position, up } = inspectionCameraView(bounds, faceOrientation, camera.aspect, camera.fov, corners, angle, renderer.domElement.clientWidth < 950);
     detailCamera.copy(camera);
     detailCamera.position.lerpVectors(camera.position, position, amount);
     detailCamera.up.lerpVectors(camera.up, up, amount).normalize();

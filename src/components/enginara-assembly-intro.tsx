@@ -88,12 +88,14 @@ export function EnginaraAssemblyIntro() {
     html.style.scrollbarGutter = "stable";
     html.style.overflow = "hidden";
     const wheel = (event: WheelEvent) => {
+      if (event.target instanceof Element && event.target.closest("[data-inspection-details]")) return;
       if (event.ctrlKey) return;
       event.preventDefault();
       const scale = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
       rotatePart(gsap.utils.clamp(-240, 240, (event.deltaY || event.deltaX) * scale) * .004);
     };
     const escape = (event: KeyboardEvent) => {
+      if (["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End"].includes(event.key) && event.target instanceof Element && event.target.closest("[data-inspection-details]")) return;
       if (event.key === "Escape") { event.preventDefault(); closePart(); }
       if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
         event.preventDefault(); rotatePart(["ArrowLeft", "ArrowUp"].includes(event.key) ? -.25 : .25);
@@ -105,7 +107,7 @@ export function EnginaraAssemblyIntro() {
   }, [selected, closePart, rotatePart]);
 
   useEffect(() => {
-    const media = window.matchMedia("(min-width: 950px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)");
+    const media = window.matchMedia("(min-width: 320px) and (min-height: 560px) and (prefers-reduced-motion: no-preference)");
     let disposed = false;
     let generation = 0;
     const clear = () => {
@@ -152,7 +154,7 @@ export function EnginaraAssemblyIntro() {
       controller.current?.update(selectedRef.current ? inspectionProgress.current : p, false, ink.current.value);
       buildChapter.current?.update(gsap.utils.clamp(0, 1, (raw - ASSEMBLY_PORTION) / (1 - ASSEMBLY_PORTION)), p > .88);
       if (raw >= .97 && focusAfterSkip.current) {
-        surface.current?.focus({ preventScroll: true });
+        document.getElementById("build")?.focus({ preventScroll: true });
         focusAfterSkip.current = false;
       }
       if (sketchNotes.current) {
@@ -230,7 +232,7 @@ export function EnginaraAssemblyIntro() {
   }, { dependencies: [enhanced], scope: root, revertOnUpdate: true });
 
   return <div className={`${styles.journey} ${enhanced ? styles.enhanced : ""}`} ref={root} id="imagine" data-inspecting={Boolean(selected)}>
-    <div className={styles.buildAnchor} id={enhanced ? "build" : undefined} aria-hidden="true" />
+    <div className={styles.buildAnchor} id={enhanced ? "services" : undefined} aria-hidden="true" />
     {ASSEMBLY_STORY.map(beat => <div key={beat.id} id={beat.id} className={styles.storyAnchor} style={{ top: `calc(${(beat.start + .04) * ASSEMBLY_PORTION * 100}% - ${(beat.start + .04) * ASSEMBLY_PORTION * 100}svh)` }} aria-hidden="true" />)}
     <div className={styles.sticky}>
       <div className={styles.canvas} ref={host} aria-hidden="true" />
@@ -276,7 +278,7 @@ export function EnginaraAssemblyIntro() {
 
       {enhanced && <AssemblyInspector selected={selected} displayed={displayed} hovered={hovered} available={available} exploreButton={exploreButton} onSelect={selectPart} onClose={() => closePart()} onRotate={rotatePart} onBackdrop={(x, y) => { if (!controller.current?.hitInspection(x, y)) closePart(); }} />}
 
-      <section className={styles.liveBuild} id={!enhanced ? "build" : undefined} ref={surface} aria-labelledby="build-title" tabIndex={-1}>
+      <section className={styles.liveBuild} id={!enhanced ? "services" : undefined} ref={surface} aria-labelledby="services-title" tabIndex={-1}>
         <BuildChapter ref={buildChapter} />
       </section>
     </div>
