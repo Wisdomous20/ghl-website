@@ -117,16 +117,40 @@ export function SoftwareStory() {
   const [processStep, setProcessStep] = useState(0);
   const [processManual, setProcessManual] = useState(false);
   const [enhanced, setEnhanced] = useState(false);
+  const [visibleScenes, setVisibleScenes] = useState<boolean[]>(() => beats.map(() => false));
   const playback = useMotionPlayback(stage);
+  const sceneRunning = (index: number) => playback.running && (enhanced ? active === index : visibleScenes[index]);
+  const sceneMotion = (index: number) => ({ "--motion-state": sceneRunning(index) ? "running" : "paused" }) as CSSProperties;
+  const careRunning = sceneRunning(3);
+  const processRunning = sceneRunning(4);
 
   useEffect(() => {
-    if (!playback.running) return;
-    const timer = window.setInterval(() => {
-      setCycle(value => value + 1);
-      if (active === 4 && !processManual) setProcessStep(value => (value + 1) % delivery.length);
-    }, 4400);
+    if (enhanced || !stage.current) return;
+    const observer = new IntersectionObserver(entries => {
+      setVisibleScenes(previous => {
+        const next = [...previous];
+        entries.forEach(entry => {
+          const index = Number((entry.target as HTMLElement).dataset.softwareScene);
+          next[index] = entry.isIntersecting;
+        });
+        return next.some((value, index) => value !== previous[index]) ? next : previous;
+      });
+    }, { threshold: 0 });
+    stage.current.querySelectorAll("[data-software-scene]").forEach(scene => observer.observe(scene));
+    return () => observer.disconnect();
+  }, [enhanced]);
+
+  useEffect(() => {
+    if (!careRunning) return;
+    const timer = window.setInterval(() => setCycle(value => value + 1), 4400);
     return () => window.clearInterval(timer);
-  }, [playback.running, active, processManual]);
+  }, [careRunning]);
+
+  useEffect(() => {
+    if (!processRunning || processManual) return;
+    const timer = window.setInterval(() => setProcessStep(value => (value + 1) % delivery.length), 4400);
+    return () => window.clearInterval(timer);
+  }, [processRunning, processManual]);
 
   useGSAP(() => {
     const media = gsap.matchMedia();
@@ -244,7 +268,7 @@ export function SoftwareStory() {
       <div className={styles.paperWipe} data-paper-wipe aria-hidden="true" />
       <header className={styles.stageHeader}><a href="#imagine" aria-label="Enginara home"><EnginaraMark /><span>ENGINARA</span></a><span>FROM IDEA TO EVERYDAY.</span><button className={`${styles.motionToggle} ${styles.mobilePause}`} aria-pressed={playback.paused} onClick={() => { playback.setPaused(!playback.paused); if (playback.paused) setProcessManual(false); }}>{playback.paused ? "▷ Play motion" : "Ⅱ Pause motion"}</button><a href="#contact">Start a project <span>↗</span></a></header>
 
-      <div className={styles.scene} data-software-scene="0">
+      <div className={styles.scene} data-software-scene="0" style={sceneMotion(0)}>
       <section className={`${styles.panel} ${styles.buildPanel}`} data-story-panel id={!enhanced ? "build-paths" : undefined} aria-labelledby="build-title">
         <p className={styles.eyebrow}>01 / GIVE THE IDEA A LIFE</p>
         <h2 id="build-title">Your idea.<br /><em>Made real.</em></h2>
@@ -254,25 +278,25 @@ export function SoftwareStory() {
       </section>
 
       <div className={styles.blueprint} data-blueprint aria-hidden="true"><div><span>01 / THE STRUCTURE</span><svg viewBox="0 0 700 400" fill="none"><path d="M1 1H699V399H1Z M1 41H699 M20 61H315V161H20Z M20 190H300 M20 210H280 M20 230H240 M355 61H679V365H355Z M355 61 679 365 M679 61 355 365 M20 305H158V351H20Z" /></svg></div><div><span>02 / THE LOGIC</span><code><i>const</i> idea = your.vision;<br /><i>const</i> experience = build(&#123;<br />&nbsp; design: <b>considered</b>,<br />&nbsp; connections: <b>everything</b>,<br />&nbsp; madeFor: <b>you</b><br />&#125;);<span className={styles.codeCaret}>▎</span></code></div></div>
-      <div className={styles.browser} data-story-browser><div className={styles.browserBar}><span><i /><i /><i /></span><span>{route === "custom" ? "formandfield.example" : "northstar.example / workspace"}</span><span>CONCEPT ↗</span></div><div className={styles.browserBody}>{route === "custom" ? <WebsiteDemo playing={playback.running && (!enhanced || active === 0)} /> : <WorkspaceDemo playing={playback.running && (!enhanced || active === 0)} />}</div><div className={styles.browserEdge} aria-hidden="true"><span>03 / THE EXPERIENCE</span><i /></div></div>
+      <div className={styles.browser} data-story-browser><div className={styles.browserBar}><span><i /><i /><i /></span><span>{route === "custom" ? "formandfield.example" : "northstar.example / workspace"}</span><span>CONCEPT ↗</span></div><div className={styles.browserBody}>{route === "custom" ? <WebsiteDemo playing={sceneRunning(0)} /> : <WorkspaceDemo playing={sceneRunning(0)} />}</div><div className={styles.browserEdge} aria-hidden="true"><span>03 / THE EXPERIENCE</span><i /></div></div>
 
       </div>
-      <div className={styles.scene} data-software-scene="1">
+      <div className={styles.scene} data-software-scene="1" style={sceneMotion(1)}>
       <section className={`${styles.panel} ${styles.connectPanel}`} data-story-panel id={!enhanced ? "automate" : undefined} aria-labelledby="automate-title"><p className={styles.eyebrow}>02 / MAKE THE CONNECTIONS</p><h2 id="automate-title">Good on its own.<br /><em>Better together.</em></h2><p className={styles.body}>An enquiry becomes a conversation. <br />Your website, CRM, AI and workflows <br />keep the next step moving.</p><span className={styles.sceneNote}><i /> FOLLOW AN EXAMPLE ENQUIRY THROUGH THE SYSTEM</span></section>
       <NetworkGraphic />
 
       </div>
-      <div className={styles.scene} data-software-scene="2">
+      <div className={styles.scene} data-software-scene="2" style={sceneMotion(2)}>
       <section className={`${styles.panel} ${styles.expandPanel}`} data-story-panel id={!enhanced ? "capabilities" : undefined} aria-labelledby="capabilities-title"><p className={styles.eyebrow}>03 / SEE THE BIGGER PICTURE</p><h2 id="capabilities-title">One partner.<br /><em>A world of<br />possibility.</em></h2><p className={styles.body}>Software, automation, AI and operations. <br />Connected by the same team, around <br />the way your business actually works.</p><ul className={styles.capabilityList}><li>Websites, apps & custom software</li><li>CRM, AI agents & integrations</li><li>Cloud, reporting & operations</li></ul><a className={styles.textLink} href="#contact">Find your starting point <span>↗</span></a></section>
       <EcosystemGraphic />
 
       </div>
-      <div className={styles.scene} data-software-scene="3">
+      <div className={styles.scene} data-software-scene="3" style={sceneMotion(3)}>
       <section className={`${styles.panel} ${styles.carePanel}`} data-story-panel id={!enhanced ? "manage" : undefined} aria-labelledby="manage-title"><p className={styles.eyebrow}>04 / STAY WITH WHAT YOU BUILD</p><h2 id="manage-title">Built to launch.<br /><em>Backed to last.</em></h2><p className={styles.body}>Technology should give you time back. <br />We monitor, maintain, and improve it. <br />You keep moving your business forward.</p></section>
       <CareGraphic cycle={cycle} />
 
       </div>
-      <div className={styles.scene} data-software-scene="4">
+      <div className={styles.scene} data-software-scene="4" style={sceneMotion(4)}>
       <section className={`${styles.panel} ${styles.processPanel}`} data-story-panel id={!enhanced ? "approach" : undefined} aria-labelledby="approach-title"><p className={styles.eyebrow}>05 / HOW WE GET THERE. TOGETHER.</p><h2 id="approach-title">A shared plan.<br /><em>Then, progress.</em></h2><div className={styles.processTabs} role="group" aria-label="Explore our delivery process">{delivery.map((step, index) => <button key={step.name} onClick={() => { setProcessStep(index); setProcessManual(true); }} aria-pressed={processStep === index}><span>0{index + 1}</span>{step.name}<i /></button>)}</div><div className={styles.processCopy} aria-live={processManual ? "polite" : "off"}><h3>{delivery[processStep].title}</h3><p>{delivery[processStep].body}</p></div><a className={styles.textLink} href="#contact">Let’s start with a conversation <span>↗</span></a></section>
       <ProcessDrawing step={processStep} />
 

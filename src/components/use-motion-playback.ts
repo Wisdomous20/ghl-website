@@ -30,7 +30,9 @@ export function useMotionPlayback(elementRef: RefObject<HTMLElement | null>) {
       setRunning(previous => previous === play ? previous : play);
     };
     sync.current = update;
-    const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; update(); }, { threshold: .1 });
+    // A long mobile chapter can exceed ten viewports. Its visible area may never
+    // reach a percentage threshold, even while it fills the screen.
+    const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; update(); }, { threshold: 0 });
     observe.current = () => { observer.unobserve(element); observer.observe(element); };
     observer.observe(element);
     document.addEventListener("visibilitychange", update);

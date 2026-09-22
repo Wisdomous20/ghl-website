@@ -4,7 +4,7 @@
 .page section { scroll-margin-top: -5rem; }
 .page em { font-family: inherit; font-style: normal; font-weight: inherit; color: var(--graphite); }
 .header { height: 108px; padding: 0 5.5%; position: absolute; inset: 0 0 auto; display: flex; align-items: center; justify-content: space-between; z-index: 20; }
-.brand { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 29px; letter-spacing: -1.6px; }
+.brand { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display), sans-serif; font-weight: 500; font-size: 29px; letter-spacing: -.075em; line-height: 1.2; }
 .brand svg { width: 26px; height: 25px; }.brandDot { color: var(--signal-orange); }
 .header nav { display: flex; align-items: center; gap: 36px; font-size: 13px; }
 .header nav > a { transition: color .2s; }.header nav > a:hover { color: var(--graphite); }

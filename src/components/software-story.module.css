@@ -144,7 +144,6 @@
 .progress { height: 1px; position: absolute; left: 0; right: 0; top: -1px; }.progress i { position: absolute; inset: 0; background: var(--story-orange); transform: scaleX(0); transform-origin: left; }
 .story[data-beat="4"] .stageHeader, .story[data-beat="4"] .stageFooter { color: var(--story-dark); --story-muted: oklch(44% .02 75); --story-line: oklch(43% .02 75 / .25); --story-orange: var(--story-brown); --story-ink: var(--story-dark); }
 .story[data-beat="4"] :focus-visible { outline-color: var(--story-brown); }
-.story[data-beat="0"] :is(.network, .ecosystem, .careGraphic, .processDrawing) *, .story[data-beat="1"] :is(.blueprint, .ecosystem, .careGraphic, .processDrawing) *, .story[data-beat="2"] :is(.blueprint, .network, .careGraphic, .processDrawing) *, .story[data-beat="3"] :is(.blueprint, .network, .ecosystem, .processDrawing) *, .story[data-beat="4"] :is(.blueprint, .network, .ecosystem, .careGraphic) * { animation-play-state: paused !important; }
 
 @keyframes codeBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 @keyframes signalTravel { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }

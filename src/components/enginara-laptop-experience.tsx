@@ -52,7 +52,7 @@ export function EnginaraLaptopExperience() {
     <main className={styles.page} ref={root}>
       <a href="#build" className={styles.skip}>Skip introduction</a>
       <header className={styles.header}>
-        <a className={styles.brand} href="#imagine" aria-label="Enginara home"><EnginaraMark /><span>enginara<span className={styles.brandDot}>.</span></span></a>
+        <a className={styles.brand} href="#imagine" aria-label="Enginara home"><EnginaraMark /><span>Enginara<span className={styles.brandDot}>.</span></span></a>
         <nav className={styles.desktopNav} aria-label="Main navigation">
           <a href="#build">What we do</a>
           <a href="#approach">Our approach</a>
