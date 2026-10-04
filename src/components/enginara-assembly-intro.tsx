@@ -195,7 +195,8 @@ export function EnginaraAssemblyIntro() {
     const tween = gsap.fromTo(progress.current, { value: 0 }, {
       value: 1, ease: "none",
       scrollTrigger: {
-        trigger: root.current, start: "top top", end: "bottom bottom", scrub: 0.45,
+        // Smooth wheel bursts on the playhead; touch keeps its closer response.
+        trigger: root.current, start: "top top", end: "bottom bottom", scrub: ScrollTrigger.isTouch === 1 ? .45 : .9,
         onRefresh: self => { progress.current.value = self.progress; paint(); },
       },
       onUpdate: paint,
@@ -249,7 +250,7 @@ export function EnginaraAssemblyIntro() {
         <p className={styles.eyebrow}><span />01 / IMAGINE</p>
         <div className={styles.heroFooter}>
           <div><h1>First, <span className={styles.markedIdea}>an idea.<PencilUnderline /></span><br /><em>Then, we build.</em></h1><a className={styles.scrollCue} href={enhanced ? "#foundation" : "#build"}><PencilArrow down /> Follow the making of an idea</a></div>
-          <div><p className={styles.description}>Bring the idea, even if it’s still a rough sketch. We’ll turn it into a website, software, or a system that works for you.</p><SketchLink href="#contact">Start a project</SketchLink></div>
+          <div><p className={styles.description}>Bring the idea, or the part of your business that needs a better system. Enginara designs, builds, connects and manages websites, CRM, automation and AI systems that help your business and team work better.</p><SketchLink href="#contact">Start a project</SketchLink></div>
         </div>
       </div>
 

@@ -530,7 +530,7 @@ export function CinematicHome() {
           <a className={styles.skipStory} href="#after-story">Skip story</a>
           <motion.a
             className={styles.headerCta}
-            href="mailto:hello@enginara.com?subject=New%20Enginara%20project"
+            href="mailto:info@enginara.tech?subject=New%20Enginara%20project"
             style={{ backgroundColor: headerCtaBackground, color: headerCtaColor }}
           >
             Start a project <span aria-hidden="true">↗</span>
@@ -714,7 +714,7 @@ export function CinematicHome() {
               <p>What should work better?</p>
               <a
                 className={styles.resolveCta}
-                href="mailto:hello@enginara.com?subject=New%20Enginara%20project"
+                href="mailto:info@enginara.tech?subject=New%20Enginara%20project"
                 tabIndex={-1}
               >
                 Start a project <span aria-hidden="true">↗</span>
@@ -770,7 +770,7 @@ export function CinematicHome() {
             <EnginaraMark className={styles.staticResolveMark} />
             <h2>You imagine. We build. We manage.</h2>
             <p>What should work better?</p>
-            <a href="mailto:hello@enginara.com?subject=New%20Enginara%20project">
+            <a href="mailto:info@enginara.tech?subject=New%20Enginara%20project">
               Start a project <span aria-hidden="true">↗</span>
             </a>
           </section>
@@ -785,7 +785,7 @@ export function CinematicHome() {
         </span>
         <p>
           Software development / workflow automation / technical ownership<br />
-          <a href="mailto:hello@enginara.com">hello@enginara.com</a>
+          <a href="mailto:info@enginara.tech">info@enginara.tech</a>
         </p>
         <p>© {new Date().getFullYear()}</p>
       </footer>

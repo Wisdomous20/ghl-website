@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EnginaraMark } from "./enginara-mark";
 import { EnginaraAssemblyIntro } from "./enginara-assembly-intro";
-import { SketchLink } from "./sketch-controls";
 import { SoftwareStory } from "./software-story";
+import { SiteHeader } from "./site-header";
+import { PricingTeaser } from "./pricing-teaser";
 import styles from "./enginara-laptop-experience.module.css";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -18,22 +19,6 @@ function Arrow() {
 
 export function EnginaraLaptopExperience() {
   const root = useRef<HTMLElement>(null);
-  const mobileMenu = useRef<HTMLDetailsElement>(null);
-
-  useEffect(() => {
-    const dismiss = (event: PointerEvent) => {
-      if (mobileMenu.current?.open && !mobileMenu.current.contains(event.target as Node)) mobileMenu.current.open = false;
-    };
-    const escape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && mobileMenu.current?.open) {
-        mobileMenu.current.open = false;
-        mobileMenu.current.querySelector("summary")?.focus();
-      }
-    };
-    document.addEventListener("pointerdown", dismiss);
-    document.addEventListener("keydown", escape);
-    return () => { document.removeEventListener("pointerdown", dismiss); document.removeEventListener("keydown", escape); };
-  }, []);
 
   useGSAP(() => {
     const media = gsap.matchMedia();
@@ -51,26 +36,15 @@ export function EnginaraLaptopExperience() {
   return (
     <main className={styles.page} ref={root}>
       <a href="#build" className={styles.skip}>Skip introduction</a>
-      <header className={styles.header}>
-        <a className={styles.brand} href="#imagine" aria-label="Enginara home"><EnginaraMark /><span>Enginara<span className={styles.brandDot}>.</span></span></a>
-        <nav className={styles.desktopNav} aria-label="Main navigation">
-          <a href="#build">What we do</a>
-          <a href="#approach">Our approach</a>
-          <SketchLink href="#contact" compact>Start a project</SketchLink>
-        </nav>
-        <details className={styles.mobileMenu} ref={mobileMenu}>
-          <summary>Menu <span aria-hidden="true">+</span></summary>
-          <nav aria-label="Mobile navigation" onClick={event => { if ((event.target as HTMLElement).closest("a")) event.currentTarget.closest("details")?.removeAttribute("open"); }}>
-            <a href="#imagine">The idea <span>01</span></a><a href="#build">What we do <span>02</span></a><a href="#approach">Our approach <span>03</span></a><a href="#contact">Start a project <span>↗</span></a>
-          </nav>
-        </details>
-      </header>
+      <SiteHeader />
 
       <EnginaraAssemblyIntro />
 
       <SoftwareStory />
 
-      <section className={styles.contact} id="contact" aria-labelledby="contact-title"><p className={styles.eyebrow} data-reveal><span />A SPACE FOR YOUR NEXT IDEA</p><h2 id="contact-title" data-reveal>What shall we<br /><em>make together?</em></h2><p data-reveal>A rough sketch is a good place to start.<br />Tell us what you have in mind.</p><a className={styles.primaryButton} href="mailto:hello@enginara.com?subject=Let%E2%80%99s%20build%20something" data-reveal>Start a project <Arrow /></a><a className={styles.email} href="mailto:hello@enginara.com">hello@enginara.com</a></section>
+      <PricingTeaser />
+
+      <section className={styles.contact} id="contact" aria-labelledby="contact-title"><p className={styles.eyebrow} data-reveal><span />A SPACE FOR YOUR NEXT IDEA</p><h2 id="contact-title" data-reveal>What should we<br /><em>build together?</em></h2><p className={styles.contactCopy} data-reveal>Tell us where the work gets stuck and what you already use. We’ll give you an honest recommendation on where to start, and whether a Proven System or a Custom Build fits best.</p><div className={styles.contactActions} data-reveal><a className={styles.primaryButton} href="mailto:info@enginara.tech?subject=Blueprint%20call%20request">Book a call <Arrow /></a><a className={styles.secondaryButton} href="mailto:info@enginara.tech?subject=Project%20details">Send us the details <Arrow /></a></div><a className={styles.email} href="mailto:info@enginara.tech">info@enginara.tech</a></section>
       <footer className={styles.footer}><div className={styles.footerWordmark} aria-hidden="true">enginara<span>.</span></div><div className={styles.footerBottom}><a className={styles.brand} href="#imagine" aria-label="Enginara home"><EnginaraMark /></a><p>You imagine. We build. We manage.</p><span>© {new Date().getFullYear()} Enginara</span><a href="#imagine">Back to top ↑</a></div></footer>
     </main>
   );

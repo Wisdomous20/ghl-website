@@ -150,7 +150,9 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
     const opening = phase(.755, .855);
     const zoom = phase(.885, SCREEN_HANDOFF);
     const power = phase(.815, .86);
-    const unfold = phase(.06, .185);
+    // The canvas is fully visible at .135. Show the entire explosion before
+    // the first components begin docking at .27, without extending the page.
+    const unfold = phase(.135, .26);
     const layer = (start: number, end: number) => unfold * (1 - phase(start, end));
     const width = host.clientWidth;
     const height = host.clientHeight;

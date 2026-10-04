@@ -42,6 +42,14 @@ During the exploded assembly, all 15 component groups can be inspected: chassis 
 - Support phone, tablet, and desktop. Reduced motion and unavailable WebGL receive normal document flow and immediate access to the work.
 - No glass cards, glow effects, fake live metrics, or identical icon-card service grids. Charcoal is reserved for the software chapter.
 
+## Pricing page
+
+- `/pricing` is a dedicated comparison page, reachable from the shared desktop and mobile navigation and a homepage introduction before the contact section.
+- Keep the existing Sora/Manrope typography, warm paper, graphite text, orange pencil marks and sketch controls. A wide two-line introduction leads into drawn planning sheets, full-width offer rows, ongoing care, native FAQ disclosures and the contact invitation.
+- Systems Blueprint is the planning step, with separate starting fees for the Proven System and Custom Build paths. Show activation, monthly management and custom build starting prices as distinct amounts. The confirmed figures live in `src/components/pricing-options.ts`.
+- On tablets, place the package and price beside each other with scope below. On phones, place the price before the scope and keep the two price options side by side. Keep every amount readable at 320px.
+- Decorative planning sheets stack with scroll; the care heading reveals as it enters view. Prices and scope stay visible without animation or JavaScript. Reduced motion disables both GSAP treatments.
+
 ## Mobile adaptation
 
 - Below 950px, use a compact native disclosure menu, a full-width word drawing above the introduction, and touch-sized project controls. Keep the existing eight-second drawing / five-second hold loop.

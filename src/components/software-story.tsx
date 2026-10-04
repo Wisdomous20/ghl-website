@@ -20,10 +20,10 @@ const beats = [
 ] as const;
 
 const delivery = [
-  { name: "Discover", title: "First, understand.", body: "Your business, people, and the work that could work better. We ask, listen, and map it together.", outcome: "A shared picture", note: "What should work better?" },
-  { name: "Architect", title: "Give the idea a plan.", body: "Design the experience, choose the foundations, and draw the connections before the first line of code.", outcome: "One buildable blueprint", note: "Every connection considered." },
-  { name: "Build & launch", title: "Make it real.", body: "Build, configure, connect, and test. You see the progress and help shape the details along the way.", outcome: "A working system", note: "Ready for the real world." },
-  { name: "Keep growing", title: "Stay with the system.", body: "Launch with care. Then maintain, support, and improve, with a team that already knows your business.", outcome: "An ongoing partnership", note: "The next chapter starts here." },
+  { name: "Discover", title: "First, understand.", body: "The Blueprint maps how your work really runs: tools, people, data, handoffs and bottlenecks. You get a clear recommendation on what to fix first, plus a step-by-step build plan.", outcome: "A shared picture", note: "What should work better?" },
+  { name: "Design", title: "Next, decide.", body: "Together, we decide what to set up, what to build, what to connect, where your information lives and who owns each step.", outcome: "One buildable blueprint", note: "Every connection considered." },
+  { name: "Build", title: "Then, make it work.", body: "We build in working phases, connect your tools, test the handoffs, document the setup and train the people who will use it.", outcome: "A working system", note: "Ready for the real world." },
+  { name: "Operate", title: "Evolving with you. Accountable throughout.", body: "We monitor connections, keep your system current and plan improvements as your business changes. Managed Operations is separate: trained people for defined monthly services.", outcome: "An ongoing partnership", note: "The next chapter starts here." },
 ] as const;
 
 const capabilities = [
@@ -34,9 +34,9 @@ const capabilities = [
 ] as const;
 
 function NetworkGraphic() {
-  return <div className={styles.network} data-network aria-hidden="true">
-    <svg viewBox="0 0 340 1050" preserveAspectRatio="none" className={styles.mobileNetworkLines} fill="none"><path className={styles.wires} d="M170 170V930" /><g className={styles.signals}><path pathLength="1" d="M170 170V930" /></g></svg>
-    <svg viewBox="0 0 1400 740" preserveAspectRatio="none" className={styles.networkLines} fill="none">
+  return <div className={styles.network} data-network role="group" aria-label="An example inquiry, from website form to conversation">
+    <svg viewBox="0 0 340 1050" preserveAspectRatio="none" className={styles.mobileNetworkLines} fill="none" aria-hidden="true"><path className={styles.wires} d="M170 170V930" /><g className={styles.signals}><path pathLength="1" d="M170 170V930" /></g></svg>
+    <svg viewBox="0 0 1400 740" preserveAspectRatio="none" className={styles.networkLines} fill="none" aria-hidden="true">
       <g className={styles.networkRules}><path d="M0 370H1400 M700 0V740" /><ellipse cx="700" cy="370" rx="440" ry="254" /><ellipse cx="700" cy="370" rx="550" ry="325" /></g>
       <g className={styles.wires}>
         <path d="M350 400H470Q510 400 510 360V240Q510 200 550 200H650" />
@@ -52,10 +52,10 @@ function NetworkGraphic() {
       </g>
       <g className={styles.junctions}><circle cx="450" cy="400" r="7" /><circle cx="1180" cy="590" r="7" /><circle cx="450" cy="400" r="19" /></g>
     </svg>
-    <div className={`${styles.networkNode} ${styles.sourceNode}`}><span>01 / THE FIRST HELLO</span><strong>A new enquiry.</strong><p>From your website</p><div className={styles.enquirySignal}><i />Request received <b>↗</b></div></div>
-    <div className={`${styles.networkNode} ${styles.crmNode}`}><span>02 / KEEP IT TOGETHER</span><strong>Your CRM.</strong><div className={styles.record}><i>AM</i><div>Alex Morgan<small>Website project</small></div><b>New</b></div><div className={styles.record}><i>JC</i><div>Jamie Chen<small>Client portal</small></div><b>Ready</b></div></div>
-    <div className={`${styles.networkNode} ${styles.aiNode}`}><span>03 / THE RIGHT NEXT STEP</span><div className={styles.agentSymbol}><i /><i /><i /><i /></div><strong>A little intelligence.</strong><p>Route the request.<br />Prepare the follow-up.</p><div className={styles.aiWork}><i /><i /><i /><span>Context → action</span></div></div>
-    <div className={`${styles.networkNode} ${styles.calendarNode}`}><span>04 / MOVE IT FORWARD</span><div className={styles.calendarTop}><strong>A conversation.</strong><i>↗</i></div><div className={styles.calendarDays}>{["M", "T", "W", "T", "F"].map((day, index) => <span key={index}>{day}<b>{12 + index}</b></span>)}</div><p>Discovery call <span>Invitation prepared</span></p></div>
+    <div className={`${styles.networkNode} ${styles.sourceNode}`}><span>01 / THE FIRST HELLO</span><strong>A new inquiry.</strong><p>Website form · Request received</p><div className={styles.enquirySignal}><i />Captured automatically <b>↗</b></div></div>
+    <div className={`${styles.networkNode} ${styles.crmNode}`}><span>02 / KEEP IT TOGETHER</span><strong>Into your CRM.</strong><div className={styles.record}><i>AM</i><div>Alex Morgan<small>Website project</small></div><b>New</b></div><div className={styles.record}><i>JC</i><div>Jamie Chen<small>Client portal</small></div><b>Ready</b></div></div>
+    <div className={`${styles.networkNode} ${styles.aiNode}`}><span>03 / THE RIGHT NEXT STEP</span><div className={styles.agentSymbol} aria-hidden="true"><i /><i /><i /><i /></div><strong>Follow-up, prepared.</strong><p>Route to the right person.<br />Draft the reply with context.</p><div className={styles.aiWork}><i /><i /><i /><span>Human review when needed</span></div></div>
+    <div className={`${styles.networkNode} ${styles.calendarNode}`}><span>04 / MOVE IT FORWARD</span><div className={styles.calendarTop}><strong>A conversation.</strong><i>↗</i></div><div className={styles.calendarDays} aria-hidden="true">{["M", "T", "W", "T", "F"].map((day, index) => <span key={index}>{day}<b>{12 + index}</b></span>)}</div><p>Discovery call · times offered<span>Invitation prepared</span></p></div>
     <div className={styles.integrationLabel}><span>↔</span> YOUR TOOLS. TALKING TO EACH OTHER.</div>
   </div>;
 }
@@ -181,6 +181,7 @@ export function SoftwareStory() {
         element.dataset.beat = String(index);
         panels.forEach((panel, i) => { panel.inert = i !== index; panel.setAttribute("aria-hidden", String(i !== index)); });
         if (browser) { browser.inert = index !== 0; browser.setAttribute("aria-hidden", String(index !== 0)); }
+        if (network) { network.inert = index !== 1; network.setAttribute("aria-hidden", String(index !== 1)); }
         if (care) { care.inert = index !== 3; care.setAttribute("aria-hidden", String(index !== 3)); }
       };
       gsap.set(panels.slice(1), { autoAlpha: 0, y: 65 });
@@ -218,7 +219,7 @@ export function SoftwareStory() {
       return () => {
         delete element.dataset.enhanced; delete element.dataset.beat;
         setEnhanced(false);
-        [...panels, browser, care].forEach(panel => { if (panel) { panel.inert = false; panel.removeAttribute("aria-hidden"); } });
+        [...panels, browser, network, care].forEach(panel => { if (panel) { panel.inert = false; panel.removeAttribute("aria-hidden"); } });
       };
     });
     media.add("(max-width: 949px), (max-height: 639px), (prefers-reduced-motion: reduce)", () => {
@@ -272,9 +273,9 @@ export function SoftwareStory() {
       <section className={`${styles.panel} ${styles.buildPanel}`} data-story-panel id={!enhanced ? "build-paths" : undefined} aria-labelledby="build-title">
         <p className={styles.eyebrow}>01 / GIVE THE IDEA A LIFE</p>
         <h2 id="build-title">Your idea.<br /><em>Made real.</em></h2>
-        <p className={styles.body}>A website, a tool, a better way to work. <br />Let’s build the thing your business needs.</p>
-        <div className={styles.routes} role="group" aria-label="Choose your starting point"><button onClick={() => setRoute("custom")} aria-pressed={route === "custom"}><span>01</span><strong>From scratch</strong><small>Imagine it. We engineer it.</small><i>↗</i></button><button onClick={() => setRoute("proven")} aria-pressed={route === "proven"}><span>02</span><strong>From a foundation</strong><small>A proven system, made yours.</small><i>↗</i></button></div>
-        <span className={styles.buildAnnotation}>DESIGN → DEVELOP → LAUNCH</span>
+        <p className={styles.body}>Start with a proven system, or have us build something custom when off-the-shelf tools fall short.</p>
+        <div className={styles.routes} role="group" aria-label="Choose your starting point"><button onClick={() => setRoute("custom")} aria-pressed={route === "custom"}><span>01</span><strong>Custom Build</strong><small>Imagine it. We engineer it.</small><i>↗</i></button><button onClick={() => setRoute("proven")} aria-pressed={route === "proven"}><span>02</span><strong>Proven System</strong><small>Built on what works. Made yours.</small><i>↗</i></button></div>
+        <span className={styles.buildAnnotation}>Plan → Configure or build → Connect → Manage</span>
       </section>
 
       <div className={styles.blueprint} data-blueprint aria-hidden="true"><div><span>01 / THE STRUCTURE</span><svg viewBox="0 0 700 400" fill="none"><path d="M1 1H699V399H1Z M1 41H699 M20 61H315V161H20Z M20 190H300 M20 210H280 M20 230H240 M355 61H679V365H355Z M355 61 679 365 M679 61 355 365 M20 305H158V351H20Z" /></svg></div><div><span>02 / THE LOGIC</span><code><i>const</i> idea = your.vision;<br /><i>const</i> experience = build(&#123;<br />&nbsp; design: <b>considered</b>,<br />&nbsp; connections: <b>everything</b>,<br />&nbsp; madeFor: <b>you</b><br />&#125;);<span className={styles.codeCaret}>▎</span></code></div></div>
@@ -282,22 +283,22 @@ export function SoftwareStory() {
 
       </div>
       <div className={styles.scene} data-software-scene="1" style={sceneMotion(1)}>
-      <section className={`${styles.panel} ${styles.connectPanel}`} data-story-panel id={!enhanced ? "automate" : undefined} aria-labelledby="automate-title"><p className={styles.eyebrow}>02 / MAKE THE CONNECTIONS</p><h2 id="automate-title">Good on its own.<br /><em>Better together.</em></h2><p className={styles.body}>An enquiry becomes a conversation. <br />Your website, CRM, AI and workflows <br />keep the next step moving.</p><span className={styles.sceneNote}><i /> FOLLOW AN EXAMPLE ENQUIRY THROUGH THE SYSTEM</span></section>
+      <section className={`${styles.panel} ${styles.connectPanel}`} data-story-panel id={!enhanced ? "automate" : undefined} aria-labelledby="automate-title"><p className={styles.eyebrow}>02 / MAKE THE CONNECTIONS</p><h2 id="automate-title">Good on its own.<br /><em>Better together.</em></h2><p className={styles.body}>Capture every inquiry. Connect your form, CRM, calendar and follow-up. Automation handles repeatable steps; a person steps in when judgment is needed.</p><span className={styles.sceneNote}><i /> FOLLOW AN EXAMPLE INQUIRY THROUGH THE SYSTEM</span></section>
       <NetworkGraphic />
 
       </div>
       <div className={styles.scene} data-software-scene="2" style={sceneMotion(2)}>
-      <section className={`${styles.panel} ${styles.expandPanel}`} data-story-panel id={!enhanced ? "capabilities" : undefined} aria-labelledby="capabilities-title"><p className={styles.eyebrow}>03 / SEE THE BIGGER PICTURE</p><h2 id="capabilities-title">One partner.<br /><em>A world of<br />possibility.</em></h2><p className={styles.body}>Software, automation, AI and operations. <br />Connected by the same team, around <br />the way your business actually works.</p><ul className={styles.capabilityList}><li>Websites, apps & custom software</li><li>CRM, AI agents & integrations</li><li>Cloud, reporting & operations</li></ul><a className={styles.textLink} href="#contact">Find your starting point <span>↗</span></a></section>
+      <section className={`${styles.panel} ${styles.expandPanel}`} data-story-panel id={!enhanced ? "capabilities" : undefined} aria-labelledby="capabilities-title"><p className={styles.eyebrow}>03 / SEE THE BIGGER PICTURE</p><h2 id="capabilities-title">One partner.<br /><em>Every piece<br />connected.</em></h2><p className={styles.body}>A Systems Blueprint maps what to connect, configure or build first. Websites, CRM, automation, AI and operations, with one accountable team.</p><ul className={styles.capabilityList}><li>Real estate · Leads & follow-up</li><li>Medical & aesthetic clinics · Inquiries & consultations</li><li>Title & settlement · Intake, documents & milestones</li><li>Your industry · Built around your goals</li></ul><a className={styles.textLink} href="#contact">Find your starting point <span>↗</span></a></section>
       <EcosystemGraphic />
 
       </div>
       <div className={styles.scene} data-software-scene="3" style={sceneMotion(3)}>
-      <section className={`${styles.panel} ${styles.carePanel}`} data-story-panel id={!enhanced ? "manage" : undefined} aria-labelledby="manage-title"><p className={styles.eyebrow}>04 / STAY WITH WHAT YOU BUILD</p><h2 id="manage-title">Built to launch.<br /><em>Backed to last.</em></h2><p className={styles.body}>Technology should give you time back. <br />We monitor, maintain, and improve it. <br />You keep moving your business forward.</p></section>
+      <section className={`${styles.panel} ${styles.carePanel}`} data-story-panel id={!enhanced ? "manage" : undefined} aria-labelledby="manage-title"><p className={styles.eyebrow}>04 / STAY WITH WHAT YOU BUILD</p><h2 id="manage-title">Built to launch.<br /><em>Backed to last.</em></h2><p className={styles.body}>We monitor connections, maintain your system, support your team and plan improvements. Need people to run the work too? Ask about separate Managed Operations.</p></section>
       <CareGraphic cycle={cycle} />
 
       </div>
       <div className={styles.scene} data-software-scene="4" style={sceneMotion(4)}>
-      <section className={`${styles.panel} ${styles.processPanel}`} data-story-panel id={!enhanced ? "approach" : undefined} aria-labelledby="approach-title"><p className={styles.eyebrow}>05 / HOW WE GET THERE. TOGETHER.</p><h2 id="approach-title">A shared plan.<br /><em>Then, progress.</em></h2><div className={styles.processTabs} role="group" aria-label="Explore our delivery process">{delivery.map((step, index) => <button key={step.name} onClick={() => { setProcessStep(index); setProcessManual(true); }} aria-pressed={processStep === index}><span>0{index + 1}</span>{step.name}<i /></button>)}</div><div className={styles.processCopy} aria-live={processManual ? "polite" : "off"}><h3>{delivery[processStep].title}</h3><p>{delivery[processStep].body}</p></div><a className={styles.textLink} href="#contact">Let’s start with a conversation <span>↗</span></a></section>
+      <section className={`${styles.panel} ${styles.processPanel}`} data-story-panel id={!enhanced ? "approach" : undefined} aria-labelledby="approach-title"><p className={styles.eyebrow}>05 / HOW WE GET THERE. TOGETHER.</p><h2 id="approach-title">A shared plan.<br /><em>Then, progress.</em></h2><div className={styles.processTabs} role="group" aria-label="Explore our delivery process">{delivery.map((step, index) => <button key={step.name} onClick={() => { setProcessStep(index); setProcessManual(true); }} aria-pressed={processStep === index}><span>0{index + 1}</span>{step.name}<i /></button>)}</div><div className={styles.processCopy} aria-live={processManual ? "polite" : "off"}><h3>{delivery[processStep].title}</h3><p>{delivery[processStep].body}</p></div><a className={styles.textLink} href="#contact">Book a Blueprint call <span>↗</span></a></section>
       <ProcessDrawing step={processStep} />
 
       </div>

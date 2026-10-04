@@ -158,7 +158,7 @@ export function EnginaraLanding() {
               Tell us what you are trying to build, automate, or finally get under
               control. We will help you find the clearest next step.
             </p>
-            <a className={styles.contactCta} href="mailto:hello@enginara.com?subject=New%20Enginara%20project">
+            <a className={styles.contactCta} href="mailto:info@enginara.tech?subject=New%20Enginara%20project">
               Start a project <span aria-hidden="true">↗</span>
             </a>
           </div>

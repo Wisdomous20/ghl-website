@@ -1068,7 +1068,7 @@ export function EnginaraSystemExperience() {
           ) : null}
           <a
             className={styles.headerCta}
-            href="mailto:hello@enginara.com?subject=New%20Enginara%20project"
+            href="mailto:info@enginara.tech?subject=New%20Enginara%20project"
           >
             Start a project
           </a>
@@ -1527,7 +1527,7 @@ export function EnginaraSystemExperience() {
                 <motion.a
                   animate={{ opacity: 1, y: 0 }}
                   className={styles.flowCta}
-                  href="mailto:hello@enginara.com?subject=Build%20an%20Enginara%20system"
+                  href="mailto:info@enginara.tech?subject=Build%20an%20Enginara%20system"
                   initial={motionEnabled ? { opacity: 0, y: 12 } : false}
                   transition={{
                     delay: motionEnabled ? currentFlow.length * 0.1 : 0,
@@ -1593,7 +1593,7 @@ export function EnginaraSystemExperience() {
               <div className={styles.finalActions} data-reveal>
                 <a
                   className={styles.primaryButton}
-                  href="mailto:hello@enginara.com?subject=New%20Enginara%20project"
+                  href="mailto:info@enginara.tech?subject=New%20Enginara%20project"
                 >
                   Start a project
                 </a>
