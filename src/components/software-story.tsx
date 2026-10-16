@@ -274,7 +274,7 @@ export function SoftwareStory() {
         <p className={styles.eyebrow}>01 / GIVE THE IDEA A LIFE</p>
         <h2 id="build-title">Your idea.<br /><em>Made real.</em></h2>
         <p className={styles.body}>Start with a proven system, or have us build something custom when off-the-shelf tools fall short.</p>
-        <div className={styles.routes} role="group" aria-label="Choose your starting point"><button onClick={() => setRoute("custom")} aria-pressed={route === "custom"}><span>01</span><strong>Custom Build</strong><small>Imagine it. We engineer it.</small><i>↗</i></button><button onClick={() => setRoute("proven")} aria-pressed={route === "proven"}><span>02</span><strong>Proven System</strong><small>Built on what works. Made yours.</small><i>↗</i></button></div>
+        <div className={styles.routes} role="group" aria-label="Choose your starting point"><button onClick={() => setRoute("proven")} aria-pressed={route === "proven"}><span>01</span><strong>Proven System</strong><small>Built on what works. Made yours.</small><i>↗</i></button><button onClick={() => setRoute("custom")} aria-pressed={route === "custom"}><span>02</span><strong>Custom Build</strong><small>Imagine it. We engineer it.</small><i>↗</i></button></div>
         <span className={styles.buildAnnotation}>Plan → Configure or build → Connect → Manage</span>
       </section>
 
