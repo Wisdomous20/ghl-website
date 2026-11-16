@@ -21,7 +21,7 @@ export function ServiceSystem() {
     </g>
     <g className={styles.careModule}>
       <rect x="262" y="413" width="333" height="70" rx="4" className={styles.sageSurface} /><circle cx="283" cy="435" r="4" className={styles.careBeacon} /><text x="299" y="440" className={styles.moduleTitle}>Keep moving forward.</text><text x="282" y="465" className={styles.miniLabel}>MONITOR</text><text x="369" y="465" className={styles.miniLabel}>MAINTAIN</text><text x="461" y="465" className={styles.miniLabel}>IMPROVE</text><path d="M282 473H338M369 473H433M461 473H519" className={styles.careTrack} /><path d="m549 448 8 0 4-10 6 18 5-9 12 0" className={styles.careTrace} pathLength="1" /><rect x="282" y="472" width="56" height="2" className={styles.careProgress} />
-      <text x="262" y="507" className={styles.moduleLabel}>03 / MANAGED OPERATIONS</text>
+      <text x="262" y="507" className={styles.moduleLabel}>03 / MANAGED SOLUTIONS</text>
     </g>
   </svg>;
 }

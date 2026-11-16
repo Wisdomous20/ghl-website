@@ -17,7 +17,7 @@ const detail = Manrope({
 export const metadata: Metadata = {
   title: "Enginara | You imagine. We build. We manage.",
   description:
-    "Enginara builds custom software, automates business workflows, and provides the technical support that keeps every system useful.",
+    "Enginara provides software and technology solutions, streamlined business operations, AI integrations and automation, and people and managed support services.",
   keywords: [
     "custom software development",
     "workflow automation",

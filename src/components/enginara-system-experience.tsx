@@ -1124,7 +1124,7 @@ export function EnginaraSystemExperience() {
                 </p>
               </div>
               <p className={styles.heroSub} data-hero-sub>
-                Software · Automation · AI systems · Managed operations
+                Software · Automation · AI systems · Managed Solutions
               </p>
               <h1 className={styles.heroLines} id="hero-title">
                 <span data-hero-line>
@@ -1321,7 +1321,7 @@ export function EnginaraSystemExperience() {
                 <span>Software</span>
                 <span>Automation</span>
                 <span>AI systems</span>
-                <span>Managed operations</span>
+                <span>Managed Solutions</span>
               </div>
               <ul className={styles.srOnly}>
                 {capabilityNames.map((capability) => (

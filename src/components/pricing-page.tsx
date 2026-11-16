@@ -8,17 +8,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SiteHeader } from "./site-header";
 import { EnginaraMark } from "./enginara-mark";
 import { PencilArrow, PencilUnderline, SketchLink } from "./sketch-controls";
-import { inquiryHref, pricingOptions } from "./pricing-options";
+import { inquiryHref, pricingOptions, pricingDisclaimer, supportTerms } from "./pricing-options";
 import site from "./enginara-laptop-experience.module.css";
 import styles from "./pricing-page.module.css";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const questions = [
-  { question: "Which starting point fits my business?", answer: "Start with a Systems Blueprint if the next step isn’t clear. A Proven System fits work that existing tools can support. A Custom Build fits requirements those tools can’t meet. We’ll recommend the simpler path when it does the job." },
-  { question: "Can you work with the tools we already use?", answer: "We map your existing tools and handoffs before recommending changes. The Blueprint identifies what to retain, what to connect and where configuration or custom development is needed." },
+  { question: "Which starting point fits my business?", answer: "Start with a Systems Blueprint to plan a Custom Build. A Proven System fits work that existing tools can support. A Custom Build fits requirements those tools can’t meet. We’ll recommend the simpler path when it does the job." },
+  { question: "Can you work with the tools we already use?", answer: "We map your existing tools and handoffs before recommending changes. For a Custom Build, the Blueprint identifies what to retain, what to connect and where custom development is needed. Pre-built packages carry an activation/setup fee." },
+  { question: "What are the support response and resolution times?", answer: supportTerms },
   { question: "What happens after launch?", answer: "We monitor connections, keep the system current, support your team and plan improvements as your needs change. We’ll discuss ongoing care alongside the build so you can understand both parts of the work." },
-  { question: "Is Managed Operations the same as system care?", answer: "No. System care maintains and improves the technology. Managed Operations is a separate service with trained team members carrying out a defined set of monthly services, such as marketing, administrative support and reporting." },
+  { question: "Is Managed Solutions the same as system care?", answer: "No. System care maintains and improves the technology. Managed Solutions is a separate service with trained team members carrying out a defined set of monthly services, such as marketing, administrative support and reporting." },
 ];
 
 function PlanningSheets() {
@@ -73,13 +74,14 @@ export function PricingPage() {
           <div className={styles.offerPrice}><dl className={styles.priceBreakdown}>{option.prices.map(price => <div key={price.label}><dt className={styles.priceLabel}>{price.label}</dt><dd className={styles.price}><span>From </span>{price.amount}<small>{price.suffix}</small></dd></div>)}</dl><p className={styles.priceNote}>{option.priceNote}</p><a className={styles.textLink} href={inquiryHref(option.subject)}>{option.action}<PencilArrow /></a></div>
         </article>)}
       </div>
-      <p className={styles.scopeNote}>These are starting prices. Third-party software, hosting, migrations, custom additions and Managed Operations are scoped separately where they apply.</p>
+      <p className={styles.scopeNote}>Each Custom Build is individually scoped. These are starting prices. Third-party software, hosting, migrations, custom additions and Managed Solutions are scoped separately where they apply.</p>
+      <aside className={styles.terms} aria-labelledby="pricing-terms-title"><h3 id="pricing-terms-title">Pricing & terms</h3><p>{pricingDisclaimer}</p><h3>Support for all packages</h3><p>{supportTerms}</p></aside>
       <p className={styles.scopeNote}>Not sure which path fits? <a href={inquiryHref("Help choosing a starting point")}>Tell us where the work gets stuck <span aria-hidden="true">↗</span></a></p>
     </section>
 
     <section className={styles.care} aria-labelledby="pricing-care-title">
       <div className={styles.careIntro}><p className={styles.kicker}>Beyond the build</p><h2 id="pricing-care-title" data-care-heading>{["Built to launch.", "Backed to last."].map(line => <span key={line}>{line.split(" ").map((word, index) => <span key={index} data-care-word>{word} </span>)}</span>)}</h2><p>Technology should give you time back. We stay with the system as your business changes.</p><a className={styles.textLink} href={inquiryHref("Ongoing system care inquiry")}>Discuss ongoing care <PencilArrow /></a></div>
-      <div className={styles.careDetails}><div className={styles.careLine}><span aria-hidden="true">↗</span><div><h3>Keep the system working.</h3><p>Monitor connections, keep everything current and support the people using it.</p></div></div><div className={styles.careLine}><span aria-hidden="true">↗</span><div><h3>Improve it with a plan.</h3><p>Make considered improvements as your workflows, team and goals evolve.</p></div></div><div className={styles.operations}><p className={styles.kicker}>A separate service</p><h3>Need people to run the work, too?</h3><p>Managed Operations provides trained team members for a defined set of monthly services, such as marketing, administrative support and reporting.</p><a className={styles.textLink} href={inquiryHref("Managed Operations inquiry")}>Talk about Managed Operations <PencilArrow /></a></div></div>
+      <div className={styles.careDetails}><div className={styles.careLine}><span aria-hidden="true">↗</span><div><h3>Keep the system working.</h3><p>Monitor connections, keep everything current and support the people using it.</p></div></div><div className={styles.careLine}><span aria-hidden="true">↗</span><div><h3>Improve it with a plan.</h3><p>Make considered improvements as your workflows, team and goals evolve.</p></div></div><div className={styles.operations}><p className={styles.kicker}>A separate service</p><h3>Managed Solutions</h3><p>Software and technology, streamlined business operations, AI integrations and automation, and trained people to manage the work. Monthly services can include marketing, administrative support and reporting.</p><a className={styles.textLink} href={inquiryHref("Managed Solutions inquiry")}>Talk about Managed Solutions <PencilArrow /></a></div></div>
     </section>
 
     <section className={styles.faq} aria-labelledby="pricing-faq-title"><div><p className={styles.kicker}>Before we get started</p><h2 id="pricing-faq-title">A few good<br /><span>questions.</span></h2></div><div className={styles.questions}>{questions.map(item => <details key={item.question}><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}</div></section>

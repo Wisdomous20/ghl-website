@@ -23,7 +23,7 @@ const delivery = [
   { name: "Discover", title: "First, understand.", body: "The Blueprint maps how your work really runs: tools, people, data, handoffs and bottlenecks. You get a clear recommendation on what to fix first, plus a step-by-step build plan.", outcome: "A shared picture", note: "What should work better?" },
   { name: "Design", title: "Next, decide.", body: "Together, we decide what to set up, what to build, what to connect, where your information lives and who owns each step.", outcome: "One buildable blueprint", note: "Every connection considered." },
   { name: "Build", title: "Then, make it work.", body: "We build in working phases, connect your tools, test the handoffs, document the setup and train the people who will use it.", outcome: "A working system", note: "Ready for the real world." },
-  { name: "Operate", title: "Evolving with you. Accountable throughout.", body: "We monitor connections, keep your system current and plan improvements as your business changes. Managed Operations is separate: trained people for defined monthly services.", outcome: "An ongoing partnership", note: "The next chapter starts here." },
+  { name: "Operate", title: "Evolving with you. Accountable throughout.", body: "We monitor connections, keep your system current and plan improvements as your business changes. Managed Solutions is separate: trained people for defined monthly services.", outcome: "An ongoing partnership", note: "The next chapter starts here." },
 ] as const;
 
 const capabilities = [
@@ -288,12 +288,12 @@ export function SoftwareStory() {
 
       </div>
       <div className={styles.scene} data-software-scene="2" style={sceneMotion(2)}>
-      <section className={`${styles.panel} ${styles.expandPanel}`} data-story-panel id={!enhanced ? "capabilities" : undefined} aria-labelledby="capabilities-title"><p className={styles.eyebrow}>03 / SEE THE BIGGER PICTURE</p><h2 id="capabilities-title">One partner.<br /><em>Every piece<br />connected.</em></h2><p className={styles.body}>A Systems Blueprint maps what to connect, configure or build first. Websites, CRM, automation, AI and operations, with one accountable team.</p><ul className={styles.capabilityList}><li>Real estate · Leads & follow-up</li><li>Medical & aesthetic clinics · Inquiries & consultations</li><li>Title & settlement · Intake, documents & milestones</li><li>Your industry · Built around your goals</li></ul><a className={styles.textLink} href="#contact">Find your starting point <span>↗</span></a></section>
+      <section className={`${styles.panel} ${styles.expandPanel}`} data-story-panel id={!enhanced ? "capabilities" : undefined} aria-labelledby="capabilities-title"><p className={styles.eyebrow}>03 / SEE THE BIGGER PICTURE</p><h2 id="capabilities-title">One partner.<br /><em>Every piece<br />connected.</em></h2><p className={styles.body}>You scale. We connect the technology and the people behind your business. Software, streamlined operations, AI integrations and automation, with managed support from one accountable team.</p><ul className={styles.capabilityList}><li>Real estate · Leads & follow-up</li><li>Medical & aesthetic clinics · Inquiries & consultations</li><li>Title & settlement · Intake, documents & milestones</li><li>Your industry · Built around your goals</li></ul><a className={styles.textLink} href="#contact">Find your starting point <span>↗</span></a></section>
       <EcosystemGraphic />
 
       </div>
       <div className={styles.scene} data-software-scene="3" style={sceneMotion(3)}>
-      <section className={`${styles.panel} ${styles.carePanel}`} data-story-panel id={!enhanced ? "manage" : undefined} aria-labelledby="manage-title"><p className={styles.eyebrow}>04 / STAY WITH WHAT YOU BUILD</p><h2 id="manage-title">Built to launch.<br /><em>Backed to last.</em></h2><p className={styles.body}>We monitor connections, maintain your system, support your team and plan improvements. Need people to run the work too? Ask about separate Managed Operations.</p></section>
+      <section className={`${styles.panel} ${styles.carePanel}`} data-story-panel id={!enhanced ? "manage" : undefined} aria-labelledby="manage-title"><p className={styles.eyebrow}>04 / STAY WITH WHAT YOU BUILD</p><h2 id="manage-title">Built to launch.<br /><em>Backed to last.</em></h2><p className={styles.body}>We monitor connections, maintain your system, support your team and plan improvements. Need people to run the work too? Ask about separate Managed Solutions.</p></section>
       <CareGraphic cycle={cycle} />
 
       </div>

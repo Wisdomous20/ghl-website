@@ -9,7 +9,7 @@ const memory = {
   details: ["Organise information around real work.", "Keep context consistent across your tools."],
 };
 const battery = {
-  service: "Managed operations", title: "Built for the days after launch.",
+  service: "Managed Solutions", title: "Built for the days after launch.",
   copy: "Power keeps the system useful. Our ongoing care gives your website and software a dependable team for maintenance, fixes, and the next improvement.",
   details: ["Maintain updates, backups, and connections.", "Plan improvements around your priorities."],
 };

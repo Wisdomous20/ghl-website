@@ -32,7 +32,7 @@
 .offer:first-child { background: var(--paper-light); margin: 0 -28px; padding: 45px 28px; border-top: 2px solid var(--accent-ink); }
 .offerName { position: relative; }
 .offerIndex { font-family: var(--font-display), sans-serif; font-size: 13px; display: block; margin-bottom: 35px; color: var(--accent-ink); }
-.offerName .kicker { font-size: 9px; margin-bottom: 10px; }
+.offerName .kicker { font-size: 12px; margin-bottom: 12px; }
 .offerName h3 { font-family: var(--font-display), sans-serif; font-size: clamp(25px, 2.2vw, 35px); font-weight: 400; letter-spacing: -.05em; line-height: 1.2; margin: 0 0 18px; }
 .fit { color: var(--muted); font-size: 13px; line-height: 1.8; margin: 0; max-width: 31ch; }
 .offerDetails { padding-top: 55px; }
@@ -42,16 +42,20 @@
 .offerDetails li { display: flex; gap: 10px; color: var(--muted); font-size: 13px; line-height: 1.7; padding: 6px 0; }
 .offerDetails li::before { content: "+"; color: var(--accent-ink); flex-shrink: 0; }
 .offerPrice { padding-top: 55px; display: flex; flex-direction: column; align-items: flex-start; }
-.priceLabel { color: var(--muted); text-transform: uppercase; font-size: 9px; letter-spacing: 1.2px; }
+.priceLabel { color: var(--muted); text-transform: uppercase; font-size: 12px; line-height: 1.6; letter-spacing: 1px; }
 .price { color: var(--accent-ink); font-family: var(--font-display), sans-serif; font-size: clamp(24px, 2.1vw, 34px); line-height: 1.3; letter-spacing: -.045em; margin: 12px 0; }
 .priceBreakdown { margin: 0; width: 100%; }
 .priceBreakdown > div + div { border-top: 1px solid var(--line); padding-top: 16px; margin-top: 16px; }
 .price > span { display: block; font-family: var(--font-detail), sans-serif; font-size: 11px; letter-spacing: 0; color: var(--muted); margin-bottom: 5px; }
 .price small { font-family: var(--font-detail), sans-serif; font-size: 12px; letter-spacing: 0; color: var(--muted); margin-left: 3px; }
-.priceNote { color: var(--muted); font-size: 12px; line-height: 1.7; margin: 0 0 22px; }
+.priceNote { color: var(--muted); font-size: 14px; line-height: 1.8; margin: 0 0 24px; }
 .offerPrice .textLink { margin-top: auto; font-size: 12px; }
 .scopeNote { margin: 30px 0 0; color: var(--muted); font-size: 13px; line-height: 1.9; }
 .scopeNote a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 4px; display: inline-block; }
+.terms { margin-top: 36px; padding-block: 28px; border-block: 1px solid var(--line); }
+.terms h3 { margin: 0 0 12px; font-size: 18px; font-weight: 600; line-height: 1.5; }
+.terms p { max-width: 75ch; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.9; }
+.terms p + h3 { margin-top: 28px; }
 .care { display: grid; grid-template-columns: 1fr 1fr; gap: 12%; padding: 125px 8%; background: var(--paper-light); }
 .care h2 > span { display: block; }
 .care h2 > span:last-child { color: var(--graphite); }

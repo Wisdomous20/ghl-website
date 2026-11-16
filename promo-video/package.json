@@ -1,0 +1,33 @@
+{
+    "name":  "promo-video",
+    "version":  "1.0.0",
+    "description":  "Enginara cinematic website film and original 30-second promo",
+    "repository":  {
+
+                   },
+    "license":  "UNLICENSED",
+    "private":  true,
+    "dependencies":  {
+                         "@remotion/cli":  "4.0.535",
+                         "react":  "19.2.3",
+                         "react-dom":  "19.2.3",
+                         "remotion":  "4.0.535",
+                         "@remotion/media":  "4.0.535"
+                     },
+    "devDependencies":  {
+                            "typescript":  "5.9.3",
+                            "@types/react":  "19.2.7",
+                            "playwright":  "1.58.2"
+                        },
+    "scripts":  {
+                    "dev":  "remotion studio",
+                    "check":  "tsc --noEmit",
+                    "capture":  "node capture.mjs",
+                    "encode":  "remotion ffmpeg -y -framerate 30 -i capture/frame-%04d.jpg -c:v libx264 -crf 16 -pix_fmt yuv420p -movflags +faststart public/site-motion.mp4",
+                    "render":  "remotion render Enginara-Promo out/enginara-promo-30s.mp4 --crf=16 --concurrency=4",
+                    "capture:cinematic":  "node capture-cinematic.mjs",
+                    "score":  "python score.py",
+                    "render:cinematic":  "remotion render Enginara-Cinematic out/enginara-cinematic-60s.mp4 --crf=16 --concurrency=4",
+                    "encode:cinematic":  "node encode-cinematic.mjs"
+                }
+}

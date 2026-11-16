@@ -61,7 +61,7 @@ export function BuildChapter({ ref }: { ref: Ref<BuildChapterHandle> }) {
     <div className={styles.logoMoment} ref={identity}>
       <p className={styles.identityEyebrow}>02 / THE IDEA BECOMES A SYSTEM</p>
       <div className={styles.identityWord}><EnginaraMark /><strong aria-label="Enginara">{"Enginara".split("").map((letter, index) => <span aria-hidden="true" key={index} style={{ animationDelay: `${index * .06}s` }}>{letter}</span>)}<span className={styles.identityDot} aria-hidden="true">.</span></strong></div>
-      <p className={styles.identityServices}>Software · Automation · AI systems · Managed operations</p>
+      <p className={styles.identityServices}>Software · Automation · AI systems · Managed Solutions</p>
       <div className={styles.promise}>
         {[["You", "imagine.", "An idea worth making."], ["We", "build.", "The right tools, connected."], ["We", "manage.", "Grow without starting over."]].map(([prefix, verb, detail], index) => <div key={verb}><span className={styles.promiseNumber}>0{index + 1}</span><h2>{prefix}{" "}<em>{verb}</em></h2><p>{detail}</p><i aria-hidden="true" /></div>)}
       </div>
