@@ -7,17 +7,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EnginaraMark } from "./enginara-mark";
 import { WebsiteDemo, WorkspaceDemo } from "./software-demos";
 import { useMotionPlayback } from "./use-motion-playback";
+import { SoftwareChapterNav, softwareBeats as beats } from "./software-chapter-nav";
 import styles from "./software-story.module.css";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-const beats = [
-  { id: "build-paths", label: "Build", at: .12 },
-  { id: "automate", label: "Connect", at: .355 },
-  { id: "capabilities", label: "Expand", at: .54 },
-  { id: "manage", label: "Care", at: .745 },
-  { id: "approach", label: "Our approach", at: .97 },
-] as const;
 
 const delivery = [
   { name: "Discover", title: "First, understand.", body: "The Blueprint maps how your work really runs: tools, people, data, handoffs and bottlenecks. You get a clear recommendation on what to fix first, plus a step-by-step build plan.", outcome: "A shared picture", note: "What should work better?" },
@@ -167,7 +160,6 @@ export function SoftwareStory() {
       const process = element.querySelector<HTMLElement>("[data-process-drawing]");
       const blueprint = element.querySelector<HTMLElement>("[data-blueprint]");
       const progress = element.querySelector<HTMLElement>("[data-story-progress]");
-      const paper = element.querySelector<HTMLElement>("[data-paper-wipe]");
       const timeline = gsap.timeline({ defaults: { ease: "power2.inOut" }, scrollTrigger: {
         trigger: element, start: "top top", end: "bottom bottom", scrub: .65, invalidateOnRefresh: true,
         onUpdate: self => {
@@ -209,7 +201,6 @@ export function SoftwareStory() {
         .to(panels[3], { autoAlpha: 1, y: 0, duration: .065 }, .625)
         .to(panels[3], { autoAlpha: 0, y: -65, duration: .05 }, .78)
         .to(care, { scale: .72, rotation: -8, y: -50, autoAlpha: 0, duration: .09 }, .775)
-        .fromTo(paper, { clipPath: "circle(0% at 37% 57%)" }, { clipPath: "circle(110% at 37% 57%)", duration: .11 }, .785)
         .to(panels[4], { autoAlpha: 1, y: 0, duration: .075 }, .815)
         .to(process, { autoAlpha: 1, y: 0, rotation: 0, scale: 1, duration: .115 }, .815)
         .to({}, { duration: .07 }, .93);
@@ -263,11 +254,10 @@ export function SoftwareStory() {
     return () => media.revert();
   }, { scope: root });
 
-  return <div className={styles.story} ref={root} id="build" tabIndex={-1} role="region" aria-label="Explore what we build" data-process-manual={processManual}>
+  return <div className={styles.story} ref={root} role="region" aria-label="Explore what we build" data-process-manual={processManual}>
     {beats.map(beat => <div key={beat.id} className={styles.anchor} id={enhanced ? beat.id : undefined} style={{ top: `calc(${beat.at * 100}% - ${beat.at * 100}svh)` }} aria-hidden="true" />)}
     <div className={styles.stage} ref={stage}>
-      <div className={styles.paperWipe} data-paper-wipe aria-hidden="true" />
-      <header className={styles.stageHeader}><a href="#imagine" aria-label="Enginara home"><EnginaraMark /><span>ENGINARA</span></a><span>FROM IDEA TO EVERYDAY.</span><button className={`${styles.motionToggle} ${styles.mobilePause}`} aria-pressed={playback.paused} onClick={() => { playback.setPaused(!playback.paused); if (playback.paused) setProcessManual(false); }}>{playback.paused ? "▷ Play motion" : "Ⅱ Pause motion"}</button><a href="#contact">Start a project <span>↗</span></a></header>
+      <header className={styles.stageHeader}><a href="#top" aria-label="Enginara home"><EnginaraMark /><span>ENGINARA</span></a><span>FROM IDEA TO EVERYDAY.</span><button className={`${styles.motionToggle} ${styles.mobilePause}`} aria-pressed={playback.paused} onClick={() => { playback.setPaused(!playback.paused); if (playback.paused) setProcessManual(false); }}>{playback.paused ? "▷ Play motion" : "Ⅱ Pause motion"}</button><a href="#contact">Start a project <span>↗</span></a></header>
 
       <div className={styles.scene} data-software-scene="0" style={sceneMotion(0)}>
       <section className={`${styles.panel} ${styles.buildPanel}`} data-story-panel id={!enhanced ? "build-paths" : undefined} aria-labelledby="build-title">
@@ -302,7 +292,7 @@ export function SoftwareStory() {
       <ProcessDrawing step={processStep} />
 
       </div>
-      <footer className={styles.stageFooter}><nav aria-label="The working system">{beats.map((beat, index) => <a key={beat.id} href={`#${beat.id}`} aria-current={enhanced && active === index ? "step" : undefined}><span>0{index + 1}</span>{beat.label}</a>)}</nav><button className={styles.motionToggle} aria-pressed={playback.paused} onClick={() => { playback.setPaused(!playback.paused); if (playback.paused) setProcessManual(false); }}>{playback.paused ? "▷ Play motion" : "Ⅱ Pause motion"}</button><div className={styles.progress}><i data-story-progress /></div></footer>
+      <footer className={styles.stageFooter}><SoftwareChapterNav current={enhanced ? beats[active].id : undefined} /><button className={styles.motionToggle} aria-pressed={playback.paused} onClick={() => { playback.setPaused(!playback.paused); if (playback.paused) setProcessManual(false); }}>{playback.paused ? "▷ Play motion" : "Ⅱ Pause motion"}</button><div className={styles.progress}><i data-story-progress /></div></footer>
     </div>
   </div>;
 }

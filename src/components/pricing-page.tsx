@@ -7,6 +7,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SiteHeader } from "./site-header";
 import { EnginaraMark } from "./enginara-mark";
+import { PackageComparison } from "./package-comparison";
+import offers from "./services-overview.module.css";
 import { PencilArrow, PencilUnderline, SketchLink } from "./sketch-controls";
 import { inquiryHref, pricingOptions, pricingDisclaimer, supportTerms } from "./pricing-options";
 import site from "./enginara-laptop-experience.module.css";
@@ -54,14 +56,14 @@ export function PricingPage() {
   }, { scope: root });
 
   return <main className={`${site.page} ${styles.page}`} ref={root} id="top">
-    <a className={site.skip} href="#options">Skip to pricing</a>
+    <a className={site.skip} href="#packages">Skip to packages</a>
     <SiteHeader pricing />
 
     <section className={styles.hero} data-pricing-hero aria-labelledby="pricing-title">
       <p className={styles.kicker}>Pricing & build paths</p>
       <h1 id="pricing-title">A clear plan.<br /><span>The right investment.<PencilUnderline /></span></h1>
       <p className={styles.heroLead}>Start with what your business needs.<br className={styles.desktopBreak} /> Build the right system, with one team accountable.</p>
-      <div className={styles.heroActions}><SketchLink href="#options">Find your starting point</SketchLink><a className={styles.textLink} href="#contact">Talk it through <PencilArrow /></a></div>
+      <div className={styles.heroActions}><SketchLink href="#packages">Compare packages</SketchLink><a className={styles.textLink} href="#options">See starting prices <PencilArrow /></a></div>
       <div className={styles.heroFoot}><p>A Blueprint to understand.<br />A build to bring it together.<br /><strong>A partner beyond launch.</strong></p><PlanningSheets /></div>
     </section>
 
@@ -86,7 +88,10 @@ export function PricingPage() {
 
     <section className={styles.faq} aria-labelledby="pricing-faq-title"><div><p className={styles.kicker}>Before we get started</p><h2 id="pricing-faq-title">A few good<br /><span>questions.</span></h2></div><div className={styles.questions}>{questions.map(item => <details key={item.question}><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}</div></section>
 
+    <div className={offers.darkGroup}>
+    <PackageComparison customBuildHref="#custom-build" startingPricesHref="#options" />
     <section className={`${site.contact} ${styles.contact}`} id="contact" aria-labelledby="pricing-contact-title"><p className={site.eyebrow}><span />LET’S FIND YOUR STARTING POINT</p><h2 id="pricing-contact-title">What should we<br /><em>build together?</em></h2><p className={site.contactCopy}>Tell us what you already use and where the work gets stuck. We’ll help you find the right next step.</p><div className={site.contactActions}><a className={site.primaryButton} href={inquiryHref("Blueprint call request")}>Book a call <PencilArrow /></a><a className={site.secondaryButton} href={inquiryHref("Project details")}>Send us the details <PencilArrow /></a></div><a className={site.email} href="mailto:info@enginara.tech">info@enginara.tech</a></section>
     <footer className={site.footer}><div className={site.footerWordmark} aria-hidden="true">enginara<span>.</span></div><div className={site.footerBottom}><Link className={site.brand} href="/" aria-label="Enginara home"><EnginaraMark /></Link><p>You imagine. We build. We manage.</p><Link href="/">Back to the story <span aria-hidden="true">↗</span></Link><span>© {new Date().getFullYear()} Enginara</span><a href="#top">Back to top ↑</a></div></footer>
+    </div>
   </main>;
 }

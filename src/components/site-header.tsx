@@ -29,9 +29,10 @@ export function SiteHeader({ pricing = false }: { pricing?: boolean }) {
   }, []);
 
   return <header className={styles.header}>
-    <Link className={styles.brand} href={`${home}#imagine`} aria-label="Enginara home"><EnginaraMark /><span>Enginara<span className={styles.brandDot}>.</span></span></Link>
+    <Link className={styles.brand} href={`${home}#top`} aria-label="Enginara home"><EnginaraMark /><span>Enginara<span className={styles.brandDot}>.</span></span></Link>
     <nav className={styles.desktopNav} aria-label="Main navigation">
       <Link href={`${home}#build`}>What we do</Link>
+      <Link href="#packages">Packages</Link>
       <Link href={`${home}#approach`}>Our approach</Link>
       <Link href="/pricing" aria-current={pricing ? "page" : undefined}>Pricing</Link>
       <SketchLink href="#contact" compact>Start a project</SketchLink>
@@ -43,6 +44,7 @@ export function SiteHeader({ pricing = false }: { pricing?: boolean }) {
       }}>
         <Link href={`${home}#imagine`}>The idea <span>01</span></Link>
         <Link href={`${home}#build`}>What we do <span>02</span></Link>
+        <Link href="#packages">Packages</Link>
         <Link href={`${home}#approach`}>Our approach <span>03</span></Link>
         <Link href="/pricing" aria-current={pricing ? "page" : undefined}>Pricing <span>04</span></Link>
         <a href="#contact">Start a project <span aria-hidden="true">↗</span></a>
