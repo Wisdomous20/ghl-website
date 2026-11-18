@@ -10,17 +10,17 @@
 .identityWord strong > span { display: inline-block; animation: wordBuild 12s cubic-bezier(.22,1,.36,1) infinite; animation-play-state: var(--motion-state, paused); }.identityWord .identityDot { color: var(--signal-orange); }
 .identityServices { font-size: 11px; letter-spacing: .9px; color: var(--build-muted); margin: 20px 0 0; }
 .logoMoment > small { font-size: 9px; letter-spacing: 1.6px; margin-top: 6vh; color: var(--build-muted); }.logoMoment > small > span { margin-left: 20px; color: var(--signal-orange); }
-.promise { display: grid; grid-template-columns: repeat(3, 1fr); width: 80%; max-width: 1270px; margin-top: 8vh; position: relative; }
-.promise > div { position: relative; padding: 0 28px 28px; border-bottom: 1px solid var(--build-line); }
+.promise { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 84%; max-width: 1270px; margin-top: 8vh; position: relative; }
+.promise > div { position: relative; padding: 0 clamp(12px, 1.75vw, 28px) 24px; border-bottom: 1px solid var(--build-line); }
 .promiseNumber { display: block; font-size: 10px; letter-spacing: 1px; color: var(--build-muted); margin-bottom: 16px; }
-.promise h2 { font-family: var(--font-display), sans-serif; font-size: clamp(24px, 2.8vw, 48px); font-weight: 400; letter-spacing: -.055em; margin: 0; white-space: nowrap; }.promise h2 em { color: var(--signal-orange); font-style: normal; }
+.promise h2 { font-family: var(--font-display), sans-serif; font-size: clamp(24px, 2.65vw, 45px); font-weight: 400; letter-spacing: -.055em; margin: 0; white-space: nowrap; }.promise h2 em { color: var(--signal-orange); font-style: normal; }
 .promise p { color: var(--build-muted); font-size: 12px; margin: 13px 0 0; }
-.promise i { position: absolute; inset: auto 0 -1px; height: 2px; background: var(--signal-orange); transform-origin: left; animation: promiseLine 9s linear infinite; animation-play-state: var(--motion-state, paused); }
-.promise > div:nth-child(2) i { animation-delay: 3s; }.promise > div:nth-child(3) i { animation-delay: 6s; }
+.promise i { position: absolute; inset: auto 0 -1px; height: 2px; background: var(--signal-orange); transform-origin: left; animation: promiseLine 12s linear infinite; animation-play-state: var(--motion-state, paused); }
+.promise > div:nth-child(2) i { animation-delay: 3s; }.promise > div:nth-child(3) i { animation-delay: 6s; }.promise > div:nth-child(4) i { animation-delay: 9s; }
 .motionToggle { position: absolute; right: 6%; bottom: 72px; z-index: 5; display: flex; gap: 9px; align-items: center; min-height: 32px; padding: 6px 0; border: 0; background: transparent; color: var(--build-muted); font-size: 10px; cursor: pointer; }.motionToggle span { color: var(--signal-orange); }.motionToggle:hover { color: var(--signal-orange); }.motionToggle:focus-visible { outline-color: var(--signal-orange); }
 @keyframes wordBuild { 0% { opacity: 0; transform: translateY(85%); } 8%, 93% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20%); } }
 @keyframes railBuild { 0% { opacity: 0; transform: translateX(-65px) scaleX(.6); } 9%, 94% { opacity: 1; transform: translateX(0) scaleX(1); } 100% { opacity: 0; transform: translateX(25px) scaleX(.9); } }
-@keyframes promiseLine { 0% { transform: scaleX(0); opacity: 1; } 30% { transform: scaleX(1); opacity: 1; } 34%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes promiseLine { 0% { transform: scaleX(0); opacity: 1; } 22% { transform: scaleX(1); opacity: 1; } 25%, 100% { transform: scaleX(1); opacity: 0; } }
 .services { position: absolute; inset: 0; opacity: var(--service-reveal); padding: 28px 6% 25px; pointer-events: none; }
 .services a { pointer-events: auto; }.services[inert] a { pointer-events: none; }
 .serviceHeader, .serviceFooter { display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 10px; letter-spacing: 1px; color: var(--build-muted); }
@@ -55,7 +55,7 @@
 .chapter[data-motion=ready] .identityWord strong > span, .chapter[data-motion=ready] .identityWord > svg rect { animation: none; }
 .chapter[data-motion=ready] .promise i { opacity: 0; }
 .logoMoment[aria-hidden=true] *, .services[aria-hidden=true] * { animation-play-state: paused !important; }
-.promise h2 { display: flex; gap: .2em; }
+
 .softwareModule, .automationModule, .careModule { transition: opacity .65s cubic-bezier(.22,1,.36,1), transform .85s cubic-bezier(.22,1,.36,1); }
 .connections > path { transition: stroke-dashoffset .85s cubic-bezier(.22,1,.36,1); }
 @media (prefers-reduced-motion: reduce) { .softwareModule, .automationModule, .careModule, .connections > path { transition: none; } }
@@ -64,8 +64,8 @@
   .identityEyebrow { font-size: 9px; letter-spacing: 1.3px; margin-bottom: 30px; }
   .identityWord { gap: 18px; }.identityWord > svg { width: 45px; }.identityWord strong { font-size: clamp(48px, 12vw, 90px); }
   .identityServices { font-size: 9px; letter-spacing: .25px; max-width: 86%; text-align: center; line-height: 1.9; margin-top: 16px; }
-  .promise { grid-template-columns: 1fr; width: 78%; max-width: 500px; margin-top: 34px; gap: 19px; }
-  .promise > div { padding: 0 0 16px 34px; }.promiseNumber { position: absolute; left: 0; top: 8px; font-size: 9px; }.promise h2 { font-size: clamp(26px, 7vw, 42px); }.promise p { font-size: 11px; margin-top: 7px; }
+  .promise { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 86%; max-width: 500px; margin-top: 34px; gap: 15px; }
+  .promise > div { padding: 0 0 12px; }.promiseNumber { font-size: 10px; margin-bottom: 6px; }.promise h2 { font-size: clamp(20px, 5.5vw, 36px); white-space: normal; }.promise p { font-size: 11px; margin-top: 7px; }
   .logoMoment > small { font-size: 7px; letter-spacing: .9px; margin-top: 32px; max-width: 86%; text-align: center; }.logoMoment > small > span { margin-left: 9px; }
   .services { padding: 16px 6%; }.serviceHeader { font-size: 9px; padding-bottom: 12px; gap: 12px; }.serviceHeader a { font-size: 11px; min-height: 44px; display: flex; align-items: center; }.serviceHeader a span { margin-left: 10px; }
   .serviceCopy { left: 6%; top: 15%; width: 88%; max-width: 600px; }.serviceCopy article > p:first-child { font-size: 9px; letter-spacing: 1.1px; margin-bottom: 18px; }.serviceCopy h2 { font-size: clamp(31px, 8.7vw, 50px); margin-bottom: 17px; }.serviceCopy article > p:not(:first-child) { font-size: 13px; line-height: 1.8; margin: 0; max-width: 500px; }.serviceCopy small { display: none; }
@@ -78,6 +78,6 @@
   .chapter:not([data-animated]) .system { position: relative; right: auto; bottom: auto; display: block; width: 100%; margin: 0 auto; max-height: none; }
 }
 @media (max-width: 949px) and (max-height: 710px) {
-  .identityEyebrow { margin-bottom: 20px; }.identityWord strong { font-size: 48px; }.identityWord > svg { width: 38px; }.promise { margin-top: 25px; gap: 13px; }.promise h2 { font-size: 25px; }.promise p { font-size: 10px; }.promise > div { padding-bottom: 12px; }.logoMoment > small { margin-top: 24px; }
+  .identityEyebrow { margin-bottom: 20px; }.identityWord strong { font-size: 48px; }.identityWord > svg { width: 38px; }.promise { margin-top: 25px; gap: 13px; }.promise p { font-size: 11px; }.promise > div { padding-bottom: 12px; }.logoMoment > small { margin-top: 24px; }
   .serviceCopy { top: 16%; }.serviceCopy article > p:first-child { margin-bottom: 13px; }.serviceCopy h2 { font-size: 29px; margin-bottom: 12px; }.serviceCopy article > p:not(:first-child) { font-size: 12px; max-width: 420px; }.system { bottom: 84px; max-height: 37%; }
 }
