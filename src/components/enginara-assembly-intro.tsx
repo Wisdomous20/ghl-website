@@ -6,12 +6,13 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { LaptopScene } from "./enginara-laptop-scene";
 import { OpeningFilm } from "./opening-film";
-import { PencilArrow, PencilUnderline, SketchLink } from "./sketch-controls";
+import { PencilArrow, PencilUnderline } from "./sketch-controls";
 import { AssemblyInspector } from "./assembly-inspector";
 import type { AssemblyPartId } from "./assembly-parts";
 import { BuildChapter, type BuildChapterHandle } from "./build-chapter";
-import { ASSEMBLY_STORY, ASSEMBLY_PORTION, phase, storyOpacity } from "./assembly-story";
+import { ASSEMBLY_STORY, ASSEMBLY_PORTION, assemblyCaptionAt, phase } from "./assembly-story";
 import styles from "./enginara-assembly-intro.module.css";
+import site from "./enginara-laptop-experience.module.css";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -180,23 +181,21 @@ export function EnginaraAssemblyIntro() {
         status.current.inert = p < .185 || p > .89 || Boolean(selectedRef.current);
       }
       if (progressLine.current) progressLine.current.style.transform = `scaleX(${gsap.utils.clamp(0, 1, (p - .18) / .7)})`;
+      const caption = assemblyCaptionAt(p);
       storyCards.forEach((card, index) => {
-        const beat = ASSEMBLY_STORY[index];
-        const alpha = storyOpacity(p, beat.start, beat.end);
-        card.style.opacity = String(alpha);
-        card.style.transform = `translate3d(0,${22 * (1 - phase(p, beat.start, beat.start + .025)) - 14 * phase(p, beat.end - .025, beat.end)}px,0)`;
-        card.inert = alpha < .5;
-        card.setAttribute("aria-hidden", String(alpha < .5));
+        const visible = index === caption;
+        card.style.opacity = visible ? "1" : "0";
+        card.inert = !visible;
+        card.setAttribute("aria-hidden", String(!visible));
       });
-      const upcoming = ASSEMBLY_STORY.findIndex(beat => p < beat.end);
-      const next = upcoming < 0 ? ASSEMBLY_STORY.length - 1 : upcoming;
+      const next = caption < 0 ? (p < ASSEMBLY_STORY[0].start ? 0 : ASSEMBLY_STORY.length - 1) : caption;
       setStep(previous => previous === next ? previous : next);
     };
     const tween = gsap.fromTo(progress.current, { value: 0 }, {
       value: 1, ease: "none",
       scrollTrigger: {
         // Smooth wheel bursts on the playhead; touch keeps its closer response.
-        trigger: root.current, start: "top top", end: "bottom bottom", scrub: ScrollTrigger.isTouch === 1 ? .45 : .9,
+        trigger: root.current, start: "top top", end: "bottom bottom", scrub: .3,
         onRefresh: self => { progress.current.value = self.progress; paint(); },
       },
       onUpdate: paint,
@@ -250,7 +249,14 @@ export function EnginaraAssemblyIntro() {
         <p className={styles.eyebrow}><span />01 / IMAGINE</p>
         <div className={styles.heroFooter}>
           <div><h1>First, <span className={styles.markedIdea}>an idea.<PencilUnderline /></span><br /><em>Then, we build.</em></h1><a className={styles.scrollCue} href={enhanced ? "#foundation" : "#build"}><PencilArrow down /> Follow the making of an idea</a></div>
-          <div><p className={styles.description}>Bring the idea, or the part of your business that needs a better system. Enginara designs, builds, connects and manages websites, CRM, automation and AI systems that help your business and team work better.</p><SketchLink href="#contact">Start a project</SketchLink></div>
+          <div>
+            <p className={styles.description}><strong>Websites, CRM and AI automation.</strong> Built and managed for clinics, real estate teams and service businesses.</p>
+            <div className={styles.heroActions}>
+              <a className={site.primaryButton} href="#contact">Start a project <span aria-hidden="true">↗</span></a>
+              <a className={styles.offerShortcut} href="#build">Services</a>
+              <a className={styles.offerShortcut} href="#packages">Packages &amp; pricing</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -264,17 +270,16 @@ export function EnginaraAssemblyIntro() {
       </div>
 
       <div className={styles.annotations} ref={annotations} aria-hidden="true">{[
-        ["structure", "01", "Machined foundation", "Architecture & structure"],
-        ["core", "02", "Compute module", "Application logic"],
-        ["power", "03", "Connected modules", "Systems working together"],
-        ["interface", "04", "Tactile interface", "Every interaction considered"],
-        ["display", "05", "The finished experience", "Your vision, brought to life"],
+        ["structure", "01", "Plan", "We map how your work runs"],
+        ["core", "02", "Build", "We set up or build the right tools"],
+        ["power", "03", "Connect", "Your tools share information automatically"],
+        ["display", "04", "Manage", "We keep it running and improving"],
       ].map(([id, n, label, detail]) => <div key={id} className={styles.partLabel} data-part={id}><svg><polyline /><circle r="2.5" /></svg><div data-part-copy><span>{n} / {label}</span><small>{detail}</small></div></div>)}</div>
 
       <div className={styles.status} ref={status}>
         <div className={styles.progressTrack} aria-hidden="true"><span ref={progressLine} /></div>
-        <nav className={styles.sequence} aria-label="The making of Enginara">{ASSEMBLY_STORY.map((beat, index) => <a href={`#${beat.id}`} key={beat.id} aria-current={step === index ? "step" : undefined}><span>0{index + 1}</span>{beat.label}</a>)}</nav>
-        <a href="#build" onClick={() => { focusAfterSkip.current = true; }}>Skip to the work <span aria-hidden="true">↘</span></a>
+        <nav className={styles.sequence} aria-label="The making of Enginara">{ASSEMBLY_STORY.map((beat, index) => <a href={`#${beat.id}`} key={beat.id} aria-label={beat.label} aria-current={step === index ? "step" : undefined}><span aria-hidden="true">0{index + 1}</span>{beat.label}</a>)}</nav>
+        <a href="#build" aria-label="Skip to the work" onClick={() => { focusAfterSkip.current = true; }}>Skip <span aria-hidden="true">↘</span></a>
       </div>
 
       {enhanced && <AssemblyInspector selected={selected} displayed={displayed} hovered={hovered} available={available} exploreButton={exploreButton} onSelect={selectPart} onClose={() => closePart()} onRotate={rotatePart} onBackdrop={(x, y) => { if (!controller.current?.hitInspection(x, y)) closePart(); }} />}

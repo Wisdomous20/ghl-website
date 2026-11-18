@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { createLaptopHardware } from "./laptop-hardware";
 import { createScreenArt } from "./laptop-screen-art";
 import { screenProjection } from "./screen-projection";
-import { phase as storyPhase, storyOpacity, SCREEN_HANDOFF, keyboardAssembly } from "./assembly-story";
+import { ASSEMBLY_STORY, phase as storyPhase, storyOpacity, SCREEN_HANDOFF, keyboardAssembly } from "./assembly-story";
 import { pencilMaterial, pencilEdges } from "./pencil-rendering";
 import { createLaptopInspection } from "./laptop-inspection";
 import type { AssemblyPartId } from "./assembly-parts";
@@ -198,8 +198,11 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
     frontCenter.set(0, 2.1, 0.108).applyMatrix4(lid.matrixWorld);
     camera.position.set(...shot.camera.map((value, index) => mix(value, next.camera[index])) as [number, number, number]);
     focus.set(...shot.target.map((value, index) => mix(value, next.target[index])) as [number, number, number]);
-    if (width < 950) {
-      // Fit the real assembly below the copy; width alone cannot frame an exploded object.
+    const compact = width < 950;
+    const connections = ASSEMBLY_STORY[1];
+    const columnFit = phase(connections.start - .045, connections.start) * (1 - phase(connections.end, connections.end + .045));
+    if (compact || columnFit > 0) {
+      // Fit the exploded assembly below the copy on mobile and beside Connections on desktop.
       portraitBounds.makeEmpty();
       [chassis, underside, motherboard, keyboard, trackpad, lid].forEach(part => {
         if (part.visible) portraitBounds.union(portraitPartBounds.setFromObject(part));
@@ -208,8 +211,13 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
       let cornerIndex = 0;
       for (const x of [portraitBounds.min.x, portraitBounds.max.x]) for (const y of [portraitBounds.min.y, portraitBounds.max.y]) for (const z of [portraitBounds.min.z, portraitBounds.max.z]) portraitCorners[cornerIndex++].set(x, y, z);
       camera.lookAt(focus); camera.updateMatrixWorld(true); portraitOrientation.copy(camera.quaternion);
-      const portraitView = frameCamera(portraitCorners, portraitCenter, portraitOrientation, camera.aspect, camera.fov, { left: -.94, right: .94, top: width >= 600 ? .35 : height < 710 ? .16 : .2, bottom: width >= 600 ? -.62 : height < 710 ? -.42 : -.52 });
-      camera.position.copy(portraitView.position); focus.copy(portraitView.target);
+      const frame = compact
+        ? { left: -.94, right: .94, top: width >= 600 ? .35 : height < 710 ? .12 : .2, bottom: width >= 600 ? -.62 : height < 710 ? -.42 : -.52 }
+        : { left: -.94, right: .26, top: .70, bottom: -.72 };
+      const view = frameCamera(portraitCorners, portraitCenter, portraitOrientation, camera.aspect, camera.fov, frame);
+      const fit = compact ? 1 : columnFit;
+      camera.position.lerp(view.position, fit);
+      focus.lerp(view.target, fit);
     }
     focus.lerp(frontCenter, phase(.84, .885));
     // The HTML surface retains the viewport aspect ratio within the physical screen.
@@ -261,7 +269,7 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
     const annotationRanges: Record<string, [number, number, number, number, number]> = {
       sketch: [0, .11, 1.6, 2.3, -.104],
       structure: [.21, .365, 2.9, .10, 3.1], core: [.24, .51, 0, .13, .91],
-      power: [.40, .555, 0, .12, 2.6], interface: [.575, .73, 2.7, .2, 1.1], display: [.78, .865, 3.0, 3.7, .1],
+      power: [.40, .555, 0, .12, 2.6], display: [.78, .865, 3.0, 3.7, .1],
     };
     annotationElements.forEach(element => {
       const id = element.dataset.part!;
@@ -274,8 +282,8 @@ export function createLaptopScene(host: HTMLElement, assembly?: AssemblyOptions)
       annotationPoint.set(range[2], range[3], range[4]).applyMatrix4(anchor.matrixWorld).project(camera);
       const x = (annotationPoint.x + 1) * width / 2;
       const y = (1 - annotationPoint.y) * height / 2;
-      const placement: Record<string, [number, number]> = { sketch: [.74, .25], structure: [.08, .75], core: [.80, .19], power: [.79, .69], interface: [.79, .76], display: [.80, .78] };
-      if (id === "core" && p >= .37) placement.core = [.08, .59];
+      const placement: Record<string, [number, number]> = { sketch: [.74, .25], structure: [.08, .75], core: [.80, .19], power: [.69, .68], display: [.80, .78] };
+      if (id === "core" && p >= connections.start) placement.core = [.08, .72];
       const labelX = Math.min(width - 205, width * placement[id][0]);
       const labelY = height * placement[id][1];
       const copy = element.querySelector<HTMLElement>("[data-part-copy]");

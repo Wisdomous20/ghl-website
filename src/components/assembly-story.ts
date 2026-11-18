@@ -1,14 +1,14 @@
 /** One playhead drives the physical assembly, its captions and the page handoff. */
 export const ASSEMBLY_STORY = [
-  { id: "foundation", label: "The foundation", start: .18, end: .365, title: ["Getting a better understanding", "to paint a clear picture."], copy: "Before we recommend software, we map how your work moves: the tools, people, information and handoffs involved. The result is a Systems Blueprint, a practical recommendation for what to connect, configure, build, or retain as is.", detail: "DISCOVERY / SYSTEMS BLUEPRINT" },
-  { id: "connections", label: "The connections", start: .365, end: .555, title: ["Separate parts.", "One working system."], copy: "Your website, tools and workflows should work together. We build the connections that keep information moving and remove the manual handoffs.", detail: "DEVELOPMENT / INTEGRATION" },
+  { id: "foundation", label: "The foundation", start: .125, end: .365, title: ["Getting a better understanding", "to paint a clear picture."], copy: "We map your tools, people and handoffs. The Systems Blueprint shows what to keep, connect or build.", detail: "DISCOVERY / SYSTEMS BLUEPRINT" },
+  { id: "connections", label: "The connections", start: .365, end: .555, title: ["Separate parts.", "One working system."], copy: "We connect your website and tools so information moves between them without manual handoffs.", detail: "DEVELOPMENT / INTEGRATION" },
   { id: "experience", label: "The experience", start: .555, end: .75, title: ["Complex underneath.", "Simple to use."], copy: "Every interaction has a purpose. We bring design and engineering together, then refine the details until the whole experience feels right.", detail: "INTERFACE DESIGN / TESTING" },
   { id: "reveal", label: "The idea takes shape", start: .75, end: .835, title: ["From a first sketch.", "To something useful."], copy: "The pieces come together. Your idea is ready to become part of someone's day. Keep scrolling to step inside.", detail: "BUILT / CONNECTED / READY" },
 ] as const;
 
 export const SCREEN_HANDOFF = .97;
 /** The remaining scroll distance introduces the software chapter after the screen fills. */
-export const ASSEMBLY_PORTION = .54;
+export const ASSEMBLY_PORTION = .72;
 
 export function phase(progress: number, start: number, end: number) {
   const t = Math.max(0, Math.min(1, (progress - start) / (end - start)));
@@ -17,6 +17,11 @@ export function phase(progress: number, start: number, end: number) {
 
 export function storyOpacity(progress: number, start: number, end: number) {
   return phase(progress, start, start + .025) * (1 - phase(progress, end - .025, end));
+}
+
+/** Keep the current caption readable throughout each assembly beat. */
+export function assemblyCaptionAt(progress: number) {
+  return ASSEMBLY_STORY.findIndex(beat => progress >= beat.start && progress < beat.end);
 }
 
 /** Move the intact keyboard clear of the lid before lifting and seating its rows. */

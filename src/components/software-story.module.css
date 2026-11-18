@@ -15,7 +15,7 @@
 .story :focus-visible { outline: 2px solid var(--story-orange); outline-offset: 6px; }
 .story button, .story a { -webkit-tap-highlight-color: transparent; }
 .story button { font: inherit; cursor: pointer; }
-.story[data-enhanced] { height: 850svh; }
+.story[data-enhanced] { height: 510svh; }
 .story, .anchor { scroll-margin-top: -5rem; }
 .anchor { position: absolute; left: 0; width: 1px; height: 1px; pointer-events: none; }
 .stage { position: relative; overflow: clip; isolation: isolate; }
@@ -52,15 +52,10 @@
 .blueprint > div:last-child { transform: translate(4vw, 4vh) rotate(5deg); color: var(--story-orange); }
 .blueprint > div > span { font-size: 8px; letter-spacing: 1.3px; display: block; padding: 16px 22px; border-bottom: 1px solid var(--story-line); }
 .blueprint svg { width: 88%; margin: 15px 6%; stroke: currentColor; stroke-width: 1; opacity: .5; }
-.blueprint code { font-size: clamp(15px, 1.25vw, 21px); display: block; padding: 30px; line-height: 2; color: var(--story-ink); }
-.blueprint code i { font-style: normal; color: var(--story-orange); }.blueprint code b { font-weight: 400; color: var(--story-sage); }
-.codeCaret { animation: codeBlink 1.2s step-end infinite; animation-play-state: var(--motion-state, paused); }
 .browser { position: absolute; left: 42%; top: 29%; width: 51.5%; height: 55%; min-height: 370px; border: 1px solid oklch(80% .018 75 / .5); border-radius: 5px; background: var(--story-paper); z-index: 3; transform-origin: center; box-shadow: 0 24px 45px oklch(15% .009 75 / .25); }
 .browserBar { height: 32px; border-radius: 4px 4px 0 0; padding: 0 15px; display: flex; align-items: center; justify-content: space-between; gap: 15px; font-size: 9px; background: var(--story-panel); color: var(--story-muted); }
-.browserBar > span:first-child { display: flex; gap: 4px; }.browserBar i { width: 4px; height: 4px; border: 1px solid var(--story-muted); border-radius: 50%; }.browserBar > span:last-child { font-size: 8px; }
+.browserBar > span:first-child { display: flex; gap: 4px; }.browserBar i { width: 4px; height: 4px; border: 1px solid var(--story-muted); border-radius: 50%; }.browserBar > span:last-child { font-size: 11px; text-align: end; }
 .browserBody { height: calc(100% - 32px); overflow: hidden; border-radius: 0 0 4px 4px; }
-.browserEdge { position: absolute; right: -23px; top: 20px; bottom: 20px; font-size: 8px; letter-spacing: 1.2px; writing-mode: vertical-rl; color: var(--story-muted); display: flex; align-items: center; gap: 18px; }
-.browserEdge i { flex: 1; width: 1px; background: var(--story-line); }
 .connectPanel { padding-top: 15vh; }.connectPanel h2 { font-size: clamp(49px, 4.5vw, 80px); }
 .connectPanel .body { position: absolute; left: 69%; top: 15.5vh; margin: 0; }
 .sceneNote { position: absolute; left: 6%; bottom: 12%; color: var(--story-muted); font-size: 9px; letter-spacing: 1.1px; display: flex; align-items: center; gap: 9px; }
@@ -141,7 +136,6 @@
 .motionToggle { border: 0; background: none; color: var(--story-muted); font-size: 10px !important; padding: 10px 0; }.motionToggle:hover { color: var(--story-ink); }
 .progress { height: 1px; position: absolute; left: 0; right: 0; top: -1px; }.progress i { position: absolute; inset: 0; background: var(--story-orange); transform: scaleX(0); transform-origin: left; }
 
-@keyframes codeBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 @keyframes signalTravel { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes junctionPulse { 0%, 100% { transform: scale(.7); opacity: .1; } 50% { transform: scale(1.35); opacity: .5; } }
 @keyframes activityPulse { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
@@ -189,7 +183,7 @@
   .body br { display: none; }
   .routes { max-width: 550px; margin-top: 32px; }.routes button { padding: 20px 0; }.routes strong { font-size: 21px; }.routes small { font-size: 12px; }
   .story:not([data-enhanced]) .browser { width: 88%; max-width: 670px; height: auto; min-height: 0; margin: 10px auto 20px; }
-  .browserBody { height: auto; }.browserBar { height: 35px; padding: 0 12px; font-size: 9px; gap: 8px; }.browserBar > span:last-child { display: none; }.browserEdge { right: -19px; font-size: 7px; }
+  .browserBody { height: auto; }.browserBar { height: auto; min-height: 35px; padding: 7px 12px; font-size: 10px; gap: 4px 8px; flex-wrap: wrap; }.browserBar > span:last-child { text-align: start; }
   .story:not([data-enhanced]) .network { width: 88%; max-width: 550px; height: 1090px; margin: 5px auto 0; }
   .networkLines { display: none; }.mobileNetworkLines { display: block; position: absolute; inset: 0; width: 100%; height: 1030px; }
   .networkNode { padding: 24px; width: 92%; left: 0; transform: none; }

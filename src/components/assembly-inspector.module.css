@@ -1,7 +1,7 @@
 .explorer { position: absolute; left: 7.8%; bottom: 34px; z-index: 7; pointer-events: auto; }
 .explorer[hidden] { display: none; }
 .hint { color: var(--muted); font-size: 11px; margin: 0 0 9px; }
-.exploreButton { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 7px 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--text); font-size: 13px; }
+.exploreButton { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 7px 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--text); font-size: 15px; }
 .exploreButton > span { color: var(--accent-ink); font-size: 22px; font-weight: 400; }
 .exploreButton:hover { color: var(--accent-ink); }
 .partMenu { position: absolute; bottom: calc(100% + 15px); left: -20px; width: 440px; max-width: calc(100vw - 90px); padding: 20px; background: var(--surface); border: 1px solid var(--line); outline: 1px solid color-mix(in oklch, var(--line) 50%, transparent); outline-offset: 3px; }
@@ -25,8 +25,8 @@
 @media (prefers-reduced-motion: reduce) { .inspector, .details { transition: none; transform: none; } }
 @media (max-width: 949px) {
   .details { background: var(--surface); user-select: text; }
-  .explorer { left: 6%; bottom: 110px; right: 6%; }
-  .hint { display: none; }.exploreButton { min-height: 44px; font-size: 13px; background: var(--surface); padding-right: 14px; }
+  .explorer { left: 6%; bottom: max(59px, calc(env(safe-area-inset-bottom) + 51px)); right: 6%; }
+  .hint { display: none; }.exploreButton { min-height: 44px; font-size: 15px; background: var(--surface); padding-right: 14px; }
   .partMenu { left: 0; width: 100%; max-width: none; max-height: min(60svh, 500px); overflow-y: auto; overscroll-behavior: contain; padding: 16px; }
   .partMenu > div { column-gap: 16px; }.partMenu button { min-height: 48px; font-size: 12px; }
   .back { left: 6%; top: max(18px, env(safe-area-inset-top)); font-size: 14px; }.back kbd { display: none; }

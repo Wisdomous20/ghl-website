@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { EnginaraMark } from "./enginara-mark";
-import { SketchLink } from "./sketch-controls";
 import styles from "./enginara-laptop-experience.module.css";
 
 export function SiteHeader({ pricing = false }: { pricing?: boolean }) {
@@ -35,7 +34,7 @@ export function SiteHeader({ pricing = false }: { pricing?: boolean }) {
       <Link href="#packages">Packages</Link>
       <Link href={`${home}#approach`}>Our approach</Link>
       <Link href="/pricing" aria-current={pricing ? "page" : undefined}>Pricing</Link>
-      <SketchLink href="#contact" compact>Start a project</SketchLink>
+      <a className={styles.primaryButton} href="#contact">Start a project <span aria-hidden="true">↗</span></a>
     </nav>
     <details className={styles.mobileMenu} ref={menu}>
       <summary>Menu <span aria-hidden="true">+</span></summary>

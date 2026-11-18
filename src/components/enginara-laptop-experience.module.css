@@ -30,7 +30,7 @@
 .footer { padding: 0 5.5%; background: var(--surface); }
 .footerWordmark { text-align: center; font-family: var(--font-display), sans-serif; font-size: 19vw; font-weight: 500; letter-spacing: -.075em; line-height: 1.05; color: oklch(75% .018 75); user-select: none; padding-bottom: 30px; }.footerWordmark > span { color: var(--signal-orange); }
 .footerBottom { padding: 30px 0; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 25px; }.footerBottom .brand svg { width: 22px; }
-.footerBottom > p, .footerBottom > span, .footerBottom > a:last-child { font-size: 12px; color: var(--muted); }
+.footerBottom > p, .footerBottom > span, .footerBottom > a:last-child { font-size: 14px; color: var(--text); }
 @media (max-width: 949px) { .header { height: 80px; }.header nav { gap: 18px; }.header nav > a:not(:last-child) { display: none; }.eyebrow { margin-bottom: 18px; }.footerBottom { flex-wrap: wrap; }.contact { padding: 100px 7%; } }
 @media (prefers-reduced-motion: reduce) { .page *, .page *::before, .page *::after { transition: none !important; animation: none !important; }.primaryButton:hover { transform: none; } }
 @media (max-width: 949px) {
@@ -42,5 +42,5 @@
   .header .mobileMenu nav > a { display: flex; justify-content: space-between; align-items: center; padding: 17px 0; min-height: 52px; font-size: 16px; border-bottom: 1px solid var(--line); }.header .mobileMenu nav > a:last-child { border-bottom: 0; color: var(--accent-ink); }.header .mobileMenu nav > a::after { display: none; }.mobileMenu nav span { font-size: 12px; color: var(--graphite); }
   .contact { padding: 88px 6% 76px; }.contact h2 { font-size: clamp(43px, 11.5vw, 75px); }.contact p:not(.eyebrow) { font-size: 15px; }.contact .eyebrow { font-size: 9px; letter-spacing: 1.1px; }
   .primaryButton { min-height: 48px; }.email { min-height: 44px; display: flex; align-items: center; margin-top: 14px; }
-  .footer { padding: 0 6%; }.footerWordmark { font-size: 18.5vw; padding-bottom: 24px; }.footerBottom { display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 24px 0; }.footerBottom > p { grid-column: 1 / -1; grid-row: 1; margin: 0; font-size: 12px; }.footerBottom > .brand { display: none; }.footerBottom > a:last-child { min-height: 44px; display: flex; align-items: center; }
+  .footer { padding: 0 6%; }.footerWordmark { font-size: 18.5vw; padding-bottom: 24px; }.footerBottom { display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 24px 0; }.footerBottom > p { grid-column: 1 / -1; grid-row: 1; margin: 0; font-size: 14px; }.footerBottom > .brand { display: none; }.footerBottom > a:last-child { min-height: 44px; display: flex; align-items: center; }
 }

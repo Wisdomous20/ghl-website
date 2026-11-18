@@ -268,8 +268,8 @@ export function SoftwareStory() {
         <span className={styles.buildAnnotation}>Plan → Configure or build → Connect → Manage</span>
       </section>
 
-      <div className={styles.blueprint} data-blueprint aria-hidden="true"><div><span>01 / THE STRUCTURE</span><svg viewBox="0 0 700 400" fill="none"><path d="M1 1H699V399H1Z M1 41H699 M20 61H315V161H20Z M20 190H300 M20 210H280 M20 230H240 M355 61H679V365H355Z M355 61 679 365 M679 61 355 365 M20 305H158V351H20Z" /></svg></div><div><span>02 / THE LOGIC</span><code><i>const</i> idea = your.vision;<br /><i>const</i> experience = build(&#123;<br />&nbsp; design: <b>considered</b>,<br />&nbsp; connections: <b>everything</b>,<br />&nbsp; madeFor: <b>you</b><br />&#125;);<span className={styles.codeCaret}>▎</span></code></div></div>
-      <div className={styles.browser} data-story-browser><div className={styles.browserBar}><span><i /><i /><i /></span><span>{route === "custom" ? "formandfield.example" : "northstar.example / workspace"}</span><span>CONCEPT ↗</span></div><div className={styles.browserBody}>{route === "custom" ? <WebsiteDemo playing={sceneRunning(0)} /> : <WorkspaceDemo playing={sceneRunning(0)} />}</div><div className={styles.browserEdge} aria-hidden="true"><span>03 / THE EXPERIENCE</span><i /></div></div>
+      <div className={styles.blueprint} data-blueprint aria-hidden="true"><div><span>01 / THE STRUCTURE</span><svg viewBox="0 0 700 400" fill="none"><path d="M1 1H699V399H1Z M1 41H699 M20 61H315V161H20Z M20 190H300 M20 210H280 M20 230H240 M355 61H679V365H355Z M355 61 679 365 M679 61 355 365 M20 305H158V351H20Z" /></svg></div></div>
+      <div className={styles.browser} data-story-browser><div className={styles.browserBar}><span><i /><i /><i /></span><span>{route === "custom" ? "formandfield.example" : "northstar.example / workspace"}</span><span>Concept demo, not a client project.</span></div><div className={styles.browserBody}>{route === "custom" ? <WebsiteDemo playing={sceneRunning(0)} /> : <WorkspaceDemo playing={sceneRunning(0)} />}</div></div>
 
       </div>
       <div className={styles.scene} data-software-scene="1" style={sceneMotion(1)}>
